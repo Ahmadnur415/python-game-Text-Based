@@ -14,10 +14,6 @@ class Game:
         self.setting = setup.GAME["setting"].copy()
         self.setting["difficulty"] = create_player.select_dificulty()
 
-        self.player.gold += 1000000
-        self.player.silver += 100000
-
-
     def start(self):
         if not self.player:
             self.new_game()
