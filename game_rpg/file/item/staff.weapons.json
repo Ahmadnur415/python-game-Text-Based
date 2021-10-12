@@ -1,0 +1,47 @@
+{
+    "name": "staff",
+    "type_items": "weapons",
+    "styleAttack": "magic",
+    "class": "EQUIPPABLE",
+    "location": ["main_hand"],
+    "user": ["mage"],
+    "items": {
+        "m_staff": {
+            "name": "magic wood staff",
+            "damage": [1, 15],
+            "quality": 0,
+            "armor_penetration": 15,
+            "price": {"value": 100, "type": "silver", "max_discount": 0},
+            "sub_stats": { "magic": 3 , "will": 2, "perception": -1},
+            "attack": [ "magic:magicbolt" ]
+        },
+        "fire_staff": {
+            "name": "Fire Staff",
+            "damage": [3, 4],
+            "quality": 0,
+            "armor_penetration": 20,
+            "price": {"value": 500, "type": "silver", "max_discount": 5},
+            "attack": [ "magic:firebolt" ]
+        },
+        "ice_staff": {
+            "name": "Fire Staff",
+            "damage": [5, 25],
+            "quality": 1,
+            "location": ["two_hand"],
+            "armor_penetration": 25,
+            "price": {"value": 500, "type": "silver", "max_discount": 5},
+            "attack": [ "magic:icebolt" ]
+        },
+        "fbi_staff": {
+            "name": "<fire> blue ice staff",
+            "damage": [10, 15],
+            "quality": 3,
+            "location": ["main_hand", "off_hand"],
+            "armor_penetration": 50,
+            "in_shop": false,
+            "price": {"value": 100, "type": "gold", "max_discount": 25},
+            "sub_stats": { "strength": 15, "mana": 50 },
+            "attack": [ "magic:icebolt", "magic:magicslash" ]
+        }
+    }
+}

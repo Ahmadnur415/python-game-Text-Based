@@ -1,0 +1,47 @@
+{
+    "version": [0, 0, 2],
+    "name": "footgear",
+    "type_items": "armor",
+    "class": "EQUIPPABLE",
+    "location": ["shoes"],
+    "user": ["all"],
+    "items": {
+        "battle_boots": {
+            "name": "Battle Boots",
+            "quality": 5,
+            "defense": 54,            
+            "price": { "value": 100, "type": "gold", "max_discount": 17},
+            "sub_stats": { "strength": 15 , "magic": 15, "archery": 15 }
+        },
+        "mechanic_shoes": {
+            "name": "Mechanic Shoes",
+            "defense": 16,
+            "evasion": 8,
+            "quality": 1,
+            "price": { "value": 10000, "type": "silver", "max_discount": 10},
+            "sub_stats": { "critical_change": 5, "archery": 3}
+        },
+        "crystal_boots": {
+            "name": "Crystal Boots",
+            "defense": 100,
+            "quality": 5,
+            "price": { "value": 100000, "type": "silver", "max_discount": 0},
+            "sub_stats": { "luck": 100 }
+        },
+        "fishermans_shoes": {
+            "name": "Fisherman's Shoes",
+            "defense": 16,
+            "quality": 0,
+            "price": { "value": 100, "type": "silver", "max_discount": 0},
+            "sub_stats": { "will": 5, "critical_hit": 5 }
+        },
+        "gardener_shoes": {
+            "name": "Gardener Shoes",
+            "defense": 8,
+            "evasion": 10,
+            "quality": 0,
+            "price": { "value": 100, "type": "silver", "max_discount": 0},
+            "sub_stats": { "health": 100 }
+        }
+    }
+}

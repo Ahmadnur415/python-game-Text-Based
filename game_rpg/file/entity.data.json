@@ -1,0 +1,177 @@
+{
+    "version": [0, 0, 1],
+    "entity_values":{
+        "primary": [
+            "strength",
+            "constitution",
+            "archery",
+            "perception",
+            "magic",
+            "will"
+        ],
+        "secondary": [
+            "growth_hp",
+            "growth_mp",
+            "luck"
+        ],
+        "resource": [
+            "health",
+            "mana",
+            "stamina"
+        ],
+        "defense": [
+            "defense",
+            "evasion",
+            "resistance",
+            "armor_penetration"
+        ]
+    },
+    "player_values": {
+        "silver": 10000,
+        "gold": 100,
+        "level": 1,
+        "exp": 0,
+        "point_level": 3,
+        "setting": {}
+    },
+    "attribute": {
+        "max_level": 60,
+        "player_role": ["mage", "archer", "warrior"],
+        "equipment": {
+            "weapons": ["main_hand", "off_hand", "two_hand"],
+            "armor": ["head", "body", "shoes"]
+        }
+    },
+    "class": {
+        "mage": {
+            "styleAttack": "magic",
+            "typeAttack": "magic",
+            "stats": {
+                "strength": 7,
+                "magic": 25,
+                "archery": 6,
+                "constitution": 10,
+                "will": 17,
+                "perception": 5,
+
+                "growth_hp": 90,
+                "growth_mp": 120,
+                "luck": 90,
+
+                "defense": 7,
+                "evasion": 10,
+                "resistance": 17,
+                "armor_penetration": 3,
+
+                "health": 25,
+                "mana": 20,
+                "stamina": 5
+            },
+            "attack": [{
+                "name": "basic_attack:03",
+                "displayName": "Basic Attack",
+                "typeAttack": "physical",
+                "base_damage": [4, 9],
+                "description_of_being_used": "attack",
+                "multiplier": [
+                    { "modifier": 0.5, "stats": "self.level" },
+                    { "modifier": 0.15, "stats": "self.physical_damage" },
+                    { "modifier": 0.4, "stats": "self.magic" }
+                ]
+            }],
+            "equipment": {
+                "main_hand": "staff:m_staff",
+                "shoes": "footgear:gardener_shoes",
+                "body": "armor:saints_r"
+            }
+        },
+        "archer": {
+            "styleAttack": "archery",
+            "typeAttack": "physical",
+            "stats" : {
+                "strength": 15,
+                "magic": 5,
+                "archery": 20,
+                "constitution": 10,
+                "will": 8,
+                "perception": 17,
+
+                "growth_hp": 95,
+                "growth_mp": 105,
+                "luck": 120,
+
+                "defense": 9,
+                "evasion": 15,
+                "resistance": 8,
+                "armor_penetration": 9,
+                
+                "health": 15,
+                "stamina": 25,
+                "mana": 10
+            },
+            "attack": [
+                {
+                    "name": "basic_attack:02",
+                    "displayName": "Basic Attack",
+                    "typeAttack": "physical",
+                    "base_damage": [3, 10],
+                    "description_of_being_used": "attack",
+                    "multiplier": [
+                        { "modifier": 0.5, "stats": "self.level" },
+                        { "modifier": 0.15, "stats": "self.physical_damage" },
+                        { "modifier": 0.4, "stats": "self.archery" }
+                    ]
+                }
+            ],
+            "equipment": {
+                "main_hand": "bow:wood_b",
+                "head": "helmet:assassin_mask",
+                "body": "armor:saints_r"
+            }
+        },
+        "warrior": {
+            "styleAttack": "strength",
+            "typeAttack": "physical",
+            "stats": {
+                "strength": 20,
+                "magic": 7,
+                "archery": 8,
+                "constitution": 16,
+                "will": 12,
+                "perception": 10,
+
+                "growth_hp": 100,
+                "growth_mp": 100,
+                "luck": 100,
+                
+                "defense": 11,
+                "evasion": 11,
+                "resistance": 11,
+                "armor_penetration": 6,
+                
+                "health": 35,
+                "stamina": 10,
+                "mana": 5
+            },
+            "attack": [
+                {
+                    "name": "basic_attack:01",
+                    "displayName": "Basic Attack",
+                    "typeAttack": "physical",
+                    "base_damage": [5, 8],
+                    "description_of_being_used": "attack",
+                    "multiplier": [
+                        { "modifier": 0.3, "stats": "self.level" },
+                        { "modifier": 0.15, "stats": "self.physical_damage" },
+                        { "modifier": 0.4, "stats": "self.strength" }
+                    ]
+                }
+            ],
+            "equipment": {
+                "main_hand": "sword:wood_s",
+                "head": "helmet:broken_helm",
+                "body": "armor:wood_mail"
+            }
+        }
+    }
+}

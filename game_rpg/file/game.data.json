@@ -1,0 +1,45 @@
+{   
+    "version": [0, 0, 1],
+    "fileGame": {
+        "items": "items.data.json",
+        "entity": "entity.data.json",
+        "attack": "attack.data.json",
+        "lang": "lang/",
+        "enemy": "enemy.data.json"
+    },
+    "_view": {
+        "strength": "STR",
+        "magic": "Magic",
+        "archery": "ARC",
+        "constitution": "CON",
+        "will": "WILL",
+        "perception": "PERC",
+        "growth_hp": "Growth Hp",
+        "growth_mp": "Growth Mp",
+        "luck": "LUCK",
+        "defense": "DEF",
+        "evasion": "Evasion",
+        "resistance": "RES",
+        "armor_penetration": "A.pen",
+        "damage": "DMG",
+        "critical_change": "C.Change",
+        "critical_hit": "C.Hit",
+        "health": "Hp",
+        "mana": "Mp",
+        "stamina": "St",
+        "max_health": "Max Hp",
+        "max_mana": "Max Mp",
+        "max_stamina": "Max St",
+        "class_": "Class"
+    },
+    "setting": {
+        "auto_gave": true,
+        "input_prompt": ">>> ",
+        "lang": "en_US",
+        "difficulty": 1,
+        "savename": null
+    },
+    "difficulty": [
+        "easy", "normal", "hard"
+    ]
+}

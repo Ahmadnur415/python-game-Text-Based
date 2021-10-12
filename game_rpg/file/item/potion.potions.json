@@ -1,0 +1,51 @@
+{
+    "version": [0, 0, 1],
+    "name": "potion",
+    "type_items": "potion",
+    "class": "CONSUMABLE",
+    "items": {
+        "recover_potion": {
+            "name": "Recover Potion",
+            "quality": 0,
+            "price": { "value": 150, "type": "silver", "max_discount": 5 },
+            "attribute": { "type": "restore", "stats": { "health": 10, "mana": 50, "stamina": 5 }}
+        },
+        "potion_health_max": {
+            "name": "Potion health max",
+            "quality": 1,
+            "price": {"value": 5, "type": "gold", "max_discount": 5},
+            "attribute": {
+                "type": "restore",
+                "stats": {
+                    "health": { "value": 25, "modiefer": "max_health" },
+                    "stamina": { "value": 20, "modiefer": "max_stamina" },
+                    "mana": { "value": 20, "modiefer": "max_mana" }
+                }
+            }
+        },
+        "banana_juice": {
+            "name": "Banana Juice",
+            "quality": 1,
+            "price": { "value": 25, "type": "silver", "max_discount": 5 },
+            "attribute": { "type": "restore", "stats": { "health": 25, "stamina": 5 }}
+        },
+        "blue_potion": {
+            "name": "Blue Potion",
+            "quality": 1,
+            "price": { "value": 35, "type": "silver", "max_discount": 0 },
+            "attribute": { "type": "restore", "stats": {"mana": { "value": 5, "modiefer": "max_mana" } }}
+        },
+        "yellow_potion": {
+            "name": "Yellow Potion",
+            "quality": 1,
+            "price": { "value": 35, "type": "silver", "max_discount": 0 },
+            "attribute": { "type": "restore", "stats": {"mana": { "value": 5, "modiefer": "max_stamina" } }}
+        },
+        "milk": {
+            "name": "Milk",
+            "quality": 4,
+            "price": { "value": 25, "type": "gold", "max_discount": 0 },
+            "attribute": { "type": "increase", "stats": { "strength":3, "constitution": 3 }}
+        }
+    }
+}

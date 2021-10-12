@@ -1,0 +1,154 @@
+{
+    "class_enemy": [
+        "rat",
+        "golem",
+        "witch"
+    ],
+    "variant": {
+        "rat": [
+            {
+                "name": "magic rat",
+                "styleAttack": "magic",
+                "typeAttack":"magic",
+                "prority": [
+                    "magic", "evasion", "will"
+                ],
+                "stats": {
+                    "magic": 25,
+                    "evasion": 5,
+                    "health": 5,
+                    "mana": 35,
+                    "perception": 5,
+                    "resistance": 25,
+                    "defense": 5
+                }
+            },
+            {
+                "name": "strong rat",
+                "prority": ["health", "defense", "strength"],
+                "stats": {
+                    "evasion": 7,
+                    "health": 65,
+                    "defense": 26,
+                    "strength": 25,
+                    "perception": 5,
+                    "resistance": 5
+                }
+            }
+        ]
+    },
+    "class": {
+        "rat": {
+            "name": "rat",
+            "styleAttack": "strength",
+            "typeAttack": "physical",
+            "stats": {
+                "strength": 8, 
+                "magic": 4, 
+                "archery": 1, 
+                "constitution": 5,
+                "will": 1, 
+                "perception": 21, 
+                "growth_hp": 50,
+                "growth_mp": 30, 
+                "luck": 130,
+                "defense": 10,
+                "evasion": 45,
+                "resistance": 15,
+                "armor_penetration":0,
+                "health": 10,
+                "stamina": 10,
+                "mana": 10
+            },
+            "prority": [
+                "perception", "evasion", "strength"
+            ],
+            "attack": [
+                {
+                    "name": "attack:01",
+                    "displayName": "attack",
+                    "typeAttack": "physical",
+                    "base_damage": 5,
+                    "description_of_being_used": "attack",
+                    "multiplier": [
+                        { "modifier": 0.2, "stats": "self.level" },
+                        { "modifier": 0.08, "stats": "self.luck" },
+                        { "modifier": 0.1, "stats": "self.physical_damage" }
+                    ]
+                }
+            ],
+            "looting": {
+                "silver#100": 70,
+                "silver#500": 15,
+                "armor:silk_r": 10,
+                "gold#10": 0.5,
+                "gold#1": 4,
+                "bow:burning_b": 0.05,
+                "armor:adventurer_suit": 0.45
+            },
+            "equipment": {}
+        },
+        "golem": {
+            "name": "golem",
+            "styleAttack": "strength",
+            "typeAttack": "physical",
+            "stats": {
+                "strength": 5, 
+                "magic": 5, 
+                "archery": 5, 
+                "constitution": 20,
+                "will": 10, 
+                "perception": 3, 
+                "growth_hp": 165,
+                "growth_mp": 65, 
+                "luck": 100,
+                "defense": 45,
+                "health": 150,
+                "stamina": 15
+            },
+            "prority": [ "growth_hp", "defense", "health" ],
+            "attack": [ "melee:golem_punch" ],
+            "equipment": {},
+            "looting": {}
+        },
+        "witch": {
+            "name": "witch",
+            "styleAttack": "magic",
+            "typeAttack": "magic",
+            "stats": {
+                "strength": 7, 
+                "magic": 15, 
+                "archery": 5,
+                "constitution": 15,
+                "will": 17, 
+                "perception": 7, 
+                "growth_hp": 80,
+                "growth_mp": 125, 
+                "luck": 95,
+                "defense": 9,
+                "evasion": 11,
+                "resistance": 25,
+                "armor_penetration": 5,
+                "health": 5,
+                "mana": 25,
+                "stamina": 5
+            },
+            "prority":[
+                "magic", "mana", "will"
+            ],
+            "looting": {
+                "silver#1500": 50,
+                "gold#15": 20 ,
+                "silver#10000": 24,
+                "armor:holy_robe": 5,
+                "gold#100": 0.01,
+                "staff:ice_staff": 0.09
+            },
+            "equipment": {
+                "hand": [ "staff:m_staff", "staff:ice_staff", "staff:fire_staff" ],
+                "body": [ "armor:holy_robe", "armor:saints_r", "armor:silk_r", "armor:adventurer_suit" ]
+            },
+            "attack": [ "magic:magic_attack" ]
+        }
+    }
+}
