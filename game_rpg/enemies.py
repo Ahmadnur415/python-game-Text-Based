@@ -1,11 +1,12 @@
 # Generate Enemy
 
 from .enemy import Enemy
-from .setup import _ENEMY, _ATTACK
+from .setup import _ATTACK, GAME
+from .file import _load
 from .items import get_items, Items as ITEMS, EQUIPPABLE
 from .attack import ATTACK
 import random
-
+import collections
 
 def _generate_enemy_level(lv: int, diff: int=1):
     if 3 < lv <= 7:
@@ -23,17 +24,16 @@ def _generate_enemy_level(lv: int, diff: int=1):
 
 
 def enemyRandom(lv=3):
+    _ENEMY = _load(GAME["fileGame"]["enemy"])
     if isinstance(lv, (list, tuple)):
         lv = random.randint(min(lv), max(lv))
 
-    _class = random.choice(_ENEMY["class_enemy"].copy())
+    _class = random.choice(_ENEMY["list_enemy"].copy())
     DATA = _ENEMY["class"][_class].copy()
     if _class in _ENEMY["variant"]:
         variant_enemy = random.choice(_ENEMY["variant"][_class].copy() + ["default"])
         if variant_enemy != "default":
-            DATA["stats"].update(variant_enemy.get("stats", {}))
-            variant_enemy.pop("stats", None)
-            DATA.update(variant_enemy)
+            DATA = update_enemy(DATA, variant_enemy)
 
     # -- equipment
     equipment = {}
@@ -41,13 +41,9 @@ def enemyRandom(lv=3):
         for locate, values  in DATA["equipment"].items():
             id_items = random.choice(values) if isinstance(values, list) else values
             items = get_items(id_items)
-            if not isinstance(items, ITEMS):
+            if not isinstance(items, ITEMS) or not isinstance(items.attribute, EQUIPPABLE):
                 # gagal dalam mendapatka items
                 continue
-            
-            if not isinstance(items.attribute, EQUIPPABLE):
-                continue
-            
 
             if locate == "hand":
                 locate = random.choice(items.attribute.location)
@@ -70,10 +66,9 @@ def enemyRandom(lv=3):
     # looting
     looting = []
     if DATA.get("looting"):
-        print("aaaa")
-        for loot, change in DATA["looting"].items():
-            looting.append((loot, change))
-
+        looting_sorted = sorted(DATA["looting"], key=lambda d: d["change"], reverse=True)
+        for loot in looting_sorted:
+            looting.append((loot, loot["change"]))
 
     return Enemy(
         name=DATA["name"],
@@ -84,3 +79,11 @@ def enemyRandom(lv=3):
         stats=DATA,
         looting=looting
     )
+
+def update_enemy(orig_data: dict, new_data: dict):
+    for key, value in new_data.items():
+        if isinstance(value, collections.Mapping):
+            orig_data[key] = update_enemy(orig_data.get(key, {}), value)
+        else:
+            orig_data[key] = value
+    return orig_data

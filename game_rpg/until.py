@@ -13,15 +13,6 @@ def add_multiple_attributes(object_, **attribute):
         setattr(object_, name_key, value)
 
 
-def resolve_index_condition(index, data: dict):
-    print(f"resolve_index_condition -- fuction -- {__file__}")
-    for key, value in data.items():
-        if key == index:
-            return value
-    else:
-        return
-
-
 def resolve_random_condition(chances_data: list):
     """
     Example:

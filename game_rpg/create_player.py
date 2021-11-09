@@ -10,9 +10,8 @@ def create_player():
     )
 
     name_player = input(interface.get_messages("game.input_name"))
-    if name_player in "":
-        name_player = "PLayer"
-    
+    if name_player == "":
+        name_player = "Player"
 
     print()
     while True:

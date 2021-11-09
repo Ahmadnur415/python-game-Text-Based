@@ -120,7 +120,7 @@
             "price" : {"value": 1000, "type": "gold", "max_discount": 10},
             "sub_stats": { "perception": 50 }
         },
-        "anto_magic_suit":{
+        "anti_magic_suit":{
             "name": "Anti Magic Suit",
             "quality": 5,
             "defense": 40,

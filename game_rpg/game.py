@@ -1,7 +1,7 @@
 import os
 import pickle
 from datetime import datetime
-from . import rooms, interface, create_player, items, setup
+from . import rooms, interface, create_player, setup
 
 
 class Game:
@@ -28,6 +28,8 @@ class Game:
         
         result = self.main_menu.name
         while True:
+            if self.setting["autosave"]:
+                self.save_game()
             if result in (self.main_menu.name, "main"):
                 result = self.main_menu.enter(self)
                 continue

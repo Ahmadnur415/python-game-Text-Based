@@ -31,33 +31,6 @@ def _init():
 
     return core
 
-
-# version 2
-def __load_items(path: str):
-    # version 2
-    items = _load(path)
-
-    if not items.get("items"):
-        items["items"] = {}
-
-    items["all_items"] = []
-
-    for item_path in item.items:
-        data_item = _load(items["path"] + item_path)
-        items["items"][data_item["name"]] = data_item
-
-        # create dict "items_by_type[type_items]"
-        if not items["items_by_type"].get(data_item["type_items"], None):
-            items["items_by_type"][data_item["type_items"]] = []
-
-        # load items
-        for items_in_data in data_item["items"].keys():
-            items["all_items"].append(data_item["name"] + ":" + items_in_data)
-            items["items_by_type"][data_item["type_items"]].append(data_item["name"] + ":" + items_in_data)
-
-    return items
-
-
 # version 3
 def _load_items(path: str):
     items = _load(path)
@@ -111,7 +84,6 @@ def _load_items(path: str):
 
     items['all_items'] = all_items
     items["items_by_type"] = items_by_type
-    # print(json.dumps(items["items"]["axe"], indent=3))
     return items
 
 
@@ -137,9 +109,7 @@ def _entity_data(path):
 
 
 if __name__ == '__main__':
-    # Game = json.dumps(_init(), indent=4)
-    # print(Game)
-    # with open("file_game.json", "w") as f:
-    #     f.write(Game)
-
-    __load_items("items.data.json")
+    Game = json.dumps(_init(), indent=4)
+    print(Game)
+    with open("file_game.json", "w") as f:
+        f.write(Game)

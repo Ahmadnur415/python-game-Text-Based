@@ -15,11 +15,11 @@ def enter(self, game):
     # print result battle
     print()
     
-    if result_battle != "fled":
+    if result_battle != Battle.FLED:
         Battle.view_battle()
         interface.centerprint("-")
         
-        modifier = 1 if result_battle == "win" else 0.5
+        modifier = 1 if result_battle == Battle.WIN else 0.5
 
         # menerima hadiah
         exp = int(Battle.count_turn * 10 * modifier)
@@ -37,39 +37,32 @@ def enter(self, game):
             )
         )
 
-        if result_battle != "win":
+        if result_battle != Battle.WIN:
             interface.get_enter()
 
-    if result_battle == "win":
+    if result_battle == Battle.WIN:
 
         # get looting
         if not self.enemy.looting:
             pass
 
-        looting = resolve_random_condition(self.enemy.looting)
-        if "#" in looting:
-            name, value = looting.split("#")
-            try:
-                value = int(value)
-            except ValueError:
-                pass
+        loot = resolve_random_condition(self.enemy.looting)
+        if isinstance(loot["value"], list):
+            loot["value"] = random.randint(min(loot["value"]), max(loot["value"]))
 
-            setattr(game.player, name, getattr(game.player, name) + value)
-            interface.centerprint(
-                interface.get_messages("battle.loot").format(
-                    f"{value} {name}"
-                )
-            )
-        if ":" in looting:
-            items = get_items(looting)
+        if loot["name"] in ("silver", "gold"):
+            setattr( game.player, loot["name"], getattr(game.player, loot["name"]) + loot["value"] )
+            interface.centerprint(interface.get_messages("battle.loot").format(f"{loot['value']} {loot['name']}"))
+        else:
+            items = get_items(loot["name"])
             if isinstance(items, ITEMS):
+                items.amount = loot["value"]
                 game.player.append_inventory(items)
-
                 interface.centerprint(
                     interface.get_messages("battle.loot").format(
-                        items.name
+                        f"{loot['value']}x {items.name}" if loot["value"] > 1 else f"{items.name}"
                     )
-                )    
+                )
 
         print()
         interface.get_enter()

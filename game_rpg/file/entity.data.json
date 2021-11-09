@@ -27,7 +27,7 @@
         ]
     },
     "player_values": {
-        "silver": 10000,
+        "silver": 1000,
         "gold": 100,
         "level": 1,
         "exp": 0,

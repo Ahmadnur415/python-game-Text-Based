@@ -89,7 +89,7 @@ def items_interface(player, items):
                 return player.items_interface(items)
         
         # jumlah yang dijual
-        amount_sell = items.amount
+        amount_sell = items.amount if items.namespace != "" else 1
         if items.amount > 1:
             print()
             interface.leftprint(interface.get_messages("items.on_sell").format(name=items.name, amount=items.amount))
@@ -197,7 +197,6 @@ def view_stats_interface(player):
 
         if _input == BACK:
             return BACK
-
 
 
 def point_level_interface(player):
