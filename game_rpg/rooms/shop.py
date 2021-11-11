@@ -15,10 +15,7 @@ GO_BACK = "go back"
 
 def enter(self, game):
     
-    # ---- debug
-    setup.DATA_ITEMS = file.__load_items(setup.GAME["fileGame"]["items"])
-    # ----
-
+    setup.DATA_ITEMS = file._load_items(setup.GAME["fileGame"]["items"])
     commands = list(setup.DATA_ITEMS["items_by_type"].keys())
     commands.append(B_MARKET)
     commands.extend(self.commands.copy())
