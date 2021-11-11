@@ -28,7 +28,7 @@ class Game:
         
         result = self.main_menu.name
         while True:
-            if self.setting["autosave"]:
+            if self.setting["auto_save"]:
                 self.save_game()
             if result in (self.main_menu.name, "main"):
                 result = self.main_menu.enter(self)
