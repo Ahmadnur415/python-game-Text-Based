@@ -16,11 +16,15 @@ def _list_of_attacks_player(battle, show_number=False) -> list:
         if show_number:
             line = "(" + str(i+1) + ")" + line
 
-        if attack.cost_st > 0:
-            line += new_line + interface.get_messages("attack.stamina_cost_template").format(cost=attack.cost_st)
+        if attack.turn_count >= attack.countdown:
+            if attack.cost_st > 0:
+                line += new_line + interface.get_messages("attack.stamina_cost_template").format(cost=attack.cost_st)
+            
+            if attack.cost_mp > 0:
+                line += new_line + interface.get_messages("attack.mana_cost_template").format(cost=attack.cost_mp)
         
-        if attack.cost_mp > 0:
-            line += new_line + interface.get_messages("attack.mana_cost_template").format(cost=attack.cost_mp)
+        if attack.turn_count < attack.countdown:
+            line += new_line + interface.get_messages("attack.is_cooldown").format(value=attack.countdown - attack.turn_count)
 
         lines.append(line)
     return lines

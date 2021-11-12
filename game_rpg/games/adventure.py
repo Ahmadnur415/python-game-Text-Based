@@ -13,6 +13,8 @@ def enter(self, game):
     result_battle = Battle.run()
 
     print()
+    for attack_player in game.player.attack:
+        attack_player.turn_count = attack_player.countdown
 
     if result_battle != Battle.FLED:
         Battle.view_battle()

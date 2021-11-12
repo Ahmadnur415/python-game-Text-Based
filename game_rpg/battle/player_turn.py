@@ -44,8 +44,8 @@ def player_attack_phase(battle):
         battle.print_list_of_attacks()        
         index = "1" if len(battle.player.attack) == 1 else f"1 - {len(battle.player.attack)}"
 
-        # choise attack player 
-        interface.centerprint("== " +interface.get_messages("input_messages.choose_items_interface").format(name="Attack",index=index) + " ==")
+        # print: choise attack player 
+        interface.centerprint("== " + interface.get_messages("input_messages.choose_items_interface").format(name="Attack",index=index) + " ==")
         attack_name = interface.get_input()
         
         if attack_name.lower() == "b":
@@ -59,9 +59,15 @@ def player_attack_phase(battle):
         if attack_name not in battle.player.attack_name:
             continue
         
+        # new countdown
         attack = battle.player.get_attack_from_name(attack_name)
+        
+        if attack.turn_count < attack.countdown:
+            continue
+        
         proir_health = battle.enemy.health
         attack_result = battle.player.attack_state(battle.enemy, attack)
+        attack.turn_count = 0
 
         print()
         display_name_player = interface.get_messages("prefixes.player", "You") + " "
@@ -78,7 +84,7 @@ def player_attack_phase(battle):
 
         if attack_result == flag.EVADED:
             battle.count_dodge += 1
-            interface.centerprint(interface.get_messages("prefixes.enemy") + interface.get_messages("battle.messages.enemy_evaded"))
+            interface.centerprint(interface.get_messages("prefixes.enemy") + " " + interface.get_messages("battle.messages.enemy_evaded"))
             break
 
         if attack_result == flag.CRITICAL_HIT:

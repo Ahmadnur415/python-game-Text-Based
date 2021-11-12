@@ -88,7 +88,7 @@ def usable_attacks(entity):
 
     for attack in entity.attack:
         if (
-            entity.mana >= attack.cost_mp and entity.stamina >= attack.cost_st
+            entity.mana >= attack.cost_mp and entity.stamina >= attack.cost_st and attack.turn_count >= attack.countdown
         ):
             usable_attacks_list.append(attack)
 

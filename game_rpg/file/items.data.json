@@ -2,37 +2,14 @@
     "version": [0, 0, 2],
     "name": "data:items",
     "path": "item/",
-    "quality": [
-        "common",
-        "uncommon",
-        "rare",
-        "epic",
-        "legendary",
-        "special"
-    ],
+    "quality": [ "common", "uncommon", "rare", "epic", "legendary", "special" ],
     "attribute": {
-        "basic": [
-            "damage",
-            "armor_penetration",
-            "defense",
-            "evasion",
-            "resistance"
-        ],
+        "basic": [ "damage", "armor_penetration", "defense", "evasion", "resistance" ],
         "_other": [
-            "strength",
-            "magic",
-            "archery",
-            "constitution",
-            "will",
-            "perception",
-            "growth_hp",
-            "growth_mp",
-            "luck",
-            "critical_change",
-            "critical_hit",
-            "health",
-            "mana",
-            "stamina"
+            "strength", "magic", "archery", "constitution", "will", "perception",
+            "growth_hp", "growth_mp", "luck",
+            "critical_change", "critical_hit",
+            "health", "mana", "stamina"
         ]
     },
     "items": {},

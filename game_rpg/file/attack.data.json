@@ -1,10 +1,5 @@
 {
-    "style_attack": {
-        "melee": "strength",
-        "ranged": "archery",
-        "magic": "magic",
-        "spell": "magic"
-    },
+    "style_attack": { "melee": "strength", "ranged": "archery", "magic": "magic", "spell": "magic" },
     "melee": {
         "slab": {
             "name": "melee:slab",
@@ -21,6 +16,7 @@
             "name": "melee:golem_punch",
             "displayName": "Golem Punch",
             "typeAttack": "physical",
+            "countdown": 3,
             "description_of_being_used": "attack.description.hit",
             "multiplier": [
                 { "modifier": 0.2, "stats": "self.level" },
@@ -33,6 +29,7 @@
             "displayName": "slash",
             "typeAttack": "physical",
             "description_of_being_used": "attack.description.slash",
+            "countdown": 1,
             "multiplier": [
                 { "modifier": 0.5, "stats": "self.level" },
                 { "modifier": 0.3, "stats": "self.damage" }
@@ -44,12 +41,13 @@
             "name": "ranged:shoot",
             "displayName": "shoot",
             "typeAttack": "physical",
-            "base_damage": [5, 7],
-            "countdown": 1,
+            "base_damage": [7, 10],
             "description_of_being_used": "attack.description.shoot",
-            "cost_st": 15,
+            "countdown": 3,
+            "cost_st": 20,
             "multiplier": [
-                { "modifier": 0.2, "stats": "self.magic_damage" },
+                { "modifier": 0.1, "stats": "self.archery" },
+                { "modifier": 0.2, "stats": "self.perception" },
                 { "modifier": 0.7, "stats": "self.damage" }
             ]
         },
@@ -58,11 +56,13 @@
             "displayName": "one shoot",
             "typeAttack": "physical",
             "description_of_being_used": "attack.description.shoot",
+            "countdown": 10,
             "cost_st": 50,
             "multiplier": [
                 { "modifier": 0.1, "stats": "self.level" },
-                { "modifier": 0.5, "stats": "enemy.archery" },
-                { "modifier": 0.6, "stats": "self.damage" }
+                { "modifier": 0.4, "stats": "enemy.archery" },
+                { "modifier": 0.9, "stats": "self.damage" },
+                { "modifier": 0.3, "stats": "self.perception" }
             ]
         },
         "flameshot": {
@@ -71,13 +71,13 @@
             "typeAttack": "magic",
             "base_damage": [1, 45],
             "description_of_being_used": "attack.description.other_attack",
+            "countdown": 7,
             "cost_mp": 50,
             "multiplier": [
                 { "modifier": 0.3, "stats": "self.strength" },
                 { "modifier": 0.5, "stats": "self.level" },
                 { "modifier": 0.1, "stats": "self.physical_damage"}
             ]
-
         }
     },
     "magic": {
@@ -87,6 +87,7 @@
             "typeAttack": "magic",
             "base_damage": [1, 7],
             "description_of_being_used": "attack.description.bolt",
+            "countdown": 10,
             "cost_mp": 60,
             "multiplier": [
                 { "modifier": 0.2, "stats": "self.mana" },
@@ -98,6 +99,7 @@
             "displayName": "magic bolt",
             "typeAttack": "magic",
             "description_of_being_used": "attack.description.bolt",
+            "countdown": 4,
             "cost_mp": 17,
             "multiplier": [
                 { "modifier": 0.2, "stats": "self.magic" },
@@ -110,6 +112,7 @@
             "typeAttack": "magic",
             "description_of_being_used": "attack.description.bolt",
             "cost_mp": 25,
+            "countdown": 3,
             "multiplier": [
                 { "modifier": 0.2, "stats": "enemy.magic_reduce" },
                 { "modifier": 0.4, "stats": "self.magic_damage" },
@@ -122,6 +125,7 @@
             "typeAttack": "magic",
             "description_of_being_used": "attack.description.other_attack",
             "cost_mp": 25,
+            "countdown": 1,
             "multiplier": [
                 { "modifier": 0.4, "stats": "self.strength" },
                 { "modifier": 0.1, "stats": "self.magic" }
@@ -134,6 +138,7 @@
             "base_damage": [3, 7],
             "cost_mp": 5,
             "description_of_being_used": "attack.description.other_attack",
+            "countdown": 3,
             "multiplier": [
                 { "modifier": 0.6, "stats": "self.level" },
                 { "modifier": 0.2, "stats": "self.magic_damage" },
@@ -147,6 +152,7 @@
             "cost_st": 15,
             "cost_mp": 15,
             "description_of_being_used": "attack.description.other_attack",
+            "countdown": 4,
             "multiplier": [
                 { "modifier": 0.6, "stats": "enemy.defense" },
                 { "modifier": 0.2, "stats": "self.magic_damage" },
@@ -161,6 +167,7 @@
             "displayName": "broken wall",
             "typeAttack": "spell",
             "description_of_being_used": "attack.description.spell",
+            "countdown": 15,
             "cost_mp": 55,
             "multiplier": [
                 { "modifier": 0.6, "stats": "enemy.magic_reduce" },
@@ -172,7 +179,8 @@
             "name": "spell:drain_health",
             "displayName" : "Drain Health Attack",
             "typeAttack": "spell",
-            "description_of_being_used": "debug:-Broken Wall",
+            "description_of_being_used": "attack.description.spell",
+            "countdown": 13,
             "cost_st": 30,
             "multiplier": [
                 { "modifier": 0.05, "stats": "enemy.max_health" },

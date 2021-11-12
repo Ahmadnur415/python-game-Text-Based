@@ -33,13 +33,12 @@
         "class_": "Class"
     },
     "setting": {
-        "auto_gave": true,
+        "auto_save": true,
         "input_prompt": ">>> ",
         "lang": "en_US",
-        "difficulty": 1,
+        "difficulty": 2,
         "savename": null
     },
-    "difficulty": [
-        "easy", "normal", "hard"
-    ]
+    "difficulty": [ "easy", "normal", "hard" ],
+    "input_prompt": [ ">>>", "-->", "==>", ">", "$"]
 }

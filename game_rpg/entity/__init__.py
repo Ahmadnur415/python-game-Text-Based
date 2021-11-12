@@ -4,15 +4,15 @@ from . import other_property, attack, entity_until, equipment, view
 
 class Entity:
     def __init__(
-            self,
-            name: str = "Entity",
-            namespace: str = "entity",
-            _class=None,
-            attacks: list = None,
-            equipments: dict = None,
-            stats: dict = None,
-            type_attack=None,
-            style_attack=None
+        self,
+        name: str = "Entity",
+        namespace: str = "entity",
+        _class=None,
+        attacks: list = None,
+        equipments: dict = None,
+        stats: dict = None,
+        type_attack=None,
+        style_attack=None
     ):
 
         if not stats:
@@ -43,7 +43,6 @@ class Entity:
         self.type_attack = type_attack
         self.style_attack = style_attack
 
-
         self.health = self.max_health
         self.mana = self.max_mana
         self.stamina = self.max_stamina
@@ -63,16 +62,13 @@ class Entity:
     def namespace(self):
         return self.__namespace
 
-    # statsistic entity
     max_health = other_property.max_health
     max_mana = other_property.max_mana
     max_stamina = other_property.max_stamina
 
-    #
     critical_change = other_property.critical_change
     critical_hit = other_property.critical_hit
 
-    #
     reduce_damage = other_property.reduce_damage
     magic_damage = other_property.magic_damage
     physical_damage = other_property.physical_damage

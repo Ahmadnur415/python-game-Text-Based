@@ -12,6 +12,7 @@ def run_enemy_turn(battle):
     attack_use = random.choice(battle.enemy.usable_attacks)
 
     result_attack = battle.enemy.attack_state(battle.player, attack_use)
+    attack_use.trun_count = 0
 
     if result_attack == flag.EVADED:
         interface.centerprint(

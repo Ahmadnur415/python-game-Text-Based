@@ -5,6 +5,7 @@
    "attack.stamina_cost_template": "Stamina Cost: {cost}",
    "attack.mana_cost_template": "Mana Cost: {cost}",
    "attack.description.slash": "Slash",
+   "attack.is_cooldown": "Cooldown {value} turn",
    "attack.description.slab": "Slab",
    "attack.description.bolt": "fire an {name} at",
    "attack.description.shoot": "Shoot at",
