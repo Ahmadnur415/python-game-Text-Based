@@ -1,6 +1,6 @@
 from ..import enemies, battle, interface
 from ..items import get_items, Items as ITEMS
-from ..room import Room
+from .game_menu import game_menu
 from ..until import resolve_random_condition
 import random
 
@@ -12,16 +12,13 @@ def enter(self, game):
     Battle = battle.Battle(game.player, self.enemy)
     result_battle = Battle.run()
 
-    # print result battle
     print()
-    
+
     if result_battle != Battle.FLED:
         Battle.view_battle()
         interface.centerprint("-")
         
         modifier = 1 if result_battle == Battle.WIN else 0.5
-
-        # menerima hadiah
         exp = int(Battle.count_turn * 10 * modifier)
         gold = int((Battle.count_crit * 2 + Battle.count_turn / 2 + Battle.count_dodge / 5) * modifier)
         silver = int((Battle.count_turn * 100 + (Battle.count_crit + Battle.count_dodge) / 4) * modifier)
@@ -71,7 +68,7 @@ def enter(self, game):
     self.enemy = None
     return "main"
 
-ROOM = Room(
+main = game_menu(
     "adventure",
     enter=enter,
     commands=None,

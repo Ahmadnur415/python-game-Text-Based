@@ -5,7 +5,7 @@ LOAD = "Load"
 QUIT = "Quit"
 commands = [PLAY, LOAD, QUIT]
 
-def play():
+def start_game():
     while True:
         interface.centerprint(interface.get_messages("game.title.welcome"))
 
@@ -33,7 +33,3 @@ def play():
             
         if index == QUIT:
             return quit()
-
-
-
-

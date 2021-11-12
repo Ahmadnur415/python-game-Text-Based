@@ -1,6 +1,6 @@
-class Room(object):
+class game_menu(object):
     def __init__(self, name, enter, commands: list=None, **others) -> None:
-        
+
         if not commands:
             commands = []
 
@@ -17,4 +17,3 @@ class Room(object):
     def add_commands(self, *commands):
         for command in commands:
             self.commands.append(command)
-    

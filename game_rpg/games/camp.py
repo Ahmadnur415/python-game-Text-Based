@@ -1,5 +1,5 @@
 from .. import interface
-from ..room import Room
+from .game_menu import game_menu
 
 
 VIEW = "view player"
@@ -20,7 +20,6 @@ def enter(self, game):
             interface.leftprint(f"({i + 1}) {str(room).capitalize().replace('_', ' ')}")
         
         index = interface.get_int_input(len(commands)) - 1
-        # New Line
         print()
 
         index = commands[index]
@@ -45,8 +44,7 @@ def enter(self, game):
         if index in self.commands:
             return index
 
-
-ROOM = Room(
+main = game_menu(
     name="camp",
     enter=enter
 )

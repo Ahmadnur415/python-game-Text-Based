@@ -1,7 +1,7 @@
 import os
 import pickle
 from datetime import datetime
-from . import rooms, interface, create_player, setup
+from . import games, interface, create_player, setup
 
 
 class Game:
@@ -63,10 +63,10 @@ class Game:
             pickle.dump(self, f, -1)
 
 
-    main_menu = rooms.main_menu
-    camp = rooms.camp
-    adventure = rooms.adventure
-    shop = rooms.shop
+    main_menu = games.main_menu
+    camp = games.camp
+    adventure = games.adventure
+    shop = games.shop
     
 
 def load_game():

@@ -1,9 +1,7 @@
 from ..import interface, setup, until, file
 from ..items import get_items, Items as ITEMS
-from ..room import Room
+from .game_menu import game_menu
 from operator import attrgetter
-
-
 import random
 
 B_MARKET = "black market"
@@ -278,12 +276,12 @@ def black_market(self, game):
         
         print()
 
-ROOM = Room(
+main = game_menu(
     name="shop",
     enter=enter,
     commands=None,
     items_bc=[]
 )
-setattr(ROOM, "shop_items", shop_items.__get__(ROOM, ROOM.__class__))
-setattr(ROOM, "dealing_items", dealing_items.__get__(ROOM, ROOM.__class__))
-setattr(ROOM, "black_market", black_market.__get__(ROOM, ROOM.__class__))
+setattr(main, "shop_items", shop_items.__get__(main, main.__class__))
+setattr(main, "dealing_items", dealing_items.__get__(main, main.__class__))
+setattr(main, "black_market", black_market.__get__(main, main.__class__))

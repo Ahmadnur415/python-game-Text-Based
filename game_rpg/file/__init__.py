@@ -31,7 +31,6 @@ def _init():
 
     return core
 
-# version 3
 def _load_items(path: str):
     items = _load(path)
 
