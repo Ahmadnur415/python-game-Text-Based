@@ -11,7 +11,7 @@ def view_stats(items):
     if items.namespace == "EQUIPPABLE":
         interface.printData(base_stats, distance=1)
         view_EQUIPPABLE(items)
-        
+
     if items.namespace == "CONSUMABLE":
         base_stats.update({"amount": items.amount})
         interface.printData(base_stats, distance=1)
@@ -19,8 +19,6 @@ def view_stats(items):
 
 
 def view_EQUIPPABLE(items):
-    _view = setup.GAME["_view"].copy()
-
     distance = 1
 
     if items.typeItems == 'weapons':
@@ -35,15 +33,15 @@ def view_EQUIPPABLE(items):
             
             if value != 0:
                 interface.printData(
-                    {_view.get(name, name): f"{value:+}"}, 
+                    {interface.get_messages("view." + name, name): f"{value:+}"}, 
                     one_line=True, 
                     mark=False, 
                     distance=distance
                 )
 
-    for names, value in items.sub_stats.items():
+    for names, value in items.stats.items():
         interface.printData(
-            {_view.get(names, names): f"{value:+}"},
+            {interface.get_messages("view." + names, names): f"{value:+}"},
             one_line=True, 
             mark=False, 
             distance=distance
@@ -51,20 +49,15 @@ def view_EQUIPPABLE(items):
 
 
 def view_CONSUMABLE(items):
-    _view = setup.GAME["_view"].copy()
     
     if items.attribute.type_ == "restore":
         lines = [] 
         for names, values in items.attribute.stats.items():
             if isinstance(values, dict):
-                lines.append(
-                    names + f" from {values['value']}% {_view.get(values['modiefer'], values['modiefer'])}"
-                )
+                lines.append(names + f" from {values['value']}% {interface.get_messages('view.modiefer', 'modiefer')}")
             
             if isinstance(values, int):
-                lines.append(
-                    f"{values} {names}"
-                )
+                lines.append(f"{values} {names}")
         
         interface.centerprint(
             interface.get_messages(
@@ -83,6 +76,4 @@ def view_CONSUMABLE(items):
             if name in setup.DATA_ENTITY["entity_values"]["resource"]:
                 name = "max_" + name
 
-            interface.leftprint(
-                f"{value} {_view.get(name, name)}"
-            )
+            interface.leftprint(f"{value} {interface.get_messages('view.' + name, name)}")

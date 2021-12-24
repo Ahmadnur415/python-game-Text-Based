@@ -200,8 +200,6 @@ def view_stats_interface(player):
 
 
 def point_level_interface(player):
-    view = setup.GAME["_view"].copy()
-
     lines = {}
     commands = []
     index_stats = ""
@@ -209,7 +207,7 @@ def point_level_interface(player):
     interface.centerprint("-- Point Level --")
     for i, stats in enumerate(setup.DATA_ENTITY["entity_values"]["primary"]):
         commands.append(stats)
-        lines[f"{i+1}) {view.get(stats, stats)}"] = getattr(player, stats)
+        lines[f"{i+1}) {interface.get_messages('view.' + stats, stats)}"] = getattr(player, stats)
     interface.printData(lines, distance=3)
     interface.leftprint(interface.get_messages("player.point_level") + " " + str(player.point_level))
     _input = interface.get_command(commands)

@@ -1,12 +1,11 @@
 {
-    "version": [0, 0, 1],
     "entity_values":{
         "primary": [ "strength", "constitution", "archery", "perception", "magic", "will" ],
         "secondary": [ "growth_hp", "growth_mp", "luck" ],
         "resource": [ "health", "mana", "stamina" ],
         "defense": [ "defense", "evasion", "resistance", "armor_penetration"]
     },
-    "player_values": { "silver": 1000, "gold": 100, "level": 1, "exp": 0, "point_level": 3, "setting": {} },
+    "player_values": { "silver": 1000, "gold": 10, "level": 1, "exp": 0, "point_level": 3, "setting": {} },
     "attribute": {
         "max_level": 60,
         "player_role": [ "mage", "archer", "warrior" ],
@@ -34,7 +33,7 @@
                     { "modifier": 0.4, "stats": "self.magic" }
                 ]
             }],
-            "equipment": { "main_hand": "staff:m_staff", "shoes": "footgear:gardener_shoes", "body": "armor:saints_r" }
+            "equipment": { "main_hand": "staff.weapons/m_staff", "shoes": "shoes.armor/gardener_shoes", "body": "armor.armor/saints_r" }
         },
         "archer": {
             "styleAttack": "archery",
@@ -59,7 +58,7 @@
                     ]
                 }
             ],
-            "equipment": { "main_hand": "bow:wood_b", "head": "helmet:assassin_mask", "body": "armor:saints_r" }
+            "equipment": { "main_hand": "bow.weapons/wood_b", "head": "helmet.armor/assassin_mask", "body": "armor.armor/saints_r" }
         },
         "warrior": {
             "styleAttack": "strength",
@@ -84,7 +83,7 @@
                     ]
                 }
             ],
-            "equipment": { "main_hand": "sword:wood_s", "head": "helmet:broken_helm", "body": "armor:wood_mail" }
+            "equipment": { "main_hand": "sword.weapons/wood_s", "head": "helmet.armor/broken_helm", "body": "armor.armor/wood_mail" }
         }
     }
 }

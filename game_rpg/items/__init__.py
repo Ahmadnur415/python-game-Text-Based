@@ -1,21 +1,10 @@
-from .items import Items, CONSUMABLE, EQUIPPABLE
-from .generate_items import _generate_items
-from ..setup import DATA_ITEMS as DATA
+from .items import Items, EQUIPPABLE, CONSUMABLE
+from .generate_items import generate_items
 
 
-def get_items(identify: str):
-    identify = identify.split("@")
-    
-    count = 1
-    name = identify[0]
-    if len(identify) == 2:
-        try: 
-            count = int(identify[1])
-        except ValueError:
-            count = 1
-
-    if name not in DATA["all_items"]:
-        return
-
-    classItems, name = name.split(":")
-    return _generate_items(classItems, name=name, count=count)
+def get_items(identify: str, amount=1):
+    try:
+        return generate_items(identify, amount)
+    except NameError:
+        print(f"Cannot Load items : identify Error \"{identify}\"")
+        return 

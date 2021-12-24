@@ -1,4 +1,5 @@
 import os
+import glob
 import pickle
 from datetime import datetime
 from . import games, interface, create_player, setup
@@ -72,20 +73,17 @@ class Game:
 def load_game():
     games = []
     lines = []
-    listSave = os.listdir("./saves/")
+    listSave = glob.glob("./saves/*.sv")
     
     # title
     interface.centerprint("== Load Game ==")
     print(f" {'No':<3}{'Name Player':<21}{'Level':<12}{'Time':<9}")
 
-    for i, filename in enumerate(listSave):
-        try:
-            game = pickle.load(open("./saves/" + filename, "rb"))
-        except (AttributeError):
-            continue
-        time_save = datetime.fromtimestamp(os.path.getmtime("./saves/" + filename)).strftime("%X %x")
+    for filename in listSave:
+        game = pickle.load(open(filename, "rb"))
+        time_save = datetime.fromtimestamp(os.path.getmtime(filename)).strftime("%X %x")
         games.append(game)
-        lines.append(" {:<3}" + f"{game.player.name:<21}{game.player.level:<12}{time_save:<9}")
+        lines.append(" {:<3}" + f"{game.player.name:<21}{str(game.player.level).center(5):<12}{time_save:<9}")
     
     # no save file save
     if not games:

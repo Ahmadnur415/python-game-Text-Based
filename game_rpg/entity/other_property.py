@@ -1,7 +1,6 @@
 from ..items import Items as ITEMS
 from ..setup import DATA_ENTITY
 from ..until import clamp
-# import math
 
 
 def _init(entity):
@@ -110,7 +109,7 @@ def critical_change(entity):
     # equipment bonus
     for items in entity.equipment.values():
         if isinstance(items, ITEMS):
-            bonus += items.sub_stats.get("critical_change", 0)
+            bonus += items.stats.get("critical_change", 0)
 
     crit = (PERC / 4) + (STR * 2 + ARC + MGC) / 30 + (0.3 * LV) + clamp(LUCK / 100, 1.0, 25.0)
     return clamp(round(crit + bonus, 2), 1, 99)
@@ -124,7 +123,7 @@ def critical_hit(entity):
     # equipment bonus
     for items in entity.equipment.values():
         if isinstance(items, ITEMS):
-            bonus += items.sub_stats.get("critical_hit", 0)
+            bonus += items.stats.get("critical_hit", 0)
 
     dmg = (4 * STR + 4 * ARC + 4 * MGC + 3 * PERC + 2 * CON) / 7  + (LV * LUCK / 300)
     return round(dmg + 20 + bonus, 2)
@@ -151,11 +150,11 @@ def damage(entity):
     for locate, equipment in entity.equipment.items():
         if not equipment or locate not in DATA_ENTITY["attribute"]["equipment"]["weapons"]:
             continue
-
-        multiplier = 1.1 if equipment.attribute.styleAttack.damage_stats == entity.style_attack else 0.75
+        
+        multiplier = 1.1 if equipment.attribute.styleAttack == entity.style_attack else 0.75
 
         # menambahkan damage 
-        if equipment.attribute.styleAttack.damage_stats == "magic":
+        if equipment.attribute.styleAttack == "magic":
             magic = [a + floor(b * multiplier) for a, b in zip(magic, equipment.attribute.damage)]
         else:
             physical = [a + floor(b * multiplier) for a, b in zip(physical, equipment.attribute.damage)]

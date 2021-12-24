@@ -12,12 +12,12 @@ class Items:
             attribute: object,
             amount: int = 1,
             price: dict = None,
-            sub_stats: object = None,
+            stats: object = None,
             **other
     ):
 
-        if not sub_stats:
-            sub_stats = {}
+        if not stats:
+            stats = {}
         if not price:
             price = {"value": 10, "type": "gold", "max_discount": 30}
 
@@ -30,7 +30,7 @@ class Items:
             attribute=attribute,
             amount=amount,
             price=price,
-            sub_stats=sub_stats
+            stats=stats
         )
         until.set_multiple_attributes( self, **other )
 
@@ -40,7 +40,17 @@ class Items:
 
     @property
     def get_quality(self):
-        return setup.DATA_ITEMS["quality"][self.quality]
+        return setup.GAME["quality"][self.quality]
+
+    @classmethod
+    def from_identify(cls, identify):
+        pass
+    
+    def __repr__(self) -> str:
+        return self.identify
+
+    def __str__(self) -> str:
+        return self.identify
 
     view_stats = view.view_stats
 
@@ -54,7 +64,6 @@ class EQUIPPABLE:
             user,
             styleAttack=None,
             attack=None,
-            classItems=None,
             **stats
     ):
         if not attack:
@@ -67,7 +76,7 @@ class EQUIPPABLE:
             user=user,
             styleAttack=styleAttack,
             attack=attack,
-            classItems=classItems
+            location_equipment=None
         )
         until.set_multiple_attributes(self, **stats)
 

@@ -1,17 +1,15 @@
 from game_rpg.entity.other_property import damage
-from ..setup import GAME as DATA
 from ..import interface
 
 
 def _list_of_attacks_player(battle, show_number=False) -> list:
-    view = DATA["_view"].copy()
     distance = 1 if not show_number else 3
     new_line = "\n" + " " * distance + " - "
     lines = []
     for i, attack in enumerate(battle.player.attack):
 
         damage = " ~ ".join([str(i) for i in battle.player._generate_damage_of_attack_use(battle.enemy, attack)])
-        line = " " + attack.displayName + f" - {view.get(attack.typeAttack, attack.typeAttack)} damage: " + damage
+        line = " " + attack.displayName + f" - {interface.get_messages(attack.typeAttack, attack.typeAttack)} damage: " + damage
 
         if show_number:
             line = "(" + str(i+1) + ")" + line

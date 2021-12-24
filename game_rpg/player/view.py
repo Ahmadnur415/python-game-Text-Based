@@ -24,7 +24,6 @@ def view_equipment(player):
 
 
 def view_stats(self):
-    view = setup.GAME["_view"].copy()
     lines = {}
     distance = 3
 
@@ -33,11 +32,11 @@ def view_stats(self):
         if stats in setup.DATA_ENTITY["entity_values"]["resource"]:
             line = str(getattr(self, stats, 0)) + " / " + str(getattr(self, "max_" + stats, 0))
 
-        lines.update({view.get(stats, stats): line})
+        lines.update({interface.get_messages("view."+stats, stats): line})
 
     lines.update({
-        view.get("critical_change", "C.Change"): str(self.critical_change) + "%",
-        view.get("critical_hit", "C.Hit"): self.critical_hit  + "%",
+        interface.get_messages("view.critical_change", "C.Change"): str(self.critical_change) + "%",
+        interface.get_messages("view.critical_hit", "C.Hit"): self.critical_hit  + "%",
         "Level": self.level
     })
     if self.namespace == "player":

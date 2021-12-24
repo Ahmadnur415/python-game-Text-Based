@@ -6,7 +6,7 @@ from .file import _load
 from .items import get_items, Items as ITEMS, EQUIPPABLE
 from .attack import ATTACK
 import random
-import collections
+import _collections_abc
 
 def _generate_enemy_level(lv: int, diff: int=1):
     if 3 < lv <= 7:
@@ -82,7 +82,7 @@ def enemyRandom(lv=3):
 
 def update_enemy(orig_data: dict, new_data: dict):
     for key, value in new_data.items():
-        if isinstance(value, collections.Mapping):
+        if isinstance(value, _collections_abc.Mapping):
             orig_data[key] = update_enemy(orig_data.get(key, {}), value)
         else:
             orig_data[key] = value

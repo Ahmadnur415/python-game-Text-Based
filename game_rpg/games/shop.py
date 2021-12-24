@@ -12,8 +12,6 @@ NEXT = "next"
 GO_BACK = "go back"
 
 def enter(self, game):
-    
-    setup.DATA_ITEMS = file._load_items(setup.GAME["fileGame"]["items"])
     commands = list(setup.DATA_ITEMS["items_by_type"].keys())
     commands.append(B_MARKET)
     commands.extend(self.commands.copy())
@@ -39,24 +37,18 @@ def enter(self, game):
 
 
 def shop_items(self, game, type_items):
-    id_items = {}           # example {"long_sword": ["long_sword:wooden", "class_id:items_id"]}
-    class_id_name = ""
-    list_id_items = []      # list of class_id_items
-    items = []              # all_of_items
-    max_rows_items = 8
-    row_items = []          # array untuk items // 1 array / max_rows_items
+    items_by_type = setup.DATA_ITEMS["items_by_type"][type_items]
+    id_items_list = []
+    class_list = []
+    class_name = ""
 
-    # filter id items
-    for name in setup.DATA_ITEMS["items_by_type"][type_items]:
-        class_name = name.split(":")[0]
-
-        if not id_items.get(class_name):
-            id_items[class_name] = []
-        id_items[class_name].append(name)
-
-    # interface shop 1 jika jumlah id items lebih dari 1
-    if len(id_items) > 1:
-        command = list(id_items.keys())
+    for name in items_by_type:
+        name = name.split("/")[0].split(".")[0]
+        if name not in class_list:
+            class_list.append(name)
+    # =======
+    if len(class_list) > 1:
+        command = class_list
         command.append(BACK)
         interface.centerprint(interface.get_messages("game.title"), "-- " + str(self.name.upper()) + " --")
         
@@ -64,97 +56,81 @@ def shop_items(self, game, type_items):
             interface.leftprint(f"({i + 1}) {str(name).capitalize().replace('_', ' ')}")
         
         index = interface.get_int_input(len(command)) - 1
-        class_id_name = command[index]
-        
-        # back commands
-        if class_id_name == BACK:
+
+        if command[index] == BACK:
             return
-        # index
-        list_id_items = id_items.get(class_id_name)
 
-    # jika terdapat 1 id_class
-    if len(id_items) == 1:
-        class_id_name = list(id_items.keys())[0]
-        list_id_items = id_items[class_id_name]
+        class_name = command[index] + "." + type_items
 
-    # make new line
-    print()
+    if len(class_list) == 1:
+        class_name = class_list[0] + "." + type_items
 
-    # load items // di load biar bisa di urutkan bedasarkan quality
-    for name in list_id_items:
-        item = get_items(name)
+    for i in items_by_type:
+        if class_name in i:
+            id_items_list.append(i)
+    # =======
+    self.index_shop_item(game, id_items_list, type_items)
+ 
+
+def index_shop_item(self, game, list_id_items: list[str], type_items: str):
+    items = []
+    rows_items = []
+    size_shop = setup.SETTING["size_shop"]
+
+    # get items
+    for identify in list_id_items:
+        item = get_items(identify)
         if getattr(item, "in_shop", True):
-            items.append(item)        
+            items.append(item)
 
-    # sort items
+    # sort item by quality and name
     items.sort(key=attrgetter("quality", "name"))
+    while items != []:
+        rows_items.append(items[:size_shop])
+        items = items[size_shop:]
+    
+    index = 0
 
-    # dibagi 10 / 1 
-    rows = []
-    for item in items:
-        rows.append(item)
-        if len(rows) == max_rows_items:
-            row_items.append(rows.copy())
-            rows.clear()
-    if rows:
-        row_items.append(rows.copy())
-        rows.clear()
-
-    # interface shop 2
-    index_row = 0           # index_row
     while True:
-        items_in_shop = []  # items yang yang ingin di tampilkan
         commands = []
+        
+        if index < 0:
+            index = 0
+        if index > len(rows_items) - 1:
+            index = len(rows_items) - 1
 
-        if index_row < 0:
-            index_row = 0
-        if index_row > len(row_items) - 1:
-            index_row = len(row_items) - 1
-
-        # print title
         interface.centerprint(interface.get_messages("game.title"), "-- " + str(self.name.upper()) + " --")
 
-        # menambahkan items untuk di tampilkan
-        if len(items) <= 10 and len(row_items) == 1:
-            items_in_shop.extend(items)
-        
-        if len(items) > 10 and len(row_items) > 1:
-            items_in_shop.extend(row_items[index_row])
+        for i, item in enumerate(rows_items[index]):
+            commands.append(item)
+            print_line_items(item, i)
 
-        # print items
-        for i, show_items in enumerate(items_in_shop):
-            commands.append(show_items)
-            interface.leftprint(f"{i+1:<3}{show_items.name}")
-            interface.LeftRigthPrint(f"quality : {show_items.get_quality.capitalize()}", f"price : {show_items.price['value']} {show_items.price['type']}", 4)    
-
-        # menambahkan commands dan print
         left = ""
         rigth = ""
-        if index_row != 0 and index_row <= len(row_items) - 1:
+        if index != 0 and index < len(rows_items):
             commands.append(GO_BACK)
-            left = f"<-- Go back ({len(commands)})"
-        if index_row >= 0 and index_row != len(row_items) - 1:
+            left = f"<-- Go back [{len(commands)}]"
+        if index >= 0 and index != len(rows_items) - 1:
             commands.append(NEXT)
-            rigth = f" ({len(commands)}) Next Items -->"
+            rigth = f" [{len(commands)}] Next Items -->"
 
         if left or rigth:
             interface.LeftRigthPrint(left, rigth, 4)
-        
 
         # index commands and items
         index_commands = interface.get_command(commands)
 
         print()
         if index_commands == GO_BACK:
-            index_row -= 1
+            index -= 1
             continue
 
         if index_commands == NEXT:
-            index_row += 1
+            index += 1
             continue
         
         if index_commands == BACK:
-            return
+            return self.shop_items(game, type_items)
         
         if isinstance(index_commands, ITEMS):
             self.dealing_items(game, index_commands)
@@ -201,47 +177,44 @@ def dealing_items(self, game, items):
 
 def _generate_items_bc(self, game):
 
-    id_items = []
-
-    for _ in range(5 + int(game.player.luck / 100)):
-        item = random.choice(setup.DATA_ITEMS["all_items"])
-        items = get_items(item)
+    list_items = []
+    max_items = 5 + int(game.player.luck / 100)
+    for _ in range(max_items):
+        items = get_items(random.choice(setup.DATA_ITEMS["id"]))
         
-        while item in id_items:
-            item = random.choice(setup.DATA_ITEMS["all_items"])
-            items = get_items(item)
+        while items.identify in list_items:
+            items = get_items(random.choice(setup.DATA_ITEMS["id"]))
         
-        id_items.append(item)
+        list_items.append(items)
 
         if items.typeItems in ["food", "potion"]:
-            items.amount = random.randrange(5 + int(game.player.luck / 100))
+            items.amount = random.randint(-items.quality + 6, -9 / 5 * items.quality + 10 + int(game.player.luck / 100) )
         
         if items.price["type"] == "gold":
-            chnage_type = until.resolve_random_condition([
+            change_type = until.resolve_random_condition([
                 (False, until.clamp(75 - int(game.player.luck / 30), 50, 75)),
                 (True, until.clamp(25 + int(game.player.luck / 30), 25, 50))
             ])
 
-            if chnage_type:
+            if change_type:
                 items.price["type"] = "silver"
                 items.price["value"] *= 100
 
-        items.price["discount"] = random.randrange(items.price["max_discount"] + int(game.player.luck / 50))
+        items.price["discount"] = random.randint( -3 * items.quality + 20, -5 * items.quality + 30 + int(game.player.luck / 100) )
         items.price["value"] -= int(items.price["value"] / 100 * items.price["discount"])
         self.items_bc.append(items)
 
 
 def black_market(self, game):
 
-    if not self.items_bc or len(self.items_bc) < 2:
+    if not self.items_bc or len(self.items_bc) < 1:
         _generate_items_bc(self, game)
 
     while True:
         interface.centerprint(interface.get_messages("game.title"), "-- Black Market --")
 
         for i, item in enumerate(self.items_bc):
-            interface.leftprint(f"{i+1:<3}{item.name} " + (str(item.amount) + "x" if item.amount > 1 else ""))
-            interface.LeftRigthPrint(f"quality : {item.quality}", f"price : {item.price['value'] * item.amount} {item.price['type']}", 4)
+            print_line_items(item, i)
 
         # interface.centerprint("-")
         interface.leftprint(
@@ -276,6 +249,11 @@ def black_market(self, game):
         
         print()
 
+def print_line_items(item, i=0):
+    interface.leftprint(f"{i+1:<3}{item.name} " + (str(item.amount) + "x" if item.amount > 1 else ""))
+    interface.LeftRigthPrint(f"quality : {item.get_quality}", f"{item.price['value'] * item.amount} {item.price['type']}", 4)
+
+
 main = game_menu(
     name="shop",
     enter=enter,
@@ -285,3 +263,4 @@ main = game_menu(
 setattr(main, "shop_items", shop_items.__get__(main, main.__class__))
 setattr(main, "dealing_items", dealing_items.__get__(main, main.__class__))
 setattr(main, "black_market", black_market.__get__(main, main.__class__))
+setattr(main, "index_shop_item", index_shop_item.__get__(main, main.__class__))

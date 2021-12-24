@@ -75,7 +75,7 @@ def equip_items(self, items, location=None, append_inventory=False):
     self.equipment[location_equipment] = items
 
     # Add stats Items
-    for stats, value in items.sub_stats.items():
+    for stats, value in items.stats.items():
         if stats in DATA_ENTITY["entity_values"]["resource"]:
             setattr(self, "_max_" + stats, getattr(self, "_max_" + stats) + value)
             continue
@@ -98,6 +98,7 @@ def equip_items(self, items, location=None, append_inventory=False):
             self.attack.append(attack)
 
     items.attribute.use = True
+    items.attribute.location_equipment = location_equipment
     if append_inventory:
         self.append_inventory(items)
 
@@ -117,6 +118,7 @@ def unequip_items(self, locate_items):
 
     self.equipment[locate_items] = None
     items_to_unequip.attribute.use = False
+    items_to_unequip.attribute.location_equipment = None
 
     # remove attack
     for attack in items_to_unequip.attribute.attack:
@@ -124,7 +126,7 @@ def unequip_items(self, locate_items):
             self.attack.remove(attack)
 
     # remove sub stats
-    for stats, value in items_to_unequip.sub_stats.items():
+    for stats, value in items_to_unequip.stats.items():
         if stats in DATA_ENTITY["entity_values"]["resource"]:
             setattr(self, "_max_" + stats, getattr(self, "_max_" + stats) - value)
             if getattr(self, stats) > getattr(self, "_max_" + stats):

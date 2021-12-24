@@ -1,17 +1,49 @@
-from game_rpg import file
 from pathlib import Path
+from game_rpg import file
+
+global GAME, DATA_ENTITY, DATA_ITEMS, SETTING, LANG, _ATTACK
 
 
-def _init():
-    global GAME, DATA_ENTITY, DATA_ITEMS, SETTING, LANG, _ATTACK
-    GAME = file._init()
-    DATA_ENTITY = GAME["entity"]
-    DATA_ITEMS = GAME["items"]
+class setup:
+    def __init__(self):
+        self.refresh()
 
-    SETTING = GAME["setting"].copy()
-    LANG = GAME["lang"].copy()
-    _ATTACK = GAME["attack"]
-    Path("./saves/").mkdir(parents=True, exist_ok=True)
+    @property    
+    def data_entity(self):
+        return self.Game["entity"]
 
-# init game
-_init()
+    @property
+    def data_Items(self):
+        return self.Game["items"]
+    
+    @property
+    def lang(self):
+        return file._load_lang(self.Game['fileGame']["lang"])
+
+    @property
+    def _attack(self):
+        return self.Game["attack"]
+
+    def refresh(self):
+        self.Game = file._load("game.data.json")
+        self.Game["items"].update(file._load_items())
+        self.Game["entity"] = file._load_entity(self.Game["fileGame"]["entity"])
+        self.Game["attack"] = file._load(self.Game["fileGame"]["attack"])
+
+_setup = setup()
+
+GAME = _setup.Game
+DATA_ENTITY = _setup.data_entity
+DATA_ITEMS = _setup.data_Items
+LANG = _setup.lang
+_ATTACK = _setup._attack
+
+SETTING = GAME["setting"].copy()
+Path("./saves/").mkdir(parents=True, exist_ok=True)
+
+
+import json
+
+Game = json.dumps(_setup.Game, indent=4)
+with open("saves/filegame.json", "w") as f:
+    f.write(Game)

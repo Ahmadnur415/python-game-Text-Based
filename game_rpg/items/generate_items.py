@@ -1,57 +1,21 @@
 from ..setup import DATA_ITEMS, _ATTACK
 from .items import Items, EQUIPPABLE, CONSUMABLE
-from ..attack import ATTACK, AttackStyle
+from ..attack import ATTACK
+
+def generate_items( identify: str, count: int=1 ):
+    if identify not in DATA_ITEMS["id"]:
+        raise NameError
+    
+    names , items = identify.split("/")
+    items = DATA_ITEMS["list"][names][items]
+
+    if items["class"] == "EQUIPPABLE":
+        return generate_items_EQUIPPABLE(items)
+    if items["class"] == "CONSUMABLE":
+        return generate_items_CONSUMABLE(items, count)
 
 
-def _generate_items(classItems, index=1, name=None, count=1) -> Items:
-    if classItems not in DATA_ITEMS["items"]:
-        return
-
-    DATA = DATA_ITEMS["items"][classItems].copy()
-
-    if index > len(list(DATA["items"].keys())) or index <= 0:
-        return
-
-    if name not in DATA["items"]:
-        name = list(DATA["items"].keys())[int(index) - 1]
-
-    items = DATA["items"][name].copy()
-
-    if DATA["class"] == "EQUIPPABLE":
-        return Items(
-            name=items["name"],
-            quality=items["quality"],
-            typeItems=items['type_items'],
-            identify=items["identify"],
-            attribute=EQUIPPABLE(
-                location=items["location"],
-                user=items["user"],
-                styleAttack=AttackStyle.get(items.get("styleAttack", None), None),
-                attack=_generate_attack_of_items(items),
-                classItems=items["classItems"],
-                **{key: items.get(key, 0) for key in DATA_ITEMS["attribute"]["basic"]}
-            ),
-            price=items["price"],
-            sub_stats=items.get("sub_stats", {}),
-            in_shop=items.get("in_shop", True)
-        )
-
-    return Items(
-        name=items["name"],
-        quality=items["quality"],
-        typeItems=items['type_items'],
-        identify=items['identify'],
-        attribute=CONSUMABLE(
-            type_=items["attribute"]["type"],
-            stats=items["attribute"]["stats"]
-        ),
-        price=items["price"],
-        sub_stats=items.get("sub_stats", {}),
-        amount=count
-    )
-
-
-def _generate_items_CONSUMABLE(items, count=1):
+def generate_items_CONSUMABLE(items, count=1):
     if not items:
         return
     return Items(
@@ -65,11 +29,12 @@ def _generate_items_CONSUMABLE(items, count=1):
         ),
         price=items["price"],
         sub_stats=items.get("sub_stats", None),
-        amount=count
+        amount=count,
+        in_shop=items.get("in_shop", True)
     )
 
 
-def _generate_items_EQUIPPABLE(items):
+def generate_items_EQUIPPABLE(items):
     if not items:
         return
     return Items(
@@ -80,17 +45,17 @@ def _generate_items_EQUIPPABLE(items):
         attribute=EQUIPPABLE(
             location=items["location"],
             user=items["user"],
-            styleAttack=items["styleAttack"],
-            attack=items["attack"],
-            classItems=items["classItems"],
+            styleAttack=items.get("styleAttack", None),
+            attack=generate_attack_of_items(items),
             **{key: items.get(key, 0) for key in DATA_ITEMS["attribute"]["basic"]}
         ),
         price=items["price"],
-        sub_stats=items.get("sub_stats", None)
+        stats=items.get("stats", None),
+        in_shop=items.get("in_shop", True)
     )
 
 
-def _generate_attack_of_items(items):
+def generate_attack_of_items(items):
     list_of_attack = items.get("attack", []).copy()
     attacks = []
 

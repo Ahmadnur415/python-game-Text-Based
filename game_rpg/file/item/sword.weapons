@@ -1,6 +1,4 @@
 {
-    "version": [0, 0, 2],
-    "name": "sword",
     "type_items": "weapons",
     "styleAttack": "melee",
     "class": "EQUIPPABLE",
@@ -13,8 +11,8 @@
             "damage": [3, 12],
             "quality": 0,
             "armor_penetration": 6,
-            "price": {"value": 100, "type": "silver", "max_discount": 0},
-            "sub_stats": { "strength": 5, "health": 10 },
+            "price": {"value": 100, "type": "silver"},
+            "stats": { "strength": 5, "health": 10 },
             "attack": [ "melee:slash", "melee:slab" ]
         },
         "magic_s": {
@@ -22,8 +20,8 @@
             "damage": [5, 15],
             "armor_penetration": 10,
             "quality": 1,
-            "price": { "value": 5, "type": "gold", "max_discount": 5 },
-            "sub_stats": { "magic": 15 },
+            "price": { "value": 5, "type": "gold" },
+            "stats": { "magic": 15 },
             "attack": [ "magic:magic_attack" ]
         },
         "astral": {
@@ -31,8 +29,8 @@
             "quality": 5,
             "damage": [10, 30],
             "armor_penetration": 30,
-            "price": { "value": 444, "type": "gold", "max_discount": 70 },
-            "sub_stats": { "growth_hp": 10, "health": 1000 },
+            "price": { "value": 444, "type": "gold" },
+            "stats": { "growth_hp": 10, "health": 1000 },
             "attack": [ "melee:slash", "spell:drain_health" ]
         },
         "dragon_ice": {
@@ -41,8 +39,8 @@
             "damage": [1, 40],
             "location": [ "off_hand" ],
             "armor_penetration": 15,
-            "price": { "value": 500, "type": "gold", "max_discount": 30 },
-            "sub_stats": { "critical_change": 1, "critical_hit": 100 },
+            "price": { "value": 500, "type": "gold" },
+            "stats": { "critical_change": 1, "critical_hit": 100 },
             "attack": ["melee:slab", "melee:ice_slash", "magic:icebolt"]
         }
     }

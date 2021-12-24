@@ -1,5 +1,4 @@
 {
-    "name": "staff",
     "type_items": "weapons",
     "styleAttack": "magic",
     "class": "EQUIPPABLE",
@@ -11,8 +10,8 @@
             "damage": [1, 15],
             "quality": 0,
             "armor_penetration": 15,
-            "price": {"value": 100, "type": "silver", "max_discount": 0},
-            "sub_stats": { "magic": 3 , "will": 2, "perception": -1},
+            "price": {"value": 100, "type": "silver"},
+            "stats": { "magic": 3 , "will": 2, "perception": -1},
             "attack": [ "magic:magicbolt" ]
         },
         "fire_staff": {
@@ -20,7 +19,7 @@
             "damage": [3, 4],
             "quality": 0,
             "armor_penetration": 20,
-            "price": {"value": 500, "type": "silver", "max_discount": 5},
+            "price": {"value": 500, "type": "silver"},
             "attack": [ "magic:firebolt" ]
         },
         "ice_staff": {
@@ -29,7 +28,7 @@
             "quality": 1,
             "location": ["two_hand"],
             "armor_penetration": 25,
-            "price": {"value": 500, "type": "silver", "max_discount": 5},
+            "price": {"value": 500, "type": "silver"},
             "attack": [ "magic:icebolt" ]
         },
         "fbi_staff": {
@@ -39,8 +38,8 @@
             "location": ["main_hand", "off_hand"],
             "armor_penetration": 50,
             "in_shop": false,
-            "price": {"value": 100, "type": "gold", "max_discount": 25},
-            "sub_stats": { "strength": 15, "mana": 50 },
+            "price": {"value": 100, "type": "gold"},
+            "stats": { "strength": 15, "mana": 50 },
             "attack": [ "magic:icebolt", "magic:magicslash" ]
         }
     }

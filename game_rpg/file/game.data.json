@@ -1,44 +1,31 @@
 {   
-    "version": [0, 0, 1],
+    "version": [0, 1, 4],
     "fileGame": {
-        "items": "items.data.json",
-        "entity": "entity.data.json",
         "attack": "attack.data.json",
-        "lang": "lang/",
-        "enemy": "enemy.data.json"
-    },
-    "_view": {
-        "strength": "STR",
-        "magic": "Magic",
-        "archery": "ARC",
-        "constitution": "CON",
-        "will": "WILL",
-        "perception": "PERC",
-        "growth_hp": "Growth Hp",
-        "growth_mp": "Growth Mp",
-        "luck": "LUCK",
-        "defense": "DEF",
-        "evasion": "Evasion",
-        "resistance": "RES",
-        "armor_penetration": "A.pen",
-        "damage": "DMG",
-        "critical_change": "C.Change",
-        "critical_hit": "C.Hit",
-        "health": "Hp",
-        "mana": "Mp",
-        "stamina": "St",
-        "max_health": "Max Hp",
-        "max_mana": "Max Mp",
-        "max_stamina": "Max St",
-        "class_": "Class"
+        "entity": "entity.data.json",
+        "enemy": "enemy.data.json",
+        "lang": "lang/"
     },
     "setting": {
-        "auto_save": true,
+        "auto_save": false,
         "input_prompt": ">>> ",
         "lang": "en_US",
         "difficulty": 2,
-        "savename": null
+        "savename": null,
+        "size_shop": 8
     },
+    "quality": [ "common", "uncommon", "rare", "epic", "legendary", "special" ],
     "difficulty": [ "easy", "normal", "hard" ],
-    "input_prompt": [ ">>>", "-->", "==>", ">", "$"]
+    "input_prompt": [ ">>>", "-->", "==>", ">", "$" ],
+    "items" : {
+        "attribute": {
+            "basic": [ "damage", "armor_penetration", "defense", "evasion", "resistance" ],
+            "other": [
+                "strength", "magic", "archery", "constitution", "will", "perception",
+                "growth_hp", "growth_mp", "luck",
+                "critical_change", "critical_hit",
+                "health", "mana", "stamina"
+            ]
+        }
+    }
 }

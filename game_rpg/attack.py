@@ -45,14 +45,6 @@ class Multiplier:
         self.stats = stats
 
 
-class _attackstyle:
-    def __init__(self, damage_stats):
-        self.damage_stats = damage_stats
-
-
-AttackStyle = {name: _attackstyle(damage_stats=stats) for name, stats in _ATTACK["style_attack"].items()}
-
-
 def ATTACK(data: dict):
     if not data or not isinstance(data, dict):
         return

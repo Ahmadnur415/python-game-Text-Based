@@ -1,6 +1,4 @@
 {
-    "version": [0, 0, 2],
-    "name": "armor",
     "type_items": "armor",
     "class": "EQUIPPABLE",
     "location": ["body"],
@@ -8,7 +6,7 @@
     "items": {
         "template_armor":{
             "name": "Template name",
-            "quality": [ 0, 1, 2, 3, 4, 5 ],
+            "quality": 0,
             
             "defense": 0,
             "resistance": 0,
@@ -18,22 +16,22 @@
             
             "in_shop": false,
             
-            "price" : { "value": 250, "type": "silver", "max_discount": 0 },
-            "sub_stats": { "strength": 10 , "growth_hp": 3, "health": 10 }
+            "price" : { "value": 250, "type": "silver" },
+            "stats": { "strength": 10 , "growth_hp": 3, "health": 10 }
         },
 
         "wooden_a": {
             "name": "Wooden Armor",
             "quality": 0,
             "defense": 40,
-            "price" : { "value": 500, "type": "silver", "max_discount": 25 }
+            "price" : { "value": 500, "type": "silver" }
         },
         "saints_r": {
             "name": "Saint's Robe",
             "quality": 0,
             "evasion": 8,
             "resistance": 32,
-            "price" : {"value": 500, "type": "silver", "max_discount": 25}
+            "price" : {"value": 500, "type": "silver"}
         },
         "silk_r": {
             "name": "Silk Robe",
@@ -41,14 +39,14 @@
             "defense": 8,
             "resistance": 8,
             "evasion": 24,
-            "price" : {"value": 500, "type": "silver", "max_discount": 25}
+            "price" : {"value": 500, "type": "silver"}
         },
         "wood_mail": {
             "name": "Wooden Mail",
             "quality": 0,
             "defense": 25,
-            "price" : {"value": 100, "type": "silver", "max_discount": 0},
-            "sub_stats": { "health": 25 }
+            "price" : {"value": 100, "type": "silver"},
+            "stats": { "health": 25 }
         },
         "adventurer_suit": {
             "name": "Adventurer's Suit",
@@ -57,16 +55,16 @@
             "resistance": 7,
             "evasion": 5,
             "damage": 25,
-            "price" : { "value": 5, "type": "gold", "max_discount": 25 },
-            "sub_stats": { "archery": 15 }
+            "price" : { "value": 5, "type": "gold" },
+            "stats": { "archery": 15 }
         },
         "steel_armor":{
             "name": "Steel Armor",
             "quality": 1,
             "defense": 69,
             "resistance": 3,
-            "price" : { "value": 5, "type": "gold", "max_discount": 10 },
-            "sub_stats": { "strength": 25, "archery": -5}
+            "price" : { "value": 5, "type": "gold" },
+            "stats": { "strength": 25, "archery": -5}
         },
         "holy_robe":{
             "name": "Holy Robe",
@@ -75,16 +73,16 @@
             "resistance": 30,
             "evasion": 5,
             "in_shop": false,
-            "price" : {"value": 7, "type": "gold", "max_discount": 12},
-            "sub_stats": { "magic": 25 , "growth_mp": -10}
+            "price" : {"value": 7, "type": "gold"},
+            "stats": { "magic": 25 , "growth_mp": -10}
         },
         "robe_of_resistance": {
             "name": "Robe of Resistance",
             "quality": 2,
             "resistance": 100,
             "defense": 20,
-            "price" : {"value": 100, "type": "silver", "max_discount": 0},
-            "sub_stats": { "will": 10}
+            "price" : {"value": 100, "type": "silver"},
+            "stats": { "will": 10}
         },
         "ice_dress":{
             "name": "<Ice> dress",
@@ -92,8 +90,8 @@
             "defense": 11,
             "resistance": 111,
             "evasion": 1,
-            "price" : {"value": 30, "type": "silver", "max_discount": 0},
-            "sub_stats": { "strength": 10 , "archery": 10, "magic": 10}
+            "price" : {"value": 30, "type": "silver"},
+            "stats": { "strength": 10 , "archery": 10, "magic": 10}
         },
         "l_armor": {
             "name": "Legendaty Armor",
@@ -101,24 +99,24 @@
             "defense": 255,
             "resisitance": 33,
             "evasion": 10,
-            "price": {"value": 99, "type": "gold", "max_discount": 25},
-            "sub_stats": {"constitution": 10, "will": 10, "perception": 10}
+            "price": {"value": 99, "type": "gold"},
+            "stats": {"constitution": 10, "will": 10, "perception": 10}
         },
         "lod_armor": {
             "name": "<Luck of Defense> armor",
             "quality": 5,
             "defense": 320,
             "in_shop": false,
-            "price" : { "value": 999, "type": "gold", "max_discount": 17 },
-            "sub_stats": { "luck": 250 }
+            "price" : { "value": 999, "type": "gold" },
+            "stats": { "luck": 250 }
         },
         "great_armor": {
             "name": "<great> evasion robe",
             "quality": 5,
             "evasion": 250,
             "in_shop": false,
-            "price" : {"value": 1000, "type": "gold", "max_discount": 10},
-            "sub_stats": { "perception": 50 }
+            "price" : {"value": 1000, "type": "gold"},
+            "stats": { "perception": 50 }
         },
         "anti_magic_suit":{
             "name": "Anti Magic Suit",
@@ -126,7 +124,7 @@
             "defense": 40,
             "resistance": 284,
             
-            "price" : { "value": 750, "type": "gold", "max_discount": 0 }
+            "price" : { "value": 750, "type": "gold" }
         },
         "a_d_armor":{
             "name": "Azure Dragon Armor",
@@ -135,8 +133,8 @@
             "defense": 80,
             "resistance": 120,
             "evasion": 10,
-            "price" : { "value": 125, "type": "gold", "max_discount": 5 },
-            "sub_stats": { "strength": 25 , "critical_hit": 40 }
+            "price" : { "value": 125, "type": "gold" },
+            "stats": { "strength": 25 , "critical_hit": 40 }
         },
         "thives_suit":{
             "name": "Template name",
@@ -148,8 +146,8 @@
             "in_shop": false,
             
 
-            "price" : { "value": 55, "type": "gold", "max_discount": 0 },
-            "sub_stats": { "critical_change": 15, "critical_hit": 32 }
+            "price" : { "value": 55, "type": "gold" },
+            "stats": { "critical_change": 15, "critical_hit": 32 }
         },
         "white_wing_suit":{
             "name": "White Wing Suit",
@@ -157,8 +155,8 @@
             "defense": 42,
             "evasion": 10,
             "in_shop": false,
-            "price" : { "value": 16, "type": "gold", "max_discount": 14 },
-            "sub_stats": { "strength": 8, "perception": 15}
+            "price" : { "value": 16, "type": "gold" },
+            "stats": { "strength": 8, "perception": 15}
         },
         "black_wing_suit":{
             "name": "Black_Wing Suit",
@@ -167,8 +165,8 @@
             "resistance": 32,
             "evasion": 10,            
             
-            "price" : { "value": 16, "type": "gold", "max_discount": 14 },
-            "sub_stats": { "magic": 10 , "archery": 3, "stamina": 25 }
+            "price" : { "value": 16, "type": "gold" },
+            "stats": { "magic": 10 , "archery": 3, "stamina": 25 }
         },
         "hunter_mail":{
             "name": "Hunter Mail",
@@ -176,16 +174,16 @@
             
             "defense": 22,
             "in_shop": false,
-            "price" : { "value": 7500, "type": "silver", "max_discount": 0 },
-            "sub_stats": {"constitution": 15, "growth_hp": 10 }
+            "price" : { "value": 7500, "type": "silver" },
+            "stats": {"constitution": 15, "growth_hp": 10 }
         },
         "medic_robe":{
             "name": "Medic Robe",
             "quality": 1,
             "in_shop": false,
             
-            "price" : { "value": 10000, "type": "silver", "max_discount": 9 },
-            "sub_stats": { "health": 100 , "growth_hp": 14}
+            "price" : { "value": 10000, "type": "silver" },
+            "stats": { "health": 100 , "growth_hp": 14}
         }
     }
 }

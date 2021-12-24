@@ -1,6 +1,3 @@
-from .. import interface
-
-
 def run(battle):
 
     while True:

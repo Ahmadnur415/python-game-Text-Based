@@ -1,6 +1,4 @@
 {
-    "version": [0, 0, 2],
-    "name": "helmet",
     "type_items": "armor",
     "class": "EQUIPPABLE",
     "location": ["head"],
@@ -13,8 +11,8 @@
             "resistance": 7,
             "armor_penetration": 0,
             "in_shop": false,
-            "price" : {"value": 10000, "type": "gold", "max_discount": 50},
-            "sub_stats": { "strength": 25 , "archery": 23, "magic": 10, "constitution": 50}
+            "price" : {"value": 10000, "type": "gold"},
+            "stats": { "strength": 25 , "archery": 23, "magic": 10, "constitution": 50}
         },
         "anc_helm":{
             "name": "Ancient Helm",
@@ -22,8 +20,8 @@
             "defense": 16,
             "resistance": 8,
             "in_shop":false,
-            "price" : {"value": 1000000, "type": "silver", "max_discount": 45},
-            "sub_stats": { "strength": 25 , "health": 10}
+            "price" : {"value": 1000000, "type": "silver"},
+            "stats": { "strength": 25 , "health": 10}
         },
         "goat_cap":{
             "name": "Goat Cap",
@@ -32,7 +30,7 @@
             "resistance": 8,
             "evasion": 8,
             "in_shop":false,
-            "price" : {"value": 3, "type": "gold", "max_discount": 0}
+            "price" : {"value": 3, "type": "gold"}
         },
         "broken_helm":{
             "name": "Broken Helmet",
@@ -40,14 +38,14 @@
             "defense": 8,
             "in_shop": false,
             "armor_penetration": 0,
-            "price" : {"value": 100, "type": "silver", "max_discount": 3}
+            "price" : {"value": 100, "type": "silver"}
         },
         "assassin_mask":{
             "name": "Assassin Mask",
             "quality": 0,
             
-            "price" : { "value": 1000, "type": "silver", "max_discount": 0 },
-            "sub_stats": { "critical_change": 5, "critical_hit": 10 }
+            "price" : { "value": 1000, "type": "silver" },
+            "stats": { "critical_change": 5, "critical_hit": 10 }
         },
         "anubis_helm":{
             "name": "Template name",
@@ -55,36 +53,36 @@
             "armor_penetration": 5,
             "in_shop":false,
             
-            "price" : { "value": 5, "type": "gold", "max_discount": 0 },
-            "sub_stats": { "will": 20 , "stamina": 50 }
+            "price" : { "value": 5, "type": "gold" },
+            "stats": { "will": 20 , "stamina": 50 }
         },
         "king_helm": {
             "name": "King helm",
             "quality": 2,
             "defense": 15,
             "evasion": 1,
-            "price": {"value": 30, "type": "gold", "max_discount": 5},
-            "sub_stats": { "constitution":1 , "strength":5 , "will":5 }
+            "price": {"value": 30, "type": "gold"},
+            "stats": { "constitution":1 , "strength":5 , "will":5 }
         },
         "sock": {
             "name": "Sock",
             "quality": 0,
-            "price": {"value": 100, "type": "silver", "max_discount": 0},
-            "sub_stats": { "perception": 3 }
+            "price": {"value": 100, "type": "silver"},
+            "stats": { "perception": 3 }
         },
         "steel_helm": {
             "name": "Steel helm",
             "quality": 1,
             "defense": 10,
-            "price": {"value": 650, "type": "silver", "max_discount": 0},
-            "sub_stats": {"strength": 3, "constitution": 2}
+            "price": {"value": 650, "type": "silver"},
+            "stats": {"strength": 3, "constitution": 2}
         },
         "luck_helm": {
             "name": "Luck of helm",
             "quality": 4,
             "in_shop": false,
-            "price": {"value": 120, "type": "gold", "max_discount": 12},
-            "sub_stats": {"luck": 235}
+            "price": {"value": 120, "type": "gold"},
+            "stats": {"luck": 235}
         }
     }
 }

@@ -1,10 +1,8 @@
 from ..items import CONSUMABLE
-from .. import interface, setup
+from .. import interface
 
 
 def consume_items(self, items_to_consume, show_messages=True):
-    view = setup.GAME['_view'].copy()
-
     if not isinstance(items_to_consume.attribute, CONSUMABLE):
         interface.centerprint(interface.get_messages("items.can't_be_consumed"))
         return False
@@ -47,8 +45,7 @@ def consume_items(self, items_to_consume, show_messages=True):
                 )
             elif items_to_consume.attribute.type_ == "increase":
                 interface.centerprint(
-                    interface.get_messages("player.messages.item_used_increased").format(stat=view.get(stats, stats),
-                                                                                         amount=values)
+                    interface.get_messages("player.messages.item_used_increased").format(stat=interface.get_messages(stats, stats), amount=values)
                 )
     
     items_to_consume.amount -= 1

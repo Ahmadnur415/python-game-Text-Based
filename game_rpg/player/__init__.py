@@ -45,9 +45,9 @@ class Player(entity.Entity):
         self.stamina = self.max_stamina
 
         if self._class != "mage":
-            self.append_inventory(get_items("potion:recover_potion@5"))
+            self.append_inventory(get_items("potion.potions/recover_potion", 5))
         else:
-            self.append_inventory(get_items("potion:blue_potion@5"))
+            self.append_inventory(get_items("potion.potions/blue_potion", 5))
 
     max_exp = entity.other_property.max_exp
 

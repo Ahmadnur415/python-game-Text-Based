@@ -1,13 +1,11 @@
 {
-    "version": [0, 0, 1],
-    "name": "food",
     "type_items": "food",
     "class": "CONSUMABLE",
     "items": {
         "apple": {
             "name": "Apple",
             "quality":0,
-            "price": {"value": 10, "type": "silver", "max_discount": 0},
+            "price": {"value": 10, "type": "silver"},
             "identify": "food:apple",
             "attribute": { "type": "restore", "stats": { "health": 5, "mana": 10 }}
         },
@@ -15,13 +13,13 @@
             "name": "Golden Apple",
             "quality": 5,
             "in_shop": false,
-            "price": { "value": 20, "type": "gold", "max_discount": 5 },
+            "price": { "value": 20, "type": "gold" },
             "attribute": { "type": "increase", "stats": { "growth_hp": 3 , "growth_mp": 3 }}
         },
         "banana": {
             "name": "Golden Apple",
             "quality":0,
-            "price": {"value": 15, "type": "silver", "max_discount": 0},
+            "price": {"value": 15, "type": "silver"},
             "identify": "food:g_apple",
             "attribute": { "type": "restore", "stats": { "health": 19 }}
         },
@@ -29,13 +27,13 @@
             "name": "Cheese",
             "quality": 5,
             "in_shop": false,
-            "price": {"value": 50, "type": "gold", "max_discount": 0 },
+            "price": {"value": 50, "type": "gold" },
             "attribute": { "type": "increase", "stats": { "growth_hp": 5 , "growth_mp": 2, "health": 50 }}
         },
         "chocolate_pie": {
             "name": "Chocolate Pie",
             "quality": 3,
-            "price": { "value": 500, "type": "silver", "max_discount": 1 },
+            "price": { "value": 500, "type": "silver" },
             "attribute": {
                 "type": "restore",
                 "stats": {
@@ -47,13 +45,13 @@
         "lucky_candy": {
             "name": "Lucky Candy",
             "quality": 5,
-            "price": { "value": 15, "type": "gold", "max_discount": 0 },
+            "price": { "value": 15, "type": "gold" },
             "attribute": { "type": "increase", "stats": { "luck": 3 }}
         },
         "lucky_cookie": {
             "name": "Lucky Cookie",
             "quality": 4,
-            "price": { "value": 50, "type": "silver", "max_discount": 15 },
+            "price": { "value": 50, "type": "silver" },
             "identify": "food:g_apple",
             "attribute": { "type": "increase", "stats": { "luck": 12 }}
         }
