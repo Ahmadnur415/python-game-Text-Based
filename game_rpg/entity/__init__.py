@@ -78,6 +78,7 @@ class Entity:
     attack_state = attack.attack_state
     _generate_damage_of_attack_use = attack._generate_damage_of_attack_use
     usable_attacks = attack.usable_attacks
+    attack_turn_count = attack.attack_turn_count
 
     equip_items = equipment.equip_items
     unequip_items = equipment.unequip_items

@@ -80,6 +80,7 @@
    "player.level_up": "You Level Up +{level}",
    "prefixes.player": "Your",
    "prefixes.enemy":"The enemy",
+   "player.item_unequipped":"You have unequipped a {}.",
 
    "view.strength": "STR",
    "view.magic": "Magic",

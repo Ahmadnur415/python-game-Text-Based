@@ -1,4 +1,3 @@
-from .setup import _ATTACK
 from .interface import get_messages
 from . import until
 

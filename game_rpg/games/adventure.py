@@ -1,6 +1,6 @@
-from ..import enemies, battle, interface
+from ..import enemies, battle, interface, namespace
 from ..items import get_items, Items as ITEMS
-from .game_menu import game_menu
+from .game import game as GAME
 from ..until import resolve_random_condition
 import random
 
@@ -16,14 +16,14 @@ def enter(self, game):
     for attack_player in game.player.attack:
         attack_player.turn_count = attack_player.countdown
 
-    if result_battle != Battle.FLED:
+    if result_battle != namespace.BATTLE_FLED:
         Battle.view_battle()
         interface.centerprint("-")
         
-        modifier = 1 if result_battle == Battle.WIN else 0.5
-        exp = int(Battle.count_turn * 10 * modifier)
-        gold = int((Battle.count_crit * 2 + Battle.count_turn / 2 + Battle.count_dodge / 5) * modifier)
-        silver = int((Battle.count_turn * 100 + (Battle.count_crit + Battle.count_dodge) / 4) * modifier)
+        modifier = 1 if result_battle == namespace.BATTLE_WIN else 0.5
+        exp = int(Battle.attack_trun * 10 * modifier)
+        gold = int((Battle.count_crit * 2 + Battle.attack_trun / 2 + Battle.count_dodge / 5) * modifier)
+        silver = int((Battle.attack_trun * 100 + (Battle.count_crit + Battle.count_dodge) / 4) * modifier)
 
         game.player.gain_exp(exp)
         game.player.gold += gold
@@ -36,10 +36,10 @@ def enter(self, game):
             )
         )
 
-        if result_battle != Battle.WIN:
+        if result_battle != namespace.BATTLE_WIN:
             interface.get_enter()
 
-    if result_battle == Battle.WIN:
+    if result_battle == namespace.BATTLE_WIN:
 
         # get looting
         if not self.enemy.looting:
@@ -70,7 +70,7 @@ def enter(self, game):
     self.enemy = None
     return "main"
 
-main = game_menu(
+main = GAME(
     "adventure",
     enter=enter,
     commands=None,

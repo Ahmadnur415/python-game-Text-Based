@@ -70,19 +70,21 @@ def _generate_stats_enemy(enemy, priority_stats):
 def create_change_data_stats(prority_stats: list):
     change_data = []
 
-    priority_change = round(50 / len(prority_stats), 2)
+    priority_change = round(max(25 + (10 * len(prority_stats)), 65) / len(prority_stats), 2)
 
     non_priority_stats = DATA_ENTITY["stats"].copy()
     [non_priority_stats.remove(i) for i in prority_stats]
-    non_priority_change = round(50 / len(non_priority_stats), 2)
+    non_priority_change = round((100 - priority_change) / len(non_priority_stats), 2)
+    remainder = 100 - (priority_change * len(prority_stats) + non_priority_change * len(non_priority_stats))
 
-    count = 100
+    pre_non_priority_change = non_priority_change
     for stats in DATA_ENTITY["stats"]:
+        non_priority_change = pre_non_priority_change
         if stats in prority_stats:
-            count -= priority_change
             change_data.append((stats, priority_change))
         else:
-            count -= non_priority_change
-            change_data.append((stats, non_priority_change))
+            if remainder < 1:
+                non_priority_change += remainder
+            change_data.append((stats, non_priority_change + remainder))
 
     return change_data

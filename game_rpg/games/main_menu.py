@@ -1,5 +1,5 @@
 from .. import interface
-from .game_menu import game_menu
+from .game import game as GAME
 
 
 def enter(self, game):
@@ -21,7 +21,7 @@ def enter(self, game):
         if next_rooms in self.commands:
             return next_rooms
 
-main = game_menu(
+main = GAME(
     "main menu",
     enter=enter
 )

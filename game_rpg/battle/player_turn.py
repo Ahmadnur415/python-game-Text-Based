@@ -1,4 +1,4 @@
-from .. import interface
+from .. import interface, namespace
 from ..entity import flag
 
 
@@ -9,21 +9,21 @@ def run_player_turn(battle):
         interface.centerprint(
             "~",
             interface.get_messages("battle.actions.command").format(
-                interface.generate_readable_list(battle.TURN_COMMANDS, number=True)
+                interface.generate_readable_list(namespace.BATTLE_TURN_COMMANDS, number=True)
             )
         )
         command = interface.get_input()
         print()
 
-        if command in [str(i) for i in range(1, len(battle.TURN_COMMANDS) + 1)]:
-            command = battle.TURN_COMMANDS[int(command) - 1]
+        if command in [str(i) for i in range(len(namespace.BATTLE_TURN_COMMANDS))]:
+            command = namespace.BATTLE_TURN_COMMANDS[int(command) - 1]
 
-        if command == battle.USE_ITEMS:
+        if command == namespace.USE_ITEMS:
             result = battle.player.use_items_consumable_interface()
-            if result != battle.BACK:
+            if result != namespace.BACK:
                 break
 
-        if command == battle.FLED:
+        if command == namespace.BATTLE_FLED:
             interface.centerprint(interface.get_messages("battle.actions.fled"), distance=0)
             result = interface.get_boolean_input()
             print()
@@ -32,24 +32,24 @@ def run_player_turn(battle):
                 break
             continue
 
-        if command == battle.ATTACK:
+        if command == namespace.BATTLE_ATTACK:
             result = battle.player_attack_phase()
             # break
-            if result != battle.BACK:
+            if result != namespace.BACK:
                 break
 
 def player_attack_phase(battle):
     while True:
         print()
         battle.print_list_of_attacks()        
-        index = "1" if len(battle.player.attack) == 1 else f"1 - {len(battle.player.attack)}"
+        index = "1" if len(battle.player.attack) == 1 else (f"1 - {len(battle.player.attack)}")
 
         # print: choise attack player 
         interface.centerprint("== " + interface.get_messages("input_messages.choose_items_interface").format(name="Attack",index=index) + " ==")
         attack_name = interface.get_input()
         
         if attack_name.lower() == "b":
-            return battle.BACK
+            return namespace.BACK
 
         try:
             attack_name = battle.player.attack_name[int(attack_name) - 1]

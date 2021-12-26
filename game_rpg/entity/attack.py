@@ -93,3 +93,8 @@ def usable_attacks(entity):
             usable_attacks_list.append(attack)
 
     return usable_attacks_list
+
+
+def attack_turn_count(entity):
+    for attack in entity.attack:
+        attack.turn_count += 1

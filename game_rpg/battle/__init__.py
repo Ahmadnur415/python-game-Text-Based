@@ -1,5 +1,5 @@
-from .. import until
-from . import view, run as RUN, battle_util, command, player_turn, enemy_turn
+from .. import until, namespace
+from . import view, battle_util, player_turn, enemy_turn
 
 
 class Battle:
@@ -12,25 +12,39 @@ class Battle:
             player=player,
             enemy=enemy,
             first_turn=True,
-            entities=[player, enemy],
             fled=False,
-            count_turn=0,
+            attack_trun=0,
             count_crit=0,
             count_dodge=0
         )
 
-    FLED = command.FLED
-    ATTACK = command.ATTACK
-    USE_ITEMS = command.USE_ITEMS
-    BACK = command.BACK
-    WIN = command.WIN
-    LOSE = command.LOSE
-    TURN_COMMANDS = command.TURN_COMMANDS
+    def run(self):
+        while True:
+            
+            self.run_trun()
+
+            if self.fled:
+                return namespace.BATTLE_FLED
+            
+            if self.player.health < 1:
+                return namespace.BATTLE_LOSE
+
+            if self.enemy.health < 1:
+                return namespace.BATTLE_WIN
+
+    def run_trun(self):
+        self.run_player_turn()
+        self.attack_trun += 1
+        self.player.attack_turn_count()
+        
+        if self.fled or self.enemy.health < 1:
+            return
+
+        self.run_enemy_turn()
+        self.enemy.attack_turn_count()
 
     view_battle = view.view_battle
 
-    run = RUN.run
-    run_turn = RUN.run_turn
     run_player_turn = player_turn.run_player_turn
     run_enemy_turn = enemy_turn.run_enemy_turn
 

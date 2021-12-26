@@ -1,4 +1,4 @@
-class game_menu(object):
+class game(object):
     def __init__(self, name, enter, commands: list=None, **others) -> None:
 
         if not commands:

@@ -1,15 +1,9 @@
-from .. import interface
-from .game_menu import game_menu
-
-
-VIEW = "view player"
-INV = "Inventory"
-EQU = "equipment"
-SAVE = "save game"
+from .. import interface, namespace
+from .game import game as GAME
 
 
 def enter(self, game):
-    commands = [VIEW, INV, EQU, SAVE]
+    commands = [namespace.VIEW_PLAYER, namespace.INVENTORY, namespace.EQUIPMENT, namespace.SAVE_GAME]
     commands.extend(self.commands.copy())
 
     while True:
@@ -23,19 +17,19 @@ def enter(self, game):
         print()
 
         index = commands[index]
-        if index == VIEW:
+        if index == namespace.VIEW_PLAYER:
             result = game.player.view_stats_interface()
-            if result == "back":
+            if result == namespace.BACK:
                 continue            
 
-        if index == INV:
+        if index == namespace.INVENTORY:
             game.player.view_inventory_interface()
             
-        if index == EQU:
+        if index == namespace.EQUIPMENT:
             game.player.view_equipment()
             interface.get_enter()
 
-        if index == SAVE:
+        if index == namespace.SAVE_GAME:
             game.save_game()
             interface.centerprint(interface.get_messages("game.saved"))
             interface.get_enter()
@@ -44,7 +38,7 @@ def enter(self, game):
         if index in self.commands:
             return index
 
-main = game_menu(
+main = GAME(
     name="camp",
     enter=enter
 )

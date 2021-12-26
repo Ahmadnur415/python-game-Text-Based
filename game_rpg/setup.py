@@ -40,10 +40,3 @@ _ATTACK = _setup._attack
 
 SETTING = GAME["setting"].copy()
 Path("./saves/").mkdir(parents=True, exist_ok=True)
-
-
-import json
-
-Game = json.dumps(_setup.Game, indent=4)
-with open("saves/filegame.json", "w") as f:
-    f.write(Game)

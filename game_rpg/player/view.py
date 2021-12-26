@@ -1,4 +1,4 @@
-from .. import interface, setup
+from .. import interface, setup, namespace
 
 
 def view_equipment(player):
@@ -55,21 +55,19 @@ def view_stats(self):
 
 
 def view_inventory(player, typeItems: str = None):
-    title = "Inventory"
-
     if not player.inventory:
         interface.centerprint(interface.get_messages("inventory.no_have_items"))
         return
 
-    if typeItems in ("EQUIPPABLE", "equippable") and not player.equippable_items:
+    if typeItems in namespace.EQUIPPABLE and not player.equippable_items:
         interface.centerprint(interface.get_messages("inventory.no_equippable_items"))
         return
 
-    if typeItems in ("CONSUMABLE", "consumable") and not player.consumable_items:
+    if typeItems in namespace.CONSUMABLE and not player.consumable_items:
         interface.centerprint(interface.get_messages("inventory.no_consumable_items"))
         return
 
-    interface.centerprint("== " + (title if not typeItems else typeItems) + " ==")
+    interface.centerprint("== " + ("Inventory" if not typeItems else typeItems) + " ==")
 
     items_to_show = []
     for items in player.inventory:
@@ -83,7 +81,7 @@ def view_inventory(player, typeItems: str = None):
         if inventory_items.amount > 1:
             name += f" {inventory_items.amount}x"
 
-        if inventory_items.namespace == "EQUIPPABLE":
+        if inventory_items.namespace == namespace.EQUIPPABLE:
             name += (" - [E]" if inventory_items.attribute.use else "")
 
         interface.leftprint(f"{index + 1:<3}{name}")

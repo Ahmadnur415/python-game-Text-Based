@@ -1,9 +1,7 @@
-from . import interface, game, setup
+from . import interface, game, namespace
 
-PLAY = "Play"
-LOAD = "Load"
-QUIT = "Quit"
-commands = [PLAY, LOAD, QUIT]
+commands = [namespace.PLAY, namespace.LOAD, namespace.QUIT]
+
 
 def start_game():
     while True:
@@ -12,24 +10,24 @@ def start_game():
         for i, command in enumerate(commands):
             interface.leftprint(f"({i+1}) {command}")
         interface.centerprint('-')
-        
+
         index = interface.get_input()
         try:
             index = commands[int(index) - 1]
         except (ValueError, IndexError):
             continue
-        
+
         print()
-        if index == PLAY:
+        if index == namespace.PLAY:
             return game.Game().start()
 
-        if index == LOAD:
+        if index == namespace.LOAD:
             result_load = game.load_game()
             
             if isinstance(result_load, game.Game):
                 return result_load.start()
 
             continue
-            
-        if index == QUIT:
+
+        if index == namespace.QUIT:
             return quit()

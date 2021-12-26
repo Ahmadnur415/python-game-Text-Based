@@ -1,14 +1,7 @@
-from .. import interface, setup
+from .. import interface, setup, namespace
 from ..items import EQUIPPABLE, CONSUMABLE
 from operator import attrgetter
 
-USE_ITEMS = "use Items"
-CONSUME_ITEMS = "consume items"
-REMOVE_ITEMS = "unequip items"
-SELL_ITEMS = "sell items"
-BACK = "back"
-V_ATTACK = "view attack"
-VIEW = "view stats"
 
 def view_inventory_interface(player):
     while True:
@@ -16,7 +9,7 @@ def view_inventory_interface(player):
         player.view_inventory()
 
         if not player.inventory:
-            return BACK
+            return namespace.BACK
 
         interface.leftprint(
             interface.get_messages("input_messages.choose_items_interface").format(
@@ -27,7 +20,7 @@ def view_inventory_interface(player):
         index = interface.get_input()
         print()
         if index == "b":
-            return BACK
+            return namespace.BACK
 
         if index == "s":
             player.inventory.sort(key=attrgetter("name"), reverse=True)
@@ -42,15 +35,15 @@ def view_inventory_interface(player):
 
 def items_interface(player, items):
 
-    command = [USE_ITEMS if isinstance(items.attribute, CONSUMABLE) or isinstance(items.attribute, EQUIPPABLE) and not items.attribute.use else REMOVE_ITEMS]
-    command.extend([SELL_ITEMS])
+    command = [namespace.USE_ITEMS if isinstance(items.attribute, CONSUMABLE) or isinstance(items.attribute, EQUIPPABLE) and not items.attribute.use else namespace.REMOVE_ITEMS]
+    command.extend([namespace.SELL_ITEMS])
     print()
     items.view_stats()
     interface.centerprint("-")
     index = interface.get_command(command, True)
     print()
 
-    if index in [USE_ITEMS, CONSUME_ITEMS]:
+    if index in [namespace.USE_ITEMS, namespace.CONSUME_ITEMS]:
 
         if isinstance(items.attribute, CONSUMABLE):
             player.consume_items(items)
@@ -63,25 +56,24 @@ def items_interface(player, items):
 
         return player.items_interface(items)
 
-    if index == REMOVE_ITEMS and isinstance(items.attribute, EQUIPPABLE):
+    if index == namespace.REMOVE_ITEMS and isinstance(items.attribute, EQUIPPABLE):
         for locate_equip, items_equip in player.equipment.items():
             if items_equip == items:
                 player.unequip_items(locate_equip)
-                print("Items telah di unequip")
+                interface.centerprint(interface.get_messages("player.item_unequipped").format(items.name))
                 break
         else:
-            print("items tidak ada di equipment")
             items.attribute.use = False
         
         return 
 
 
-    if index == SELL_ITEMS:
-        interface.centerprint(f"-- {SELL_ITEMS.capitalize()} --")
+    if index == namespace.SELL_ITEMS:
+        interface.centerprint(f"-- {namespace.SELL_ITEMS.capitalize()} --")
 
         amount_sell = 1
         price = int(items.price["value"] / 2)
-        if items.namespace == "EQUIPPABLE":
+        if isinstance(items.attribute, EQUIPPABLE):
             if items.attribute.use:
                 
                 interface.centerprint(interface.get_messages("items.cant_sell"))
@@ -89,7 +81,7 @@ def items_interface(player, items):
                 return player.items_interface(items)
         
         # jumlah yang dijual
-        amount_sell = items.amount if items.namespace != "" else 1
+        amount_sell = items.amount
         if items.amount > 1:
             print()
             interface.leftprint(interface.get_messages("items.on_sell").format(name=items.name, amount=items.amount))
@@ -137,7 +129,7 @@ def items_interface(player, items):
 
 def use_items_consumable_interface(player, show_messages=True):
     while True:
-        player.view_inventory("CONSUMABLE")
+        player.view_inventory(namespace.CONSUMABLE)
 
         if not player.consumable_items:
             break
@@ -155,7 +147,7 @@ def use_items_consumable_interface(player, show_messages=True):
         print()
 
         if index == "b":
-            return "back"
+            return namespace.BACK
 
         if index in [str(i) for i in range(1, len(player.consumable_items) + 1)]:
             index = int(index) - 1
@@ -169,19 +161,19 @@ def use_items_consumable_interface(player, show_messages=True):
         items_to_use = player.consumable_items[index]
         result = player.consume_items(items_to_use, show_messages)
         if result:
-            return "back"
+            return namespace.BACK
 
 def view_stats_interface(player):
     while True:
-        POINT_LEVEL = f"point level{'(+)' if player.point_level > 0 else ''}"
-        commands = [V_ATTACK, POINT_LEVEL]
+        POINT_LEVEL = "point level" + ('(+)' if player.point_level > 0 else '')
+        commands = [namespace.VIEW_ATTACK, POINT_LEVEL]
 
         interface.centerprint("-- STATS PLAYER --")
         player.view_stats()
         interface.centerprint("-")
         _input = interface.get_command(commands, True)
         print()
-        if _input == V_ATTACK:
+        if _input == namespace.VIEW_ATTACK:
             
             interface.centerprint("-- ATTACK PLAYER --")
             player.view_attack()
@@ -195,8 +187,8 @@ def view_stats_interface(player):
             player.point_level_interface()
             continue
 
-        if _input == BACK:
-            return BACK
+        if _input == namespace.BACK:
+            return namespace.BACK
 
 
 def point_level_interface(player):
@@ -215,11 +207,11 @@ def point_level_interface(player):
     if _input in commands:
         index_stats = _input
     
-    if _input == BACK or index_stats == "":
-        return BACK
+    if _input == namespace.BACK or index_stats == "":
+        return namespace.BACK
     
     if player.level < 1:
-        return BACK
+        return namespace.BACK
 
     while player.level > 0:
         interface.leftprint(
@@ -235,8 +227,8 @@ def point_level_interface(player):
         amount_input = interface.get_input()
         print()
 
-        if amount_input == BACK:
-            return BACK
+        if amount_input == namespace.BACK:
+            return namespace.BACK
         
         try:
             amount_input = int(amount_input)

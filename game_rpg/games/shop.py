@@ -1,6 +1,6 @@
-from ..import interface, setup, until, file
+from ..import interface, setup, until
 from ..items import get_items, Items as ITEMS
-from .game_menu import game_menu
+from .game import game as GAME
 from operator import attrgetter
 import random
 
@@ -254,7 +254,7 @@ def print_line_items(item, i=0):
     interface.LeftRigthPrint(f"quality : {item.get_quality}", f"{item.price['value'] * item.amount} {item.price['type']}", 4)
 
 
-main = game_menu(
+main = GAME(
     name="shop",
     enter=enter,
     commands=None,

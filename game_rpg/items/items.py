@@ -1,4 +1,4 @@
-from .. import until, setup
+from .. import until, setup, namespace as nms
 from . import view
 
 
@@ -56,7 +56,7 @@ class Items:
 
 
 class EQUIPPABLE:
-    namespace = "EQUIPPABLE"
+    namespace = nms.EQUIPPABLE
 
     def __init__(
             self,
@@ -82,7 +82,7 @@ class EQUIPPABLE:
 
 
 class CONSUMABLE:
-    namespace = "CONSUMABLE"
+    namespace = nms.CONSUMABLE
 
     def __init__(self, type_, stats, effect=None):
         if not effect:
