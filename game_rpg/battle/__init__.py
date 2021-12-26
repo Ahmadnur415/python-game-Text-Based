@@ -13,6 +13,8 @@ class Battle:
             enemy=enemy,
             first_turn=True,
             fled=False,
+            total_use_items=0,
+            max_use_items=3,
             attack_trun=0,
             count_crit=0,
             count_dodge=0
@@ -42,6 +44,8 @@ class Battle:
 
         self.run_enemy_turn()
         self.enemy.attack_turn_count()
+
+        self.total_use_items = 0
 
     view_battle = view.view_battle
 

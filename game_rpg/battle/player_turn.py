@@ -4,7 +4,6 @@ from ..entity import flag
 
 def run_player_turn(battle):
     while True:
-        # view battle
         battle.view_battle()
         interface.centerprint(
             "~",
@@ -14,14 +13,20 @@ def run_player_turn(battle):
         )
         command = interface.get_input()
         print()
-
-        if command in [str(i) for i in range(len(namespace.BATTLE_TURN_COMMANDS))]:
+        
+        if command in [str(i) for i in range(len(namespace.BATTLE_TURN_COMMANDS) + 1)]:
             command = namespace.BATTLE_TURN_COMMANDS[int(command) - 1]
 
         if command == namespace.USE_ITEMS:
+            if battle.total_use_items == battle.max_use_items:
+                interface.centerprint(interface.get_messages("limit_the_use_of_items"))
+                interface.get_enter()
+                continue
+            
             result = battle.player.use_items_consumable_interface()
-            if result != namespace.BACK:
-                break
+            
+            if result:
+                battle.total_use_items += 1
 
         if command == namespace.BATTLE_FLED:
             interface.centerprint(interface.get_messages("battle.actions.fled"), distance=0)

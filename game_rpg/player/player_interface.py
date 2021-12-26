@@ -161,7 +161,7 @@ def use_items_consumable_interface(player, show_messages=True):
         items_to_use = player.consumable_items[index]
         result = player.consume_items(items_to_use, show_messages)
         if result:
-            return namespace.BACK
+            return True
 
 def view_stats_interface(player):
     while True:

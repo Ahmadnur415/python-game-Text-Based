@@ -26,6 +26,7 @@
    "battle.win": "You win",
    "battle.loot": "you get {}",
    "battle.lose": "You Lose",
+   "battle.limit_the_use_of_items": "you have the item 3 times",
    
    "desc.restore_items": "Items can restore {}",
    "desc.increase_items": "Items increase : ",
