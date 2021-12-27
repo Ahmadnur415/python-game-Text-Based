@@ -38,12 +38,12 @@
             "prority": [ "perception", "evasion", "strength" ],
             "attack": [
                 {
-                    "name": "attack:01",
-                    "displayName": "attack",
-                    "typeAttack": "physical",
-                    "base_damage": 5,
+                    "identify": "attack.01",
+                    "name": "attack",
+                    "type_damage": "physical",
+                    "damage": 5,
                     "description_of_being_used": "attack",
-                    "multiplier": [
+                    "multiplier_damage": [
                         { "modifier": 0.2, "stats": "self.level" },
                         { "modifier": 0.08, "stats": "self.luck" },
                         { "modifier": 0.1, "stats": "self.physical_damage" }
@@ -71,7 +71,7 @@
                 "defense": 45, "health": 150, "stamina": 15
             },
             "prority": [ "growth_hp", "defense", "health" ],
-            "attack": [ "melee:golem_punch" ],
+            "attack": [ "melee.golem_punch" , "melee.normal_punch"],
             "equipment": {},
             "looting": [
                 {"name": "silver", "change": 40, "value": 1000},
@@ -108,7 +108,7 @@
                 "hand": [ "staff.weapons/m_staff", "staff.weapons/ice_staff", "staff.weapons/fire_staff" ],
                 "body": [ "armor.armor/holy_robe", "armor.armor/saints_r", "armor.armor/silk_r", "armor.armor/adventurer_suit" ]
             },
-            "attack": [ "magic:magic_attack" ]
+            "attack": [ "magic.magic_attack" ]
         },
         "template": {
             "name": "bat",

@@ -47,7 +47,7 @@ class Enemy(entity.Entity):
 
 def _generate_stats_enemy(enemy, priority_stats):
     change_data = create_change_data_stats(priority_stats)
-    for i in range(1, enemy.level + 1):
+    for i in range(enemy.level + 1):
 
         point = until.resolve_random_condition([
             (1, 45 - SETTING["difficulty"] * 5),

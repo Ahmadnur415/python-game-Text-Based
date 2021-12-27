@@ -1,5 +1,5 @@
 from .. import until, namespace
-from . import view, battle_util, player_turn, enemy_turn
+from . import view, battle_util, player_turn, enemy_turn, player_attack_phase
 
 
 class Battle:
@@ -15,7 +15,7 @@ class Battle:
             fled=False,
             total_use_items=0,
             max_use_items=3,
-            attack_trun=0,
+            total_turn_battle=0,
             count_crit=0,
             count_dodge=0
         )
@@ -36,9 +36,9 @@ class Battle:
 
     def run_trun(self):
         self.run_player_turn()
-        self.attack_trun += 1
         self.player.attack_turn_count()
-        
+        self.total_turn_battle += 0.5
+
         if self.fled or self.enemy.health < 1:
             return
 
@@ -46,6 +46,8 @@ class Battle:
         self.enemy.attack_turn_count()
 
         self.total_use_items = 0
+        self.total_turn_battle += 0.5
+        print("\n")
 
     view_battle = view.view_battle
 
@@ -55,4 +57,5 @@ class Battle:
     print_list_of_attacks = battle_util.print_list_of_attacks
     _list_of_attacks_player = battle_util._list_of_attacks_player
 
-    player_attack_phase = player_turn.player_attack_phase
+    player_attack = player_attack_phase.player_attack
+    player_attack_phase = player_attack_phase.player_attack_phase

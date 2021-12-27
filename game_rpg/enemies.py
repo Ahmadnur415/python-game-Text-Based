@@ -4,7 +4,7 @@ from .enemy import Enemy
 from .setup import _ATTACK, GAME
 from .file import _load
 from .items import get_items, Items as ITEMS, EQUIPPABLE
-from .attack import ATTACK
+from .attack import Attack
 import random
 import _collections_abc
 
@@ -56,11 +56,10 @@ def enemyRandom(lv=3):
         for attack in DATA["attack"].copy():
 
             if isinstance(attack, str):
-                attack = attack.split(":")
-                attack = _ATTACK[attack[0]][attack[1]]
+                attack = _ATTACK[attack]
             
             if isinstance(attack, dict):
-                attacks.append(ATTACK(attack))
+                attacks.append(Attack.load_attack(attack))
                 continue
     
     # looting

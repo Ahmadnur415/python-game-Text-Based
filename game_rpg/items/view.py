@@ -1,4 +1,4 @@
-from .. import interface, setup
+from .. import interface, setup, namespace
 
 
 def view_stats(items):
@@ -8,11 +8,11 @@ def view_stats(items):
         "type": items.typeItems.capitalize()
     }
 
-    if items.namespace == "EQUIPPABLE":
+    if items.namespace == namespace.EQUIPPABLE:
         interface.printData(base_stats, distance=1)
         view_EQUIPPABLE(items)
 
-    if items.namespace == "CONSUMABLE":
+    if items.namespace == namespace.CONSUMABLE:
         base_stats.update({"amount": items.amount})
         interface.printData(base_stats, distance=1)
         view_CONSUMABLE(items)

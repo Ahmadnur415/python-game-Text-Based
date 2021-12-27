@@ -12,7 +12,7 @@
             "armor_penetration": 5,
             "price": {"value": 100, "type": "silver"},
             "stats": { "archery": 3 , "critical_change": 1 },
-            "attack": [ "ranged:shoot" ]
+            "attack": [ "ranged.shoot" ]
         },
         "long_wood": {
             "name": "Wooden Long Bow",
@@ -22,7 +22,7 @@
             "armor_penetration": 15,
             "price": {"value": 250, "type": "silver"},
             "stats": { "archery":5 },
-            "attack": [ "ranged:shoot" , "ranged:flame_shot" ]
+            "attack": [ "ranged.shoot" , "ranged.flameshot" ]
         },
         "short_wood": {
             "name": "Wooden short bow",
@@ -32,7 +32,7 @@
             "armor_penetration": 21,
             "price": {"value": 70, "type": "silver"},
             "stats": { "critical_hit": 10, "perception": 3 },
-            "attack": [ "ranged:shoot" ]
+            "attack": [ "ranged.shoot" ]
         },
         "burning_b": {
             "name": "Burning Bow",
@@ -42,7 +42,7 @@
             "in_shop": false,
             "price": {"value": 650, "type": "gold"},
             "stats": { "strength":10, "critical_change":15, "critical_hit": 30 },
-            "attack": [ "ranged:shoot" , "ranged:flame_shot" ]
+            "attack": [ "ranged.shoot" , "ranged.flameshot" ]
         },
         "bow_of_storm": {
             "name": "Bow Of Storm",
@@ -51,7 +51,7 @@
             "armor_penetration": 100,
             "price": {"value": 500, "type": "gold"},
             "stats": { "stamina": 50, "critical_hit": 100 },
-            "attack": ["ranged:shoot", "ranged:one_shoot"]
+            "attack": ["ranged.shoot", "ranged.one_shoot"]
         }
     }
 }

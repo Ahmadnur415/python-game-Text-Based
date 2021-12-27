@@ -1,6 +1,6 @@
 from ..setup import DATA_ITEMS, _ATTACK
 from .items import Items, EQUIPPABLE, CONSUMABLE
-from ..attack import ATTACK
+from ..attack import Attack
 
 def generate_items( identify: str, count: int=1 ):
     if identify not in DATA_ITEMS["id"]:
@@ -56,27 +56,18 @@ def generate_items_EQUIPPABLE(items):
 
 
 def generate_attack_of_items(items):
-    list_of_attack = items.get("attack", []).copy()
+    attack_in_items = items.get("attack", []).copy()
     attacks = []
 
-    if not list_of_attack:
+    if not attack_in_items:
         return
+    for attack in attack_in_items:
+        if isinstance(attack, str):
+            attack = _ATTACK[attack]
 
-    for attack_in_items in list_of_attack:
-        if isinstance(attack_in_items, str):
-            attack_in_items = attack_in_items.split(":")
-            if len(attack_in_items) == 2:
-                try:
-                    attack_in_items = _ATTACK[attack_in_items[0]][attack_in_items[1]]
-                except KeyError:
-                    continue
+        if not attack.get("damage", None):
+            attack["damage"] = items["damage"]
 
-        # -----
-        if not attack_in_items.get("base_damage", None):
-            attack_in_items["base_damage"] = items["damage"]
-
-        attacks.append(
-            ATTACK(attack_in_items)
-        )
+        attacks.append(Attack.load_attack(attack))
 
     return attacks

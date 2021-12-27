@@ -1,6 +1,5 @@
 from game_rpg.setup import DATA_ENTITY, DATA_ITEMS
-from .. import interface
-
+from .. import interface, until
 
 def equip_items(self, items, location=None, append_inventory=False):
     if items.namespace != "EQUIPPABLE" or not items.attribute.location and not location:  # or items.attribute.location not in setup.DATA_ENTITY["attribute"]["equipment"]:
@@ -76,14 +75,7 @@ def equip_items(self, items, location=None, append_inventory=False):
 
     # Add stats Items
     for stats, value in items.stats.items():
-        if stats in DATA_ENTITY["entity_values"]["resource"]:
-            setattr(self, "_max_" + stats, getattr(self, "_max_" + stats) + value)
-            continue
-        
-        if stats in ["critical_change" , "critical_hit"]:
-            continue
-
-        setattr(self, stats, getattr(self, stats) + value)
+        until.added_stats(self, stats, value)
 
     # add primary stats
     for stats in DATA_ITEMS["attribute"]["basic"]:
@@ -127,16 +119,7 @@ def unequip_items(self, locate_items):
 
     # remove sub stats
     for stats, value in items_to_unequip.stats.items():
-        if stats in DATA_ENTITY["entity_values"]["resource"]:
-            setattr(self, "_max_" + stats, getattr(self, "_max_" + stats) - value)
-            if getattr(self, stats) > getattr(self, "_max_" + stats):
-                setattr(self, stats, getattr(self, "_max_" + stats))
-            continue
-        
-        if stats in ["critical_change" , "critical_hit"]:
-            continue
-
-        setattr(self, stats, getattr(self, stats) - value)
+        until.added_stats(self, stats, -value)
 
     # remove primary stats
     for stats in DATA_ITEMS["attribute"]["basic"]:

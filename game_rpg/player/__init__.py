@@ -1,6 +1,6 @@
 from .. import entity, setup as init
 from . import inventory, view, attack, player_interface, use_items, level
-from ..attack import ATTACK
+from ..attack import Attack
 from ..items import get_items, Items as ITEMS
 
 class Player(entity.Entity):
@@ -16,7 +16,7 @@ class Player(entity.Entity):
             attacks = []
         
         attacks.extend(
-            [ATTACK(get_attack) for get_attack in DATA["attack"].copy() if DATA.get("attack", None)]
+            [Attack.load_attack(get_attack) for get_attack in DATA["attack"].copy() if DATA.get("attack", None)]
         )
 
         equipment = {}
@@ -33,8 +33,8 @@ class Player(entity.Entity):
             attacks=attacks,
             equipments=equipment,
             stats=DATA["stats"],
-            type_attack=DATA["typeAttack"],
-            style_attack=DATA["styleAttack"]
+            type_attack=DATA["type_damage"],
+            style_attack=DATA["style_attack"]
         )
         
         for stat, value in init.DATA_ENTITY["player_values"].items():

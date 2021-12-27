@@ -6,36 +6,36 @@ from .. import interface
 def run_enemy_turn(battle):
 
     if not battle.enemy.usable_attacks:
-        pass
-
-    player_health = battle.player.health
-    attack_use = random.choice(battle.enemy.usable_attacks)
-
-    result_attack = battle.enemy.attack_state(battle.player, attack_use)
-    attack_use.trun_count = 0
-
-    if result_attack == flag.EVADED:
-        interface.centerprint(
-            interface.get_messages("prefixes.player", "You") + " " + interface.get_messages("battle.messages.player_evaded")
-        )
         return
 
-    if result_attack == flag.CRITICAL_HIT:
-        interface.print_(
-            interface.get_messages("prefixes.enemy") + interface.get_messages("battle.messages.critical_hit")
-        )
+    attack_use = random.choice(battle.enemy.usable_attacks)
 
-    damage = player_health - battle.player.health
+    count_raw_attack = attack_use.raw_attack
+    while count_raw_attack > 0:
 
-    interface.centerprint(
-        interface.get_messages(
-            "battle.messages.damage_dealt"
-        ).format(
-            attack_description=attack_use.description_of_being_used,
-            enemy=interface.get_messages("prefixes.player"),
-            damage=str(damage),
-            attacker=interface.get_messages("prefixes.enemy"),
-            type_damage=attack_use.typeAttack
+        player_health = battle.player.health
+        result_attack = battle.enemy.attack_state(battle.player, attack_use)
+
+        if result_attack == flag.EVADED:
+            interface.centerprint( interface.get_messages("prefixes.player", "You") + " " + interface.get_messages("battle.messages.player_evaded") )
+            continue
+
+        if result_attack == flag.CRITICAL_HIT:
+            interface.centerprint( interface.get_messages("prefixes.enemy") + interface.get_messages("battle.messages.critical_hit") )
+
+        damage = player_health - battle.player.health
+
+        interface.leftprint(
+            interface.get_messages(
+                "battle.messages.damage_dealt"
+            ).format(
+                attack_description=attack_use.description_of_being_used,
+                enemy=interface.get_messages("prefixes.player"),
+                damage=str(damage),
+                attacker=interface.get_messages("prefixes.enemy"),
+                type_damage=attack_use.type_damage
+            )
         )
-    )
+        count_raw_attack -= 1
+    attack_use.cooldown = 0
     return

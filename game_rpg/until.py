@@ -1,5 +1,5 @@
 import random
-
+from .setup import DATA_ENTITY
 
 def set_multiple_attributes(object_, **kwargs):
     for key, value in kwargs.items():
@@ -11,6 +11,16 @@ def add_multiple_attributes(object_, **attribute):
         if isinstance(value, int):
             value = getattr(object_, name_key, 0) + value
         setattr(object_, name_key, value)
+
+
+def added_stats(entity, stats, value):
+    if stats in DATA_ENTITY["entity_values"]["resource"]:
+        setattr(entity, "_max_" + stats, getattr(entity, "_max_" + stats) + value)
+    
+    if stats in ["critical_change" , "critical_hit"]:
+         return
+
+    setattr(entity, stats, getattr(entity, stats) + value)
 
 
 def resolve_random_condition(chances_data: list):

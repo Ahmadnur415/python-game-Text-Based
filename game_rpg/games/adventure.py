@@ -14,16 +14,16 @@ def enter(self, game):
 
     print()
     for attack_player in game.player.attack:
-        attack_player.turn_count = attack_player.countdown
+        attack_player.cooldown = attack_player.countdown
 
     if result_battle != namespace.BATTLE_FLED:
         Battle.view_battle()
         interface.centerprint("-")
         
         modifier = 1 if result_battle == namespace.BATTLE_WIN else 0.5
-        exp = int(Battle.attack_trun * 10 * modifier)
-        gold = int((Battle.count_crit * 2 + Battle.attack_trun / 2 + Battle.count_dodge / 5) * modifier)
-        silver = int((Battle.attack_trun * 100 + (Battle.count_crit + Battle.count_dodge) / 4) * modifier)
+        exp = int(Battle.total_turn_battle * 10 * modifier)
+        gold = int((Battle.count_crit * 2 + Battle.total_turn_battle / 2 + Battle.count_dodge / 5) * modifier)
+        silver = int((Battle.total_turn_battle * 100 + (Battle.count_crit + Battle.count_dodge) / 4) * modifier)
 
         game.player.gain_exp(exp)
         game.player.gold += gold

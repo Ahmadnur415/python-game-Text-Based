@@ -1,192 +1,210 @@
 {
-    "style_attack": { "melee": "strength", "ranged": "archery", "magic": "magic", "spell": "magic" },
-    "melee": {
-        "slab": {
-            "name": "melee:slab",
-            "displayName": "slab",
-            "typeAttack": "physical",
-            "description_of_being_used": "attack.description.slab",
-            "multiplier": [
-                { "modifier": 0.2, "stats": "self.level" },
-                { "modifier": 0.05, "stats": "self.physical_damage" },
-                { "modifier": 0.05, "stats": "self.magic_damage" }
-            ]
-        },
-        "golem_punch": {
-            "name": "melee:golem_punch",
-            "displayName": "Golem Punch",
-            "typeAttack": "physical",
-            "countdown": 3,
-            "description_of_being_used": "attack.description.hit",
-            "multiplier": [
-                { "modifier": 0.2, "stats": "self.level" },
-                { "modifier": 0.05, "stats": "self.max_health" },
-                { "modifier": 0.01, "stats": "self.health" }
-            ]
-        },
-        "slash": {
-            "name": "melee:slash",
-            "displayName": "slash",
-            "typeAttack": "physical",
-            "description_of_being_used": "attack.description.slash",
-            "countdown": 1,
-            "multiplier": [
-                { "modifier": 0.5, "stats": "self.level" },
-                { "modifier": 0.3, "stats": "self.damage" }
-            ]
-        }
+    "melee.slab": {
+        "name": "slab",
+        "type_damage": "physical",
+        "type_attack": "melee",
+        "identify": "melee.slab",
+        "description_of_being_used": "attack.description.slab",
+        "multiplier_damage": [
+            { "modifier": 0.2, "value": "self.level" },
+            { "modifier": 0.05, "value": "self.physical_damage" },
+            { "modifier": 0.05, "value": "self.magic_damage" }
+        ]
     },
-    "ranged": {
-        "shoot": {
-            "name": "ranged:shoot",
-            "displayName": "shoot",
-            "typeAttack": "physical",
-            "base_damage": [7, 10],
-            "description_of_being_used": "attack.description.shoot",
-            "countdown": 3,
-            "cost_st": 20,
-            "multiplier": [
-                { "modifier": 0.1, "stats": "self.archery" },
-                { "modifier": 0.2, "stats": "self.perception" },
-                { "modifier": 0.7, "stats": "self.damage" }
-            ]
-        },
-        "one_shoot": {
-            "name": "ranged:one_shoot",
-            "displayName": "one shoot",
-            "typeAttack": "physical",
-            "description_of_being_used": "attack.description.shoot",
-            "countdown": 10,
-            "cost_st": 50,
-            "multiplier": [
-                { "modifier": 0.1, "stats": "self.level" },
-                { "modifier": 0.4, "stats": "enemy.archery" },
-                { "modifier": 0.9, "stats": "self.damage" },
-                { "modifier": 0.3, "stats": "self.perception" }
-            ]
-        },
-        "flameshot": {
-            "name": "ranged:flameshot",
-            "displayName": "flameshot",
-            "typeAttack": "magic",
-            "base_damage": [1, 45],
-            "description_of_being_used": "attack.description.other_attack",
-            "countdown": 7,
-            "cost_mp": 50,
-            "multiplier": [
-                { "modifier": 0.3, "stats": "self.strength" },
-                { "modifier": 0.5, "stats": "self.level" },
-                { "modifier": 0.1, "stats": "self.physical_damage"}
-            ]
-        }
+    "melee.golem_punch": {
+        "name": "Golem Punch",
+        "type_damage": "physical",
+        "type_attack": "melee",
+        "damage": {"modifier": 0.8, "value": "self.strength"},
+        "identify": "melee.golem_punch",
+        "description_of_being_used": "attack.description.hit",
+        "multiplier_damage": [
+            { "modifier": 0.2, "value": "self.level" },
+            { "modifier": 0.05, "value": "self.max_health" },
+            { "modifier": 0.01, "value": "self.health" }
+        ],
+        "countdown": 3
     },
-    "magic": {
-        "icebolt": {
-            "name": "magic:icebolt",
-            "displayName": "Ice Bolt",
-            "typeAttack": "magic",
-            "base_damage": [1, 7],
-            "description_of_being_used": "attack.description.bolt",
-            "countdown": 10,
-            "cost_mp": 60,
-            "multiplier": [
-                { "modifier": 0.2, "stats": "self.mana" },
-                { "modifier": 0.3, "stats": "self.magic_damage" }
-            ]
-        },
-        "magicbolt": {
-            "name": "magic:magicbolt",
-            "displayName": "magic bolt",
-            "typeAttack": "magic",
-            "description_of_being_used": "attack.description.bolt",
-            "countdown": 4,
-            "cost_mp": 17,
-            "multiplier": [
-                { "modifier": 0.2, "stats": "self.magic" },
-                { "modifier": 0.5, "stats": "self.magic_damage" }
-            ]
-        },
-        "firebolt": {
-            "name": "magic:firebolt",
-            "displayName": "fire bolt",
-            "typeAttack": "magic",
-            "description_of_being_used": "attack.description.bolt",
-            "cost_mp": 25,
-            "countdown": 3,
-            "multiplier": [
-                { "modifier": 0.2, "stats": "enemy.magic_reduce" },
-                { "modifier": 0.4, "stats": "self.magic_damage" },
-                { "modifier": 0.1, "stats": "self.resistance" }
-            ]
-        },
-        "magicslash": {
-            "name": "magic:magicslash",
-            "displayName": "slash magic",
-            "typeAttack": "magic",
-            "description_of_being_used": "attack.description.other_attack",
-            "cost_mp": 25,
-            "countdown": 1,
-            "multiplier": [
-                { "modifier": 0.4, "stats": "self.strength" },
-                { "modifier": 0.1, "stats": "self.magic" }
-            ]
-        },
-        "magic_attack": {
-            "name": "magic:magic_attack",
-            "displayName": "Magic attack",
-            "typeAttack": "magic",
-            "base_damage": [3, 7],
-            "cost_mp": 5,
-            "description_of_being_used": "attack.description.other_attack",
-            "countdown": 3,
-            "multiplier": [
-                { "modifier": 0.6, "stats": "self.level" },
-                { "modifier": 0.2, "stats": "self.magic_damage" },
-                { "modifier": 0.3, "stats": "self.magic" }
-            ]
-        },
-        "ice_slash": {
-            "name": "melee:ice_slash",
-            "displayName": "Ice Slash",
-            "typeAttack": "magic",
-            "cost_st": 15,
-            "cost_mp": 15,
-            "description_of_being_used": "attack.description.other_attack",
-            "countdown": 4,
-            "multiplier": [
-                { "modifier": 0.6, "stats": "enemy.defense" },
-                { "modifier": 0.2, "stats": "self.magic_damage" },
-                { "modifier": 0.3, "stats": "self.strength" }
-            ]
-        }
+    "melee.slash": {
+        "name": "slash",
+        "type_damage": "physical",
+        "type_attack": "melee",
+        "identify": "melee.slash",
+        "description_of_being_used": "attack.description.slash",
+        "multiplier_damage": [
+            { "modifier": 0.5,"value": "self.level" },
+            { "modifier": 0.3,"value": "self.damage" }
+        ],
+        "countdown": 1
     },
-
-    "spell": {
-        "brokenwall": {
-            "name": "spell:brokenwall",
-            "displayName": "broken wall",
-            "typeAttack": "spell",
-            "description_of_being_used": "attack.description.spell",
-            "countdown": 15,
-            "cost_mp": 55,
-            "multiplier": [
-                { "modifier": 0.6, "stats": "enemy.magic_reduce" },
-                { "modifier": 0.1, "stats": "self.level" },
-                { "modifier": 0.3, "stats": "enemy.magic" }
-            ]
-        },
-        "drain_health": {
-            "name": "spell:drain_health",
-            "displayName" : "Drain Health Attack",
-            "typeAttack": "spell",
-            "description_of_being_used": "attack.description.spell",
-            "countdown": 13,
-            "cost_st": 30,
-            "multiplier": [
-                { "modifier": 0.05, "stats": "enemy.max_health" },
-                { "modifier": -0.05, "stats": "enemy.health" },
-                { "modifier": 0.05, "stats": "self.health" }
-            ]
-        }
+    "ranged.shoot": {
+        "name": "shoot",
+        "type_damage": "physical",
+        "type_attack": "ranged",
+        "damage": [ 7, 10 ],
+        "identify": "ranged.shoot",
+        "description_of_being_used": "attack.description.shoot",
+        "cost_st": 20,
+        "multiplier_damage": [
+            { "modifier": 0.1,"value": "self.archery" },
+            { "modifier": 0.2,"value": "self.perception" },
+            { "modifier": 0.7,"value": "self.damage" }
+        ],
+        "countdown": 3,
+        "raw_attack": 2
+    },
+    "melee.normal_punch": {
+        "name": "normal punch",
+        "type_damage": "physical",
+        "type_attack": "melee",
+        "damage": [ 1, { "modifier": 0.2, "value": "self.strength" } ],
+        "identify": "ranged.shoot",
+        "description_of_being_used": "attack.description.shoot",
+        "cost_st": 20,
+        "multiplier_damage": { "modifier": 0.5,"value": "self.level" },
+        "countdown": 3,
+        "raw_attack": 2
+    },
+    "ranged.one_shoot": {
+        "identify": "ranged.one_shoot",
+        "name": "one shoot",
+        "type_damage": "physical",
+        "type_attack": "ranged",
+        "description_of_being_used": "attack.description.shoot",
+        "cost_st": 50,
+        "multiplier_damage": [
+            { "modifier": 0.1,"value": "self.level" },
+            { "modifier": 0.4,"value": "enemy.archery" },
+            { "modifier": 0.9,"value": "self.damage" },
+            { "modifier": 0.3,"value": "self.perception" }
+        ],
+        "countdown": 10
+    },
+    "ranged.flameshot": {
+        "identify": "ranged.flameshot",
+        "name": "flameshot",
+        "type_damage": "magic",
+        "type_attack": "ranged",
+        "damage": [ 1, 45 ],
+        "description_of_being_used": "attack.description.other_attack",
+        "cost_mp": 50,
+        "multiplier_damage": [
+            { "modifier": 0.3, "value": "self.strength" },
+            { "modifier": 0.5, "value": "self.level" },
+            { "modifier": 0.1, "value": "self.physical_damage" }
+        ],
+        "countdown": 7
+    },
+    "magic.icebolt": {
+        "identify": "magic.icebolt",
+        "name": "Ice Bolt",
+        "type_damage": "magic",
+        "type_attack": "magic",
+        "damage": [ 1, 7 ],
+        "description_of_being_used": "attack.description.bolt",
+        "cost_mp": 60,
+        "multiplier_damage": [
+            { "modifier": 0.2, "value": "self.mana" },
+            { "modifier": 0.3, "value": "self.magic_damage" }
+        ],
+        "countdown": 10
+    },
+    "magic.magicbolt": {
+        "identify": "magic.magicbolt",
+        "name": "magic bolt",
+        "type_damage": "magic",
+        "type_attack": "magic",
+        "description_of_being_used": "attack.description.bolt",
+        "cost_mp": 17,
+        "multiplier_damage": [
+            { "modifier": 0.2, "value": "self.magic" },
+            { "modifier": 0.5, "value": "self.magic_damage" }
+        ],
+        "countdown": 4
+    },
+    "magic.firebolt": {
+        "identify": "magic.firebolt",
+        "name": "fire bolt",
+        "type_damage": "magic",
+        "type_attack": "magic",
+        "description_of_being_used": "attack.description.bolt",
+        "cost_mp": 25,
+        "multiplier_damage": [
+            { "modifier": 0.2, "value": "enemy.magic_reduce" },
+            { "modifier": 0.4, "value": "self.magic_damage" },
+            { "modifier": 0.1, "value": "self.resistance" }
+        ],
+        "countdown": 3
+    },
+    "magic.magicslash": {
+        "identify": "magic.magicslash",
+        "name": "slash magic",
+        "type_damage": "magic",
+        "type_attack": "magic",
+        "description_of_being_used": "attack.description.other_attack",
+        "cost_mp": 25,
+        "multiplier_damage": [
+            { "modifier": 0.4, "value": "self.strength" },
+            { "modifier": 0.1, "value": "self.magic" }
+        ],
+        "countdown": 1
+    },
+    "magic.magic_attack": {
+        "identify": "magic.magic_attack",
+        "name": "Magic attack",
+        "type_damage": "magic",
+        "type_attack": "magic",
+        "damage": [ 3, 7 ],
+        "description_of_being_used": "attack.description.other_attack",
+        "cost_mp": 5,
+        "multiplier_damage": [
+            { "modifier": 0.6, "value": "self.level" },
+            { "modifier": 0.2, "value": "self.magic_damage" },
+            { "modifier": 0.3, "value": "self.magic" }
+        ],
+        "countdown": 3
+    },
+    "melee.ice_slash": {
+        "identify": "melee.ice_slash",
+        "name": "Ice Slash",
+        "type_damage": "magic",
+        "type_attack": "melee",
+        "description_of_being_used": "attack.description.other_attack",
+        "cost_mp": 15,
+        "cost_st": 15,
+        "multiplier_damage": [
+            { "modifier": 0.6, "value": "enemy.defense" },
+            { "modifier": 0.2, "value": "self.magic_damage" },
+            { "modifier": 0.3, "value": "self.strength" }
+        ],
+        "countdown": 4
+    },
+    "spell.brokenwall": {
+        "identify": "spell.brokenwall",
+        "name": "broken wall",
+        "type_damage": "spell",
+        "type_attack": "spell",
+        "description_of_being_used": "attack.description.spell",
+        "cost_mp": 55,
+        "multiplier_damage": [
+            { "modifier": 0.6, "value": "enemy.magic_reduce" },
+            { "modifier": 0.1, "value": "self.level" },
+            { "modifier": 0.3, "value": "enemy.magic" }
+        ],
+        "countdown": 15
+    },
+    "spell.drain_health": {
+        "identify": "spell.drain_health",
+        "name": "Drain Health Attack",
+        "type_damage": "spell",
+        "type_attack": "spell",
+        "description_of_being_used": "attack.description.spell",
+        "cost_st": 30,
+        "multiplier_damage": [
+            { "modifier": 0.05, "value": "enemy.max_health" },
+            { "modifier": -0.05, "value": "enemy.health" },
+            { "modifier": 0.05, "value": "self.health" }
+        ],
+        "countdown": 13
     }
 }

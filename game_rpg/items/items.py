@@ -4,16 +4,16 @@ from . import view
 
 class Items:
     def __init__(
-            self,
-            name: str, 
-            quality: str,
-            typeItems: str,
-            identify: int,
-            attribute: object,
-            amount: int = 1,
-            price: dict = None,
-            stats: object = None,
-            **other
+        self,
+        name: str, 
+        quality: str,
+        typeItems: str,
+        identify: int,
+        attribute: object,
+        amount: int = 1,
+        price: dict = None,
+        stats: object = None,
+        **other
     ):
 
         if not stats:
@@ -57,15 +57,8 @@ class Items:
 
 class EQUIPPABLE:
     namespace = nms.EQUIPPABLE
+    def __init__(self, location, user, styleAttack=None, attack=None, **stats ):
 
-    def __init__(
-            self,
-            location,
-            user,
-            styleAttack=None,
-            attack=None,
-            **stats
-    ):
         if not attack:
             attack = []
 

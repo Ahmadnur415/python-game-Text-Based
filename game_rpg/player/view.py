@@ -59,11 +59,11 @@ def view_inventory(player, typeItems: str = None):
         interface.centerprint(interface.get_messages("inventory.no_have_items"))
         return
 
-    if typeItems in namespace.EQUIPPABLE and not player.equippable_items:
+    if typeItems == namespace.EQUIPPABLE and not player.equippable_items:
         interface.centerprint(interface.get_messages("inventory.no_equippable_items"))
         return
 
-    if typeItems in namespace.CONSUMABLE and not player.consumable_items:
+    if typeItems == namespace.CONSUMABLE and not player.consumable_items:
         interface.centerprint(interface.get_messages("inventory.no_consumable_items"))
         return
 
