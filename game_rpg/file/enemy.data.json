@@ -44,9 +44,9 @@
                     "damage": 5,
                     "description_of_being_used": "attack",
                     "multiplier_damage": [
-                        { "modifier": 0.2, "stats": "self.level" },
-                        { "modifier": 0.08, "stats": "self.luck" },
-                        { "modifier": 0.1, "stats": "self.physical_damage" }
+                        { "modifier": 0.2, "value": "self.level" },
+                        { "modifier": 0.08, "value": "self.luck" },
+                        { "modifier": 0.1, "value": "self.physical_damage" }
                     ]
                 }
             ],
