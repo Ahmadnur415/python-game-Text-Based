@@ -1,4 +1,4 @@
-from ..setup import DATA_ENTITY as DATA
+from ..setup import ENTITY
 from . import other_property, attack, entity_until, equipment, view
 
 
@@ -19,11 +19,11 @@ class Entity:
             stats = {}
 
         for names, value in stats.items():
-            if names in DATA["entity_values"]["resource"]:
+            if names in ENTITY["entity_values"]["resource"]:
                 names = "_max_" + names
             setattr(self, names, value)
 
-        for stat in DATA["all_stats"]:
+        for stat in ENTITY["all_stats"]:
             if not hasattr(self, stat):
                 setattr(self, stat, 0)
 
@@ -37,7 +37,7 @@ class Entity:
         self.__namespace = namespace.lower()
         self.__class = _class
         self.level = 1
-        self.equipment = dict.fromkeys(DATA["equipment"])
+        self.equipment = dict.fromkeys(ENTITY["equipment"])
         self.inventory = []
         self.attack = attacks
         self.type_attack = type_attack
@@ -86,7 +86,7 @@ class Entity:
 
 
 # create health 
-for name in DATA["entity_values"]["resource"]:
+for name in ENTITY["entity_values"]["resource"]:
     setattr(
         Entity,
         name,

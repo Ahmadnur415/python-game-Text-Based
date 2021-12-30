@@ -1,4 +1,4 @@
-from game_rpg.setup import DATA_ENTITY, DATA_ITEMS
+from game_rpg.setup import ENTITY, ITEMS
 from .. import interface, until
 
 def equip_items(self, items, location=None, append_inventory=False):
@@ -78,7 +78,7 @@ def equip_items(self, items, location=None, append_inventory=False):
         until.added_stats(self, stats, value)
 
     # add primary stats
-    for stats in DATA_ITEMS["attribute"]["basic"]:
+    for stats in ITEMS["attribute"]["basic"]:
         value = getattr(items.attribute, stats, None)
         # print(stats, value)
         if stats != "damage" and value:
@@ -95,7 +95,7 @@ def equip_items(self, items, location=None, append_inventory=False):
         self.append_inventory(items)
 
     # fix bug
-    for stats in DATA_ENTITY["entity_values"]["resource"]:
+    for stats in ENTITY["entity_values"]["resource"]:
         if getattr(self, stats) > getattr(self, "max_" + stats):
             setattr(self, stats, getattr(self, "max_"+stats))
 
@@ -122,7 +122,7 @@ def unequip_items(self, locate_items):
         until.added_stats(self, stats, -value)
 
     # remove primary stats
-    for stats in DATA_ITEMS["attribute"]["basic"]:
+    for stats in ITEMS["attribute"]["basic"]:
         value = getattr(items_to_unequip.attribute, stats, None)
         if stats != "damage" and value:
             setattr(self, stats, getattr(self, stats) - value)

@@ -5,9 +5,9 @@ def view_stats(self):
     lines = {}
     distance = 3
 
-    for stats in setup.DATA_ENTITY["stats"]:
+    for stats in setup.ENTITY["stats"]:
         line = str(getattr(self, stats, 0))
-        if stats in setup.DATA_ENTITY["entity_values"]["resource"]:
+        if stats in setup.ENTITY["entity_values"]["resource"]:
             line = str(getattr(self, stats, 0)) + " / " + str(getattr(self, "max_" + stats, 0))
 
         lines.update({interface.get_messages("view."+stats, stats): line})

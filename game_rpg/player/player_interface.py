@@ -197,7 +197,7 @@ def point_level_interface(player):
     index_stats = ""
 
     interface.centerprint("-- Point Level --")
-    for i, stats in enumerate(setup.DATA_ENTITY["entity_values"]["primary"]):
+    for i, stats in enumerate(setup.ENTITY["entity_values"]["primary"]):
         commands.append(stats)
         lines[f"{i+1}) {interface.get_messages('view.' + stats, stats)}"] = getattr(player, stats)
     interface.printData(lines, distance=3)

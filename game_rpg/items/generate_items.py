@@ -1,13 +1,14 @@
-from ..setup import DATA_ITEMS, _ATTACK
+from ..setup import ITEMS, ATTACK
 from .items import Items, EQUIPPABLE, CONSUMABLE
 from ..attack import Attack
 
+
 def generate_items( identify: str, count: int=1 ):
-    if identify not in DATA_ITEMS["id"]:
-        raise NameError
-    
+    if identify not in ITEMS["id"]:
+        raise NameError()
+
     names , items = identify.split("/")
-    items = DATA_ITEMS["list"][names][items]
+    items = ITEMS["list"][names][items]
 
     if items["class"] == "EQUIPPABLE":
         return generate_items_EQUIPPABLE(items)
@@ -47,7 +48,7 @@ def generate_items_EQUIPPABLE(items):
             user=items["user"],
             styleAttack=items.get("styleAttack", None),
             attack=generate_attack_of_items(items),
-            **{key: items.get(key, 0) for key in DATA_ITEMS["attribute"]["basic"]}
+            **{key: items.get(key, 0) for key in ITEMS["attribute"]["basic"]}
         ),
         price=items["price"],
         stats=items.get("stats", None),
@@ -63,7 +64,10 @@ def generate_attack_of_items(items):
         return
     for attack in attack_in_items:
         if isinstance(attack, str):
-            attack = _ATTACK[attack]
+            attack = ATTACK(attack)
+
+        if not attack:
+            continue
 
         if not attack.get("damage", None):
             attack["damage"] = items["damage"]

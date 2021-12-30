@@ -1,5 +1,5 @@
 from ..items import Items as ITEMS
-from ..setup import DATA_ENTITY
+from ..setup import ENTITY
 from ..until import clamp
 
 
@@ -148,7 +148,7 @@ def damage(entity):
     ]
 
     for locate, equipment in entity.equipment.items():
-        if not equipment or locate not in DATA_ENTITY["attribute"]["equipment"]["weapons"]:
+        if not equipment or locate not in ENTITY["attribute"]["equipment"]["weapons"]:
             continue
         
         multiplier = 1.1 if equipment.attribute.styleAttack == entity.style_attack else 0.75

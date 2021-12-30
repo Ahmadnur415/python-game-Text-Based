@@ -2,7 +2,7 @@ from .. import interface, setup, namespace
 
 
 def view_equipment(player):
-    DATA = setup.DATA_ENTITY.copy()
+    DATA = setup.ENTITY.copy()
 
     lines = ["== Equipment ==".center(50)]
     if not player.equipment["two_hand"]:
@@ -27,9 +27,9 @@ def view_stats(self):
     lines = {}
     distance = 3
 
-    for stats in setup.DATA_ENTITY["stats"]:
+    for stats in setup.ENTITY["stats"]:
         line = str(getattr(self, stats, 0))
-        if stats in setup.DATA_ENTITY["entity_values"]["resource"]:
+        if stats in setup.ENTITY["entity_values"]["resource"]:
             line = str(getattr(self, stats, 0)) + " / " + str(getattr(self, "max_" + stats, 0))
 
         lines.update({interface.get_messages("view."+stats, stats): line})

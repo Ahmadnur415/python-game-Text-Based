@@ -1,8 +1,8 @@
-from .setup import DATA_ENTITY, GAME
+from .setup import ENTITY, GAME
 from . import interface, player
 
 
-_CLASSES = DATA_ENTITY["attribute"]["player_role"].copy()
+_CLASSES = ENTITY["attribute"]["player_role"].copy()
 def create_player():
     interface.centerprint(
         interface.get_messages("game.title.welcome"),

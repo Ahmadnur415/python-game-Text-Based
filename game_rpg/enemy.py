@@ -1,5 +1,5 @@
 from . import entity, until
-from .setup import DATA_ENTITY, SETTING
+from .setup import ENTITY, SETTING
 from .player import inventory, view, attack
 import random
 
@@ -58,10 +58,10 @@ def _generate_stats_enemy(enemy, priority_stats):
         for j in range(0, point):
             stats = until.resolve_random_condition(change_data)
             if not stats:
-                stats = random.choice(DATA_ENTITY["stats"])
+                stats = random.choice(ENTITY["stats"])
             value = getattr(enemy, stats, 0)
 
-            if stats in DATA_ENTITY["entity_values"]["resource"]:
+            if stats in ENTITY["entity_values"]["resource"]:
                 setattr(enemy, stats, value + 3)
             else:
                 setattr(enemy, stats, value + 1)
@@ -72,13 +72,13 @@ def create_change_data_stats(prority_stats: list):
 
     priority_change = round(max(25 + (10 * len(prority_stats)), 65) / len(prority_stats), 2)
 
-    non_priority_stats = DATA_ENTITY["stats"].copy()
+    non_priority_stats = ENTITY["stats"].copy()
     [non_priority_stats.remove(i) for i in prority_stats]
     non_priority_change = round((100 - priority_change) / len(non_priority_stats), 2)
     remainder = 100 - (priority_change * len(prority_stats) + non_priority_change * len(non_priority_stats))
 
     pre_non_priority_change = non_priority_change
-    for stats in DATA_ENTITY["stats"]:
+    for stats in ENTITY["stats"]:
         non_priority_change = pre_non_priority_change
         if stats in prority_stats:
             change_data.append((stats, priority_change))

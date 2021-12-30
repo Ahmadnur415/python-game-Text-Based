@@ -1,16 +1,11 @@
-from .. import entity, setup as init
+from .. import entity, setup
 from . import inventory, view, attack, player_interface, use_items, level
 from ..attack import Attack
 from ..items import get_items, Items as ITEMS
 
 class Player(entity.Entity):
-    def __init__(
-        self,
-        name, 
-        _class, 
-        attacks=None
-    ):
-        DATA = init.DATA_ENTITY["class"][_class].copy()
+    def __init__(self, name, _class, attacks=None):
+        DATA = setup.ENTITY["class"][_class].copy()
 
         if not attacks:
             attacks = []
@@ -22,9 +17,8 @@ class Player(entity.Entity):
         equipment = {}
         for names, id_items in DATA['equipment'].items():
             items = get_items(id_items)
-            if not isinstance(items, ITEMS):
-                continue
-            equipment[names] = items
+            if isinstance(items, ITEMS):
+                equipment[names] = items
 
         super().__init__(
             name,
@@ -37,7 +31,7 @@ class Player(entity.Entity):
             style_attack=DATA["style_attack"]
         )
         
-        for stat, value in init.DATA_ENTITY["player_values"].items():
+        for stat, value in setup.ENTITY["player_values"].items():
             setattr(self, stat, value)
         
         self.health = self.max_health

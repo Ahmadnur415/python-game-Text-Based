@@ -9,15 +9,19 @@ SELL_ITEMS = "sell items"
 VIEW_ATTACK = "view attack"
 VIEW_STATS = "view stats"
 
-
 EQUIPPABLE = "EQUIPPABLE"
 CONSUMABLE = "CONSUMABLE"
 
+BLACK_MARKET = "black market"
+BUY_ITEMS = "buy items"
+COUNT_ITENS = "count items"
 
 PLAY = "Play"
 LOAD = "Load"
 QUIT = "Quit"
 BACK = "back"
+NEXT = "next"
+GO_BACK = "go back"
 
 BATTLE_ATTACK = "attack"
 BATTLE_FLED = "fled"

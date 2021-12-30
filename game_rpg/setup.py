@@ -6,7 +6,7 @@ global GAME, DATA_ENTITY, DATA_ITEMS, SETTING, LANG, _ATTACK
 
 class setup:
     def __init__(self):
-        self.refresh()
+        self.load_data()
 
     @property    
     def data_entity(self):
@@ -20,23 +20,26 @@ class setup:
     def lang(self):
         return file._load_lang(self.Game['fileGame']["lang"])
 
-    @property
-    def _attack(self):
-        return self.Game["attack"]
+    def attack(self, name):
+        return self.Game["attack"].get(name, None)
 
-    def refresh(self):
+    def load_data(self):
         self.Game = file._load("game.data.json")
         self.Game["items"].update(file._load_items())
         self.Game["entity"] = file._load_entity(self.Game["fileGame"]["entity"])
         self.Game["attack"] = file._load(self.Game["fileGame"]["attack"])
 
-_setup = setup()
+    def enemy(self):
+        return file._load(self.Game["fileGame"]["enemy"])
 
+
+_setup = setup()
 GAME = _setup.Game
-DATA_ENTITY = _setup.data_entity
-DATA_ITEMS = _setup.data_Items
+ENTITY = _setup.data_entity
+ITEMS = _setup.data_Items
 LANG = _setup.lang
-_ATTACK = _setup._attack
+ATTACK = _setup.attack
+ENEMY = _setup.enemy
 
 SETTING = GAME["setting"].copy()
 Path("./saves/").mkdir(parents=True, exist_ok=True)

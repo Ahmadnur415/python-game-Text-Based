@@ -27,7 +27,7 @@ def view_EQUIPPABLE(items):
         APEN = str(getattr(items.attribute, "armor_penetration", 0)) + "% armor penetration "
         interface.leftprint("Weapons Attribute (" + DMG + ", " + APEN + ")", distance=distance)
 
-    for name in setup.DATA_ITEMS["attribute"]["basic"]:
+    for name in setup.ITEMS["attribute"]["basic"]:
         if name not in ("damage", "armor_penetration"):
             value = getattr(items.attribute, name, 0)
             
@@ -73,7 +73,7 @@ def view_CONSUMABLE(items):
         interface.leftprint(interface.get_messages("desc.increase_items"))
         for name, value in items.attribute.stats.items():
             
-            if name in setup.DATA_ENTITY["entity_values"]["resource"]:
+            if name in setup.ENTITY["entity_values"]["resource"]:
                 name = "max_" + name
 
             interface.leftprint(f"{value} {interface.get_messages('view.' + name, name)}")

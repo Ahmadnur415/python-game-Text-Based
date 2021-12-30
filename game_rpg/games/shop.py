@@ -1,19 +1,14 @@
-from ..import interface, setup, until
-from ..items import get_items, Items as ITEMS
+from ..import interface, until, namespace
+from ..setup import ITEMS
+from ..items import get_items, Items
 from .game import game as GAME
 from operator import attrgetter
 import random
 
-B_MARKET = "black market"
-BUY_ITEMS = "buy items"
-COUNT_ITENS = "count items"
-BACK = "back"
-NEXT = "next"
-GO_BACK = "go back"
 
 def enter(self, game):
-    commands = list(setup.DATA_ITEMS["items_by_type"].keys())
-    commands.append(B_MARKET)
+    commands = list(ITEMS["items_by_type"].keys())
+    commands.append(namespace.BLACK_MARKET)
     commands.extend(self.commands.copy())
     
     while True:
@@ -26,10 +21,10 @@ def enter(self, game):
         index = interface.get_int_input(len(commands)) - 1
         index = commands[index]
 
-        if index in setup.DATA_ITEMS["items_by_type"]:
+        if index in ITEMS["items_by_type"]:
             self.shop_items(game, index)
 
-        if index == B_MARKET:
+        if index == namespace.BLACK_MARKET:
             self.black_market(game)
 
         if index in self.commands:
@@ -37,7 +32,7 @@ def enter(self, game):
 
 
 def shop_items(self, game, type_items):
-    items_by_type = setup.DATA_ITEMS["items_by_type"][type_items]
+    items_by_type = ITEMS["items_by_type"][type_items]
     id_items_list = []
     class_list = []
     class_name = ""
@@ -49,7 +44,7 @@ def shop_items(self, game, type_items):
     # =======
     if len(class_list) > 1:
         command = class_list
-        command.append(BACK)
+        command.append(namespace.BACK)
         interface.centerprint(interface.get_messages("game.title"), "-- " + str(self.name.upper()) + " --")
         
         for i, name in enumerate(command):
@@ -57,7 +52,7 @@ def shop_items(self, game, type_items):
         
         index = interface.get_int_input(len(command)) - 1
 
-        if command[index] == BACK:
+        if command[index] == namespace.BACK:
             return
 
         class_name = command[index] + "." + type_items
@@ -75,7 +70,7 @@ def shop_items(self, game, type_items):
 def index_shop_item(self, game, list_id_items: list[str], type_items: str):
     items = []
     rows_items = []
-    size_shop = setup.SETTING["size_shop"]
+    size_shop = game.setting["size_shop"]
 
     # get items
     for identify in list_id_items:
@@ -108,10 +103,10 @@ def index_shop_item(self, game, list_id_items: list[str], type_items: str):
         left = ""
         rigth = ""
         if index != 0 and index < len(rows_items):
-            commands.append(GO_BACK)
+            commands.append(namespace.GO_BACK)
             left = f"<-- Go back [{len(commands)}]"
         if index >= 0 and index != len(rows_items) - 1:
-            commands.append(NEXT)
+            commands.append(namespace.NEXT)
             rigth = f" [{len(commands)}] Next Items -->"
 
         if left or rigth:
@@ -121,18 +116,18 @@ def index_shop_item(self, game, list_id_items: list[str], type_items: str):
         index_commands = interface.get_command(commands)
 
         print()
-        if index_commands == GO_BACK:
+        if index_commands == namespace.GO_BACK:
             index -= 1
             continue
 
-        if index_commands == NEXT:
+        if index_commands == namespace.NEXT:
             index += 1
             continue
         
-        if index_commands == BACK:
+        if index_commands == namespace.BACK:
             return self.shop_items(game, type_items)
         
-        if isinstance(index_commands, ITEMS):
+        if isinstance(index_commands, Items):
             self.dealing_items(game, index_commands)
 
 
@@ -180,10 +175,10 @@ def _generate_items_bc(self, game):
     list_items = []
     max_items = 5 + int(game.player.luck / 100)
     for _ in range(max_items):
-        items = get_items(random.choice(setup.DATA_ITEMS["id"]))
+        items = get_items(random.choice(ITEMS["id"]))
         
         while items.identify in list_items:
-            items = get_items(random.choice(setup.DATA_ITEMS["id"]))
+            items = get_items(random.choice(ITEMS["id"]))
         
         list_items.append(items)
 

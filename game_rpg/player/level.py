@@ -1,7 +1,7 @@
 from .. import interface, until, setup
 
 
-max_level = setup.DATA_ENTITY["attribute"]["max_level"]
+max_level = setup.ENTITY["attribute"]["max_level"]
 
 def levelUp(self):
     lv = 0

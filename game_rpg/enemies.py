@@ -1,8 +1,7 @@
 # Generate Enemy
 
 from .enemy import Enemy
-from .setup import _ATTACK, GAME
-from .file import _load
+from .setup import ATTACK, GAME, ENEMY
 from .items import get_items, Items as ITEMS, EQUIPPABLE
 from .attack import Attack
 import random
@@ -24,7 +23,7 @@ def _generate_enemy_level(lv: int, diff: int=1):
 
 
 def enemyRandom(lv=3):
-    _ENEMY = _load(GAME["fileGame"]["enemy"])
+    _ENEMY = ENEMY()
     if isinstance(lv, (list, tuple)):
         lv = random.randint(min(lv), max(lv))
 
@@ -56,8 +55,8 @@ def enemyRandom(lv=3):
         for attack in DATA["attack"].copy():
 
             if isinstance(attack, str):
-                attack = _ATTACK[attack]
-            
+                attack = ATTACK(attack)
+
             if isinstance(attack, dict):
                 attacks.append(Attack.load_attack(attack))
                 continue

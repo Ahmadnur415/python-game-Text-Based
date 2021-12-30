@@ -1,20 +1,20 @@
-from ..setup import DATA_ENTITY as DATA
+from ..setup import ENTITY
 
 
 def _full_list_of_stats():
     list_of_stats: list = []
-    for _, name in DATA["entity_values"].items():
+    for _, name in ENTITY["entity_values"].items():
         list_of_stats.extend(name)
     
     list_of_stats.extend(
-        ["_max_" + name for name in DATA["entity_values"]["resource"]]
+        ["_max_" + name for name in ENTITY["entity_values"]["resource"]]
     )
     return list_of_stats
 
 
 def _make_of_equipment():
     equipment = []
-    for _, locate_equip in DATA["attribute"]["equipment"].items():
+    for _, locate_equip in ENTITY["attribute"]["equipment"].items():
         equipment.extend(locate_equip)
 
     return equipment
@@ -41,4 +41,4 @@ def _generate_value_property(name):
 
 
 # DATA["stats"] = _full_list_of_stats()
-DATA["equipment"] = _make_of_equipment()
+ENTITY["equipment"] = _make_of_equipment()
