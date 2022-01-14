@@ -2,7 +2,7 @@
     "type_items": "potion",
     "class": "CONSUMABLE",
     "items": {
-        "recover_potion": {
+        "red_potion": {
             "name": "Recover Potion",
             "quality": 0,
             "price": { "value": 150, "type": "silver" },

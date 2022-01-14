@@ -8,7 +8,7 @@ def enter(self, game):
 
     while True:
         
-        interface.centerprint("-- "+interface.get_messages("game.title") + " --", "-- " + str(self.name.upper()) + " --")
+        interface.centerprint(interface.get_messages("game.title"), "-- " + str(self.name.upper()) + " --")
 
         for i, room in enumerate(commands):
             interface.leftprint(f"({i + 1}) {str(room).capitalize().replace('_', ' ')}")

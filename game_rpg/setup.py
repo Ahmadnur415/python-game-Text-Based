@@ -1,7 +1,7 @@
 from pathlib import Path
 from game_rpg import file
 
-global GAME, DATA_ENTITY, DATA_ITEMS, SETTING, LANG, _ATTACK
+global GAME, ENTITY, ITEMS, SETTING, LANG, _ATTACK
 
 
 class setup:
@@ -15,8 +15,7 @@ class setup:
     @property
     def data_Items(self):
         return self.Game["items"]
-    
-    @property
+
     def lang(self):
         return file._load_lang(self.Game['fileGame']["lang"])
 

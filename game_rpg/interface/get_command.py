@@ -15,7 +15,7 @@ def get_command(command: list, list_option = False):
 
         if list_option:
             centerprint(generate_readable_list(command, True) + " / (b) Back", "-", distance=0)
-        index = "1" if len(command) == 1 else f"1 - {len(command)}"
+        index = "1" if len(command) == 1 else f"1 - {len(command)-1}"
         
         print_(get_messages("input_messages.choose_items_interface").format(name="", index=index))
         

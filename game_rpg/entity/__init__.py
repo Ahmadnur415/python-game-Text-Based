@@ -92,3 +92,4 @@ for name in ENTITY["entity_values"]["resource"]:
         name,
         entity_until._generate_value_property(name)
     )
+    setattr(Entity, "_max_" + name, 0)

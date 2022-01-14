@@ -16,7 +16,6 @@ def player_attack_phase(battle):
         if attack_name.lower() == "b":
             return namespace.BACK
 
-
         try:
             attack_name = battle.player.attack_name[int(attack_name) - 1]
         except (ValueError, IndexError):
@@ -58,6 +57,7 @@ def player_attack(battle, attack_use):
         if attack_result == flag.EVADED:
             battle.count_dodge += 1
             interface.centerprint(interface.get_messages("prefixes.enemy") + interface.get_messages("battle.messages.enemy_evaded"))
+            count_raw_attack -= 1
             continue
 
         if attack_result == flag.CRITICAL_HIT:
@@ -65,8 +65,8 @@ def player_attack(battle, attack_use):
             interface.centerprint( display_name + interface.get_messages("battle.messages.critical_hit") )
 
         deal_damage = proir_health - battle.enemy.health
+        count_raw_attack -= 1
 
-        # print deal damage
         interface.leftprint(
             interface.get_messages("battle.messages.damage_dealt").format(
                 attack_description=attack_use.description_of_being_used,
@@ -76,6 +76,6 @@ def player_attack(battle, attack_use):
                 type_damage=attack_use.type_damage
             )
         )
-        count_raw_attack -= 1
+
     print()
     attack_use.cooldown = 0

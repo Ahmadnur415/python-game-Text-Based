@@ -6,19 +6,24 @@ from ..items import get_items, Items as ITEMS
 class Player(entity.Entity):
     def __init__(self, name, _class, attacks=None):
         DATA = setup.ENTITY["class"][_class].copy()
+        equipment = {}
 
         if not attacks:
             attacks = []
         
-        attacks.extend(
-            [Attack.load_attack(get_attack) for get_attack in DATA["attack"].copy() if DATA.get("attack", None)]
-        )
+        attacks.extend([
+            Attack.load_attack(get_attack)
+            for get_attack in DATA["attack"].copy()
+            if DATA.get("attack", None)
+        ])
 
-        equipment = {}
         for names, id_items in DATA['equipment'].items():
             items = get_items(id_items)
             if isinstance(items, ITEMS):
                 equipment[names] = items
+
+        for stat, value in setup.ENTITY["player_values"].items():
+            setattr(self, stat, value)
 
         super().__init__(
             name,
@@ -31,18 +36,12 @@ class Player(entity.Entity):
             style_attack=DATA["style_attack"]
         )
         
-        for stat, value in setup.ENTITY["player_values"].items():
-            setattr(self, stat, value)
-        
         self.health = self.max_health
         self.mana = self.max_mana
         self.stamina = self.max_stamina
 
-        if self._class != "mage":
-            self.append_inventory(get_items("potion.potions/recover_potion", 5))
-        else:
-            self.append_inventory(get_items("potion.potions/blue_potion", 5))
-
+        for items in DATA.get("inventory", []):
+            self.append_inventory(get_items(items["id"], items["amount"]))
     max_exp = entity.other_property.max_exp
 
     consume_items = use_items.consume_items

@@ -5,16 +5,7 @@ import random
 
 
 class Enemy(entity.Entity):
-    def __init__(
-            self,
-            name,
-            _class,
-            level,
-            attacks,
-            equipments,
-            stats,
-            looting=None
-    ):
+    def __init__(self, name, _class, level, attacks, equipments, stats, looting=None):
         super().__init__(
             name=name,
             namespace="Enemy",
@@ -55,17 +46,16 @@ def _generate_stats_enemy(enemy, priority_stats):
             (3, 20 + SETTING["difficulty"] * 5)
         ])
 
-        for j in range(0, point):
+        for _ in range(point):
             stats = until.resolve_random_condition(change_data)
             if not stats:
                 stats = random.choice(ENTITY["stats"])
-            value = getattr(enemy, stats, 0)
-
-            if stats in ENTITY["entity_values"]["resource"]:
-                setattr(enemy, stats, value + 3)
-            else:
-                setattr(enemy, stats, value + 1)
-
+            value = 1
+            if stats == "health":
+                value = 5
+            if stats == "mana":
+                value = 3
+            until.added_stats(enemy, stats, value=value)
 
 def create_change_data_stats(prority_stats: list):
     change_data = []

@@ -22,6 +22,7 @@ QUIT = "Quit"
 BACK = "back"
 NEXT = "next"
 GO_BACK = "go back"
+EXIT = "exit"
 
 BATTLE_ATTACK = "attack"
 BATTLE_FLED = "fled"

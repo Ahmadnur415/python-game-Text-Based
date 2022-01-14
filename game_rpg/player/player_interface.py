@@ -197,20 +197,17 @@ def point_level_interface(player):
     index_stats = ""
 
     interface.centerprint("-- Point Level --")
-    for i, stats in enumerate(setup.ENTITY["entity_values"]["primary"]):
+    for i, stats in enumerate(setup.ENTITY["entity_values"]["basic"]):
         commands.append(stats)
-        lines[f"{i+1}) {interface.get_messages('view.' + stats, stats)}"] = getattr(player, stats)
-    interface.printData(lines, distance=3)
-    interface.leftprint(interface.get_messages("player.point_level") + " " + str(player.point_level))
+        lines[f"{i + 1}) {interface.get_messages('view.' + stats, stats)}"] = getattr(player, stats)
+    interface.printData(lines, distance=3, one_line=True)
+    interface.leftprint(interface.get_messages("player.point_level").format(player.point_level))
     _input = interface.get_command(commands)
     print()
     if _input in commands:
         index_stats = _input
     
     if _input == namespace.BACK or index_stats == "":
-        return namespace.BACK
-    
-    if player.level < 1:
         return namespace.BACK
 
     while player.level > 0:
@@ -221,7 +218,7 @@ def point_level_interface(player):
             ),
             interface.get_messages("player.index_point_level").format(
                 amount=player.point_level,
-                stats=index_stats
+                stats=index_stats.capitalize()
             ) + " / (b) Back"
         )
         amount_input = interface.get_input()

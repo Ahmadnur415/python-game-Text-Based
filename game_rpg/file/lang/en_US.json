@@ -36,7 +36,10 @@
    "desc.constitution": "Can increase Physical reduce, max health and critical hit",
    "desc.will": "Can increase Magic reduce, evaded, max health, max mana, and magic damage",
    "desc.perception": "Can increase evaded, max stamina, critical change and critical hit",
-   
+   "desc.growth_mp": "Can Increase max health",
+   "desc.growth_hp": "Can Increase max mana",
+   "desc.luck": "Increase battle rewards, increase magic/physical reduction, evasion, critical damage and critical change",
+
    "items.cant_sell": "Items can't sell, Items already equipped.",
    "items.on_sell":"You Have {amount} {name}, how many do you want to sell? choose 1 - {amount}",
    "items.sell": "Do you want to sell {amount} {name} for {price} {type_}? (y/n)",
@@ -77,7 +80,7 @@
    "player.messages.can_not_consumed_items": "{stats} is fully charged, you can't consume {name}.",
    "player.index_point_level": "your point level is {amount}, how much do you want to add to the {stats} stats? (1 - {amount})",
    "player.not_have_money": "Your {} is not enough.",
-   "player.point_level": "Your level is",
+   "player.point_level": "Point Level : {}",
    "player.level_up": "You Level Up +{level}",
    "prefixes.player": "Your",
    "prefixes.enemy":"The enemy",

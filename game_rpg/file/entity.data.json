@@ -1,9 +1,8 @@
 {
     "entity_values":{
-        "primary": [ "strength", "constitution", "archery", "perception", "magic", "will" ],
-        "secondary": [ "growth_hp", "growth_mp", "luck" ],
+        "basic": [ "strength", "constitution", "archery", "perception", "magic", "will", "growth_hp", "growth_mp", "luck" ],
         "resource": [ "health", "mana", "stamina" ],
-        "defense": [ "defense", "evasion", "resistance", "armor_penetration"]
+        "other": [ "defense", "evasion", "resistance", "armor_penetration"]
     },
     "player_values": { "silver": 1000, "gold": 10, "level": 1, "exp": 0, "point_level": 3, "setting": {} },
     "attribute": {
@@ -33,7 +32,11 @@
                     { "modifier": 0.4, "value": "self.magic" }
                 ]
             }],
-            "equipment": { "main_hand": "staff.weapons/m_staff", "shoes": "shoes.armor/gardener_shoes", "body": "armor.armor/saints_r" }
+            "equipment": { "main_hand": "staff.weapons/m_staff", "shoes": "shoes.armor/gardener_shoes", "body": "armor.armor/saints_r" },
+            "inventory": [ 
+                {"id": "potion.potions/red_potion", "amount": 5},
+                {"id": "potion.potions/blue_potion", "amount": 5}
+            ]
         },
         "archer": {
             "style_attack": "archery",
@@ -58,7 +61,11 @@
                     ]
                 }
             ],
-            "equipment": { "main_hand": "bow.weapons/wood_b", "head": "helmet.armor/assassin_mask", "body": "armor.armor/saints_r" }
+            "equipment": { "main_hand": "bow.weapons/wood_b", "head": "helmet.armor/assassin_mask", "body": "armor.armor/saints_r" },
+            "inventory": [
+                {"id": "potion.potions/red_potion", "amount": 5},
+                {"id": "potion.potions/yellow_potion", "amount": 5}
+            ]
         },
         "warrior": {
             "style_attack": "strength",
@@ -83,7 +90,11 @@
                     ]
                 }
             ],
-            "equipment": { "main_hand": "sword.weapons/wood_s", "head": "helmet.armor/broken_helm", "body": "armor.armor/wood_mail" }
+            "equipment": { "main_hand": "sword.weapons/wood_s", "head": "helmet.armor/broken_helm", "body": "armor.armor/wood_mail" },
+            "inventory": [
+                {"id": "potion.potions/red_potion", "amount": 5},
+                {"id": "potion.potions/yellow_potion", "amount": 5}
+            ]
         }
     }
 }
