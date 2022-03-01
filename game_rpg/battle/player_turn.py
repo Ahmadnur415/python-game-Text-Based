@@ -1,43 +1,53 @@
 from .. import interface, namespace
 
+def player_turn(battle):
 
-def run_player_turn(battle):
-    while True:
-        battle.view_battle()
-        interface.centerprint(
-            "~",
-            interface.get_messages("battle.actions.command").format(
-                interface.generate_readable_list(namespace.BATTLE_TURN_COMMANDS, number=True)
-            )
+    while battle.player:
+
+        USE_ITEMS = interface.get_messages("battle.actions.use_item").format(battle.max_use_items - battle.count_use_items)
+        commands = [ namespace.BATTLE_ATTACK, USE_ITEMS, namespace.BATTLE_FLED ]
+
+        battle.view()
+
+        interface.leftprint(
+            interface.get_messages("battle.actions.command"),
+            *interface.generate_readable_list(commands, number=True, make_line=False),
+            width=battle.width_line
         )
-        command = interface.get_input()
-        print()
-        
-        if command in [str(i) for i in range(len(namespace.BATTLE_TURN_COMMANDS) + 1)]:
-            command = namespace.BATTLE_TURN_COMMANDS[int(command) - 1]
 
-        if command == namespace.USE_ITEMS:
-            if battle.total_use_items == battle.max_use_items:
-                interface.centerprint(interface.get_messages("limit_the_use_of_items"))
-                interface.get_enter()
-                continue
-            
-            result = battle.player.use_items_consumable_interface()
-            
-            if result:
-                battle.total_use_items += 1
+        command = interface.get_command(commands, "Action", add_command_back=False, loop=False)
 
-        if command == namespace.BATTLE_FLED:
-            interface.centerprint(interface.get_messages("battle.actions.fled"), distance=0)
-            result = interface.get_boolean_input()
-            print()
-            if result:
-                battle.fled = True
-                break
+        if not isinstance(command, tuple):
             continue
 
-        if command == namespace.BATTLE_ATTACK:
-            result = battle.player_attack_phase()
-            # break
+        interface.print_("\n")
+        if command[0] == USE_ITEMS:
+
+            if battle.count_use_items > battle.max_use_items:
+                battle.print_message("limit_the_use_of_items")
+
+                continue
+
+            result = battle.player.consumable_interface()
+
+            if result and result != namespace.BACK:
+                battle.count_use_items += 1
+            interface.print_("\n")
+
+            continue
+
+        if command[0] == namespace.BATTLE_FLED:
+            battle.print_message("fled")
+            battle.fled = interface.get_boolean_input()
+
+            interface.print_("\n")
+            if battle.fled:
+                return namespace.BATTLE_FLED
+
+            continue
+
+        if command[0] == namespace.BATTLE_ATTACK:
+            result =  battle.player_attack_phase()
+
             if result != namespace.BACK:
-                break
+                return result

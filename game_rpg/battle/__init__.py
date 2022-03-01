@@ -1,61 +1,59 @@
-from .. import until, namespace
-from . import view, battle_util, player_turn, enemy_turn, player_attack_phase
-
+# from .data import DATA
+from . import view, battle_util, player_turn, player_attack_phase, enemy_attack_phase
+from .. import namespace, interface, util
 
 class Battle:
-    def __init__(self, player, enemy, loot_table=None):
-        if not loot_table:
-            loot_table = []
+    def __init__(self, player, enemy) -> None:
 
-        until.set_multiple_attributes(
-            self,
-            player=player,
-            enemy=enemy,
-            first_turn=True,
-            fled=False,
-            total_use_items=0,
-            max_use_items=3,
-            total_turn_battle=0,
-            count_crit=0,
-            count_dodge=0
-        )
+        self.player = player
+        self.enemy = enemy
+        self.loot = enemy.looting
+        self.fled = False
+        self.max_use_items = 3
+        self.count_use_items = 0
+        self.count_turn_battle = 0
+        self.count_crit_player = 0
+        self.count_dodge_player = 0
+        self.__width_line = 55
+
+    @property
+    def width_line(self):
+        return util.clamp(self.__width_line, 50, self.__width_line)
 
     def run(self):
-        while True:
-            
-            self.run_trun()
+        while self.enemy:
+
+            self.turn_run()
 
             if self.fled:
                 return namespace.BATTLE_FLED
-            
+
             if self.player.health < 1:
                 return namespace.BATTLE_LOSE
 
             if self.enemy.health < 1:
                 return namespace.BATTLE_WIN
 
-    def run_trun(self):
-        self.run_player_turn()
-        self.player.attack_turn_count()
-        self.total_turn_battle += 0.5
+    def turn_run(self):
+        self.player_turn()
+        self.update_cooldown_of_attack(self.player)
+        self.count_turn_battle += 0.5
 
+        interface.centerprint("-", width=self.width_line)
         if self.fled or self.enemy.health < 1:
             return
 
-        self.run_enemy_turn()
-        self.enemy.attack_turn_count()
+        self.enemy_attack_phase()
+        interface.print_("\n")
+        self.update_cooldown_of_attack(self.enemy)
+        self.count_turn_battle += 0.5
 
-        self.total_use_items = 0
-        self.total_turn_battle += 0.5
-        print("\n")
-
-    view_battle = view.view_battle
-
-    run_player_turn = player_turn.run_player_turn
-    run_enemy_turn = enemy_turn.run_enemy_turn
-
-    print_list_of_attacks = battle_util.print_list_of_attacks
-    _list_of_attacks_player = battle_util._list_of_attacks_player
-
-    player_attack = player_attack_phase.player_attack
+    view = view.view
+    get_prefixes = battle_util.get_prefixes
+    print_message = battle_util.print_message
+    print_deal_damage = battle_util.print_deal_damage
+    update_cooldown_of_attack = battle_util.update_cooldown_of_attack
+    print_list_of_attacks_player = battle_util.print_list_of_attacks_player
+    player_turn = player_turn.player_turn
     player_attack_phase = player_attack_phase.player_attack_phase
+    enemy_attack_phase = enemy_attack_phase.enemy_attack_phase

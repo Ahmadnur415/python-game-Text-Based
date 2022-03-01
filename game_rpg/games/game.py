@@ -1,19 +1,14 @@
-class game(object):
-    def __init__(self, name, enter, commands: list=None, **others) -> None:
 
-        if not commands:
-            commands = []
-
+class Game:
+    def __init__(self, name, enter, **kwargs) -> None:
         self.name = name
-        self.enter_func = enter
-        self.commands = commands
+        self._enter = enter
 
-        for names, value in others.items():
-            setattr(self, names, value)
+        for name, value in kwargs.items():
+            setattr(self, name, value)
 
-    def enter(self, game):
-        return self.enter_func(self, game)
-    
-    def add_commands(self, *commands):
-        for command in commands:
-            self.commands.append(command)
+    def enter(self, player):
+        self._enter(self, player)
+
+    def add_methode(self, name, func):
+        setattr(self, name, func.__get__(self, self.__class__))

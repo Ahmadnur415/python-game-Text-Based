@@ -1,0 +1,119 @@
+{
+    "type": "weapons",
+    "namespace": "staff",
+    "items": {
+        "m_staff": {
+            "name": "magic wood staff",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 100, "silver" ],
+            "attacks": [ "magic/magicbolt" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 5, 20 ],
+                    "armor_penetration": 15
+                },
+                "other": {
+                    "magic": 3,
+                    "will": 2,
+                    "perception": -1
+                }
+            },
+            "equip_location": [ "main_hand" ],
+            "user": [ "mage" ],
+            "description": ""
+        },
+        "fire_staff": {
+            "name": "Fire Staff",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                500,
+                "silver"
+            ],
+            "attacks": [
+                "magic/firebolt"
+            ],
+            "stats": {
+                "basic": {
+                    "damage": [
+                        3,
+                        4
+                    ],
+                    "armor_penetration": 20
+                },
+                "other": {}
+            },
+            "equip_location": [
+                "main_hand"
+            ],
+            "user": [
+                "mage"
+            ],
+            "description": ""
+        },
+        "ice_staff": {
+            "name": "Fire Staff",
+            "quality": 1,
+            "type": "equippable",
+            "price": [
+                500,
+                "silver"
+            ],
+            "attacks": [
+                "magic/icebolt"
+            ],
+            "stats": {
+                "basic": {
+                    "damage": [
+                        5,
+                        25
+                    ],
+                    "armor_penetration": 25
+                },
+                "other": {}
+            },
+            "equip_location": [
+                "two_hand"
+            ],
+            "user": [
+                "mage"
+            ],
+            "description": ""
+        },
+        "fbi_staff": {
+            "name": "<fire> blue ice staff",
+            "quality": 3,
+            "type": "equippable",
+            "price": [
+                100,
+                "gold"
+            ],
+            "attacks": [
+                "magic/icebolt",
+                "magic/magicslash"
+            ],
+            "stats": {
+                "basic": {
+                    "damage": [
+                        10,
+                        15
+                    ],
+                    "armor_penetration": 50
+                },
+                "other": {
+                    "strength": 15,
+                    "mana": 50
+                }
+            },
+            "equip_location": [
+                "main_hand",
+                "off_hand"
+            ],
+            "user": [
+                "mage"
+            ],
+            "description": ""
+        }
+    }
+}

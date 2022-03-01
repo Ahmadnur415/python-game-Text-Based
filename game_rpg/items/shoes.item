@@ -1,0 +1,132 @@
+{
+    "type": "armor",
+    "namespace": "shoes",
+    "items": {
+        "battle_boots": {
+            "name": "Battle Boots",
+            "quality": 5,
+            "type": "equippable",
+            "price": [
+                100,
+                "gold"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 54
+                },
+                "other": {
+                    "strength": 15,
+                    "magic": 15,
+                    "dextery": 15
+                }
+            },
+            "equip_location": [
+                "shoes"
+            ],
+            "user": [
+                "all"
+            ],
+            "description": ""
+        },
+        "mechanic_shoes": {
+            "name": "Mechanic Shoes",
+            "quality": 1,
+            "type": "equippable",
+            "price": [
+                10000,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 16,
+                    "evasion": 8
+                },
+                "other": {
+                    "critical_change": 5,
+                    "dextery": 3
+                }
+            },
+            "equip_location": [
+                "shoes"
+            ],
+            "user": [
+                "all"
+            ],
+            "description": ""
+        },
+        "crystal_boots": {
+            "name": "Crystal Boots",
+            "quality": 5,
+            "type": "equippable",
+            "price": [
+                100000,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 100
+                },
+                "other": {
+                    "luck": 100
+                }
+            },
+            "equip_location": [
+                "shoes"
+            ],
+            "user": [
+                "all"
+            ],
+            "description": ""
+        },
+        "fishermans_shoes": {
+            "name": "Fisherman's Shoes",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                100,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 16
+                },
+                "other": {
+                    "will": 5,
+                    "critical_hit": 5
+                }
+            },
+            "equip_location": [
+                "shoes"
+            ],
+            "user": [
+                "all"
+            ],
+            "description": ""
+        },
+        "gardener_shoes": {
+            "name": "Gardener Shoes",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                100,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 8,
+                    "evasion": 10
+                },
+                "other": {
+                    "health": 100
+                }
+            },
+            "equip_location": [
+                "shoes"
+            ],
+            "user": [
+                "all"
+            ],
+            "description": ""
+        }
+    }
+}

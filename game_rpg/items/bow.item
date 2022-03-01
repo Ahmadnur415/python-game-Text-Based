@@ -1,0 +1,104 @@
+{
+    "type": "weapons",
+    "namespace": "bow",
+    "items": {
+        "wood_b": {
+            "name": "Wooden Bow",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 100, "silver" ],
+            "attacks": [ "ranged/shoot" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 1, 10 ],
+                    "armor_penetration": 5
+                },
+                "other": {
+                    "dextery": 3,
+                    "critical_change": 1
+                }
+            },
+            "equip_location": [ "two_hand" ],
+            "user": [ "archer" ],
+            "description": ""
+        },
+        "long_wood": {
+            "name": "Wooden Long Bow",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 250, "silver" ],
+            "attacks": [ "ranged/shoot", "ranged/flameshot" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 7, 15 ],
+                    "armor_penetration": 15
+                },
+                "other": { "dextery": 5 }
+            },
+            "equip_location": [ "two_hand" ],
+            "user": [ "archer" ],
+            "description": ""
+        },
+        "short_wood": {
+            "name": "Wooden short bow",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 700, "silver" ],
+            "attacks": [ "ranged/shoot" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 3, 7 ],
+                    "armor_penetration": 15
+                },
+                "other": {
+                    "critical_hit": 3,
+                    "perception": 3
+                }
+            },
+            "equip_location": [ "off_hand" ],
+            "user": [ "archer" ],
+            "description": ""
+        },
+        "burning_b": {
+            "name": "Burning Bow",
+            "quality": 5,
+            "type": "equippable",
+            "price": [ 650, "gold" ],
+            "attacks": [ "ranged/shoot", "ranged/flameshot" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 7, 30 ],
+                    "armor_penetration": 40
+                },
+                "other": {
+                    "strength": 10,
+                    "critical_change": 15,
+                    "critical_hit": 30
+                }
+            },
+            "equip_location": [ "two_hand" ],
+            "user": [ "archer" ],
+            "description": ""
+        },
+        "bow_of_storm": {
+            "name": "Bow Of Storm",
+            "quality": 4,
+            "type": "equippable",
+            "price": [ 500, "gold" ],
+            "attacks": [ "ranged/shoot", "ranged/one_shoot" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 1, 10 ],
+                    "armor_penetration": 100
+                },
+                "other": {
+                    "stamina": 50,
+                    "critical_hit": 100
+                }
+            },
+            "equip_location": [ "two_hand" ],
+            "user": [ "archer" ],
+            "description": ""
+        }
+    }
+}

@@ -1,0 +1,331 @@
+{
+    "type": "armor",
+    "namespace": "armor",
+    "items": {
+        "wooden_a": {
+            "name": "Wooden Armor",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 500, "silver" ],
+            "stats": {
+                "basic": { "defense": 40 },
+                "other": {}
+            },
+            "equip_location": ["body"],
+            "user": "all",
+            "description": ""
+        },
+        "saints_r": {
+            "name": "Saint's Robe",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 500, "silver" ],
+            "stats": {
+                "basic": {
+                    "resistance": 32,
+                    "evasion": 8
+                },
+                "other": {}
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "silk_r": {
+            "name": "Silk Robe",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 500, "silver" ],
+            "stats": {
+                "basic": {
+                    "defense": 8,
+                    "resistance": 8,
+                    "evasion": 24
+                },
+                "other": {}
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "wood_mail": {
+            "name": "Wooden Mail",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 100, "silver" ],
+            "stats": {
+                "basic": { "defense": 25 },
+                "other": { "health": 25 }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "adventurer_suit": {
+            "name": "Adventurer's Suit",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 5, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 13,
+                    "resistance": 7,
+                    "evasion": 5,
+                    "damage": 25
+                },
+                "other": { "dextery": 15 }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "steel_armor": {
+            "name": "Steel Armor",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 5, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 69,
+                    "resistance": 3
+                },
+                "other": {
+                    "strength": 25,
+                    "dextery": -5
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "holy_robe": {
+            "name": "Holy Robe",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 7, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 25,
+                    "resistance": 30,
+                    "evasion": 5
+                },
+                "other": {
+                    "magic": 25,
+                    "growth_mp": -10
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "robe_of_resistance": {
+            "name": "Robe of Resistance",
+            "quality": 2,
+            "type": "equippable",
+            "price": [ 100, "silver" ],
+            "stats": {
+                "basic": {
+                    "defense": 20,
+                    "resistance": 100
+                },
+                "other": {
+                    "will": 10
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "ice_dress": {
+            "name": "<Ice> dress",
+            "quality": 3,
+            "type": "equippable",
+            "price": [ 30, "silver" ],
+            "stats": {
+                "basic": {
+                    "defense": 11,
+                    "resistance": 111,
+                    "evasion": 1
+                },
+                "other": {
+                    "strength": 10,
+                    "dextery": 10,
+                    "magic": 10
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "l_armor": {
+            "name": "Legendaty Armor",
+            "quality": 4,
+            "type": "equippable",
+            "price": [ 99, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 255,
+                    "evasion": 10
+                },
+                "other": {
+                    "constitution": 10,
+                    "will": 10,
+                    "perception": 10
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "lod_armor": {
+            "name": "<Luck of Defense> armor",
+            "quality": 5,
+            "type": "equippable",
+            "price": [ 999, "gold" ],
+            "stats": {
+                "basic": { "defense": 320 },
+                "other": { "luck": 250 }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "great_armor": {
+            "name": "<great> evasion robe",
+            "quality": 5,
+            "type": "equippable",
+            "price": [ 1000, "gold" ],
+            "stats": {
+                "basic": { "evasion": 250 },
+                "other": { "perception": 50 }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "anti_magic_suit": {
+            "name": "Anti Magic Suit",
+            "quality": 5,
+            "type": "equippable",
+            "price": [ 750, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 40,
+                    "resistance": 284
+                },
+                "other": {}
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "a_d_armor": {
+            "name": "Azure Dragon Armor",
+            "quality": 4,
+            "type": "equippable",
+            "price": [ 125, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 80,
+                    "resistance": 120,
+                    "evasion": 10
+                },
+                "other": {
+                    "strength": 25,
+                    "critical_hit": 40
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "thives_suit": {
+            "name": "Template name",
+            "quality": 3,
+            "type": "equippable",
+            "price": [ 55, "gold" ],
+            "stats": {
+                "basic": {
+                    "evasion": 80,
+                    "damage": [ 0, 1 ]
+                },
+                "other": {
+                    "critical_change": 15,
+                    "critical_hit": 32
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "white_wing_suit": {
+            "name": "White Wing Suit",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 16, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 42,
+                    "evasion": 10
+                },
+                "other": {
+                    "strength": 8,
+                    "perception": 15
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "black_wing_suit": {
+            "name": "Black_Wing Suit",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 16, "gold" ],
+            "stats": {
+                "basic": {
+                    "defense": 10,
+                    "resistance": 32,
+                    "evasion": 10
+                },
+                "other": {
+                    "magic": 10,
+                    "dextery": 3,
+                    "stamina": 25
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "hunter_mail": {
+            "name": "Hunter Mail",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 7500, "silver" ],
+            "stats": {
+                "basic": { "defense": 22 },
+                "other": { "constitution": 15, "growth_hp": 10 }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        },
+        "medic_robe": {
+            "name": "Medic Robe",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 100000, "silver" ],
+            "stats": {
+                "basic": { "evasion": 20 },
+                "other": {
+                    "health": 100,
+                    "growth_hp": 14
+                }
+            },
+            "equip_location": [ "body" ],
+            "user": "all",
+            "description": ""
+        }
+    }
+}

@@ -1,44 +1,67 @@
-from .. import interface, namespace
-from .game import game as GAME
+from .game import Game
+from .. import interface, namespace, saveload
 
-
-def enter(self, game):
-    commands = [namespace.VIEW_PLAYER, namespace.INVENTORY, namespace.EQUIPMENT, namespace.SAVE_GAME]
-    commands.extend(self.commands.copy())
-
+def enter(_, player):
     while True:
-        
-        interface.centerprint(interface.get_messages("game.title"), "-- " + str(self.name.upper()) + " --")
 
-        for i, room in enumerate(commands):
-            interface.leftprint(f"({i + 1}) {str(room).capitalize().replace('_', ' ')}")
-        
-        index = interface.get_int_input(len(commands)) - 1
-        print()
+        interface.print_title(namespace.CAMP)
 
-        index = commands[index]
-        if index == namespace.VIEW_PLAYER:
-            result = game.player.view_stats_interface()
-            if result == namespace.BACK:
-                continue            
+        POINT_PLAYER = namespace.POINT_LEVEL + (" (+)" if player.point_level > 0 else "")
+        commands = namespace.COMMANDS_PLAYER.copy()
 
-        if index == namespace.INVENTORY:
-            game.player.view_inventory_interface()
-            
-        if index == namespace.EQUIPMENT:
-            game.player.view_equipment()
-            interface.get_enter()
+        if commands.index(namespace.POINT_LEVEL):
+            commands[commands.index(namespace.POINT_LEVEL)] = POINT_PLAYER
 
-        if index == namespace.SAVE_GAME:
-            game.save_game()
-            interface.centerprint(interface.get_messages("game.saved"))
-            interface.get_enter()
+
+        result = interface.get_command(
+            commands, list_option=True, loop=False
+        )
+
+        if not isinstance(result, tuple):
             continue
 
-        if index in self.commands:
-            return index
+        interface.print_("\n")
 
-main = GAME(
-    name="camp",
-    enter=enter
+        match result[0]:
+
+            case namespace.BACK:
+                from .main import main as main_menu
+                return main_menu.enter(player)
+
+            case namespace.VIEW_STATS:
+                interface.print_title("stats_player")
+                player.view()
+                interface.get_enter()
+                continue
+
+            case namespace.INVENTORY:
+                player.inventory_interface()
+                continue
+
+            case namespace.EQUIPMENT:
+                player.equipment_view()
+                interface.get_enter()
+                continue
+
+
+            case namespace.VIEW_ATTACK:
+                player.attacks_view()
+                interface.get_enter()
+                continue
+
+            case namespace.SAVE_GAME:
+                result = saveload.save_game(player)
+                if result:
+                    interface.print_message("game.saveload.saved")
+                    interface.get_enter()
+                continue
+
+            case POINT_PLAYER:
+                player.used_point_level_interface()
+                continue
+
+
+main = Game(
+    namespace.CAMP,
+    enter
 )

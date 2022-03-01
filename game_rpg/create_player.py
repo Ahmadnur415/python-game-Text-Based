@@ -1,47 +1,55 @@
-from .setup import ENTITY, GAME
-from . import interface, player
+from .data import _load
+from . import interface, namespace
+from .player import Player, DATA
 
 
-_CLASSES = ENTITY["attribute"]["player_role"].copy()
+dt_role = list(DATA.keys())
+
+
 def create_player():
-    interface.centerprint(
-        interface.get_messages("game.title.welcome"),
-        interface.get_messages("game.title.input_name")
-    )
 
-    name_player = input(interface.get_messages("game.input_name"))
-    if name_player == "":
-        name_player = "Player"
+    name = ""
+    while len(name) < 8:
+        interface.print_title("welcome")
+        interface.print_title("input_name")
 
-    print()
+        name = input(interface.get_messages("input_messages.input_name"))
+
+        interface.print_("\n")
+        if len(name) > 8:
+            break
+
+        interface.print_message("input_messages._name")
+        interface.print_("\n")
+
+
+
     while True:
-        interface.centerprint(
-            interface.get_messages("game.title.index_role"),
-            interface.get_messages("input_messages.choise_role_player").format(
-                role=interface.generate_readable_list(_CLASSES, True)       
-            )
-        )
-        
-        index = interface.get_input()
+        interface.print_title("welcome")
+        interface.print_title("index_role")
+        index = interface.get_command(dt_role, add_command_back=False, loop=False, list_option=True)
 
-        print()
+        if not isinstance(index, tuple):
+            continue
 
-        if index in [str(i) for i in range(1, len(_CLASSES) + 1)]:
-            role = _CLASSES[int(index)-1]
+        role = index[0]
+        break
 
-            return player.Player(
-                name=name_player,
-                _class=role,
-                attacks=[],
-                
-            )
+    interface.print_("\n")
+    while True:
+        interface.print_title("welcome")
+        interface.print_title("index_dificulty")
 
-def select_dificulty():
-    interface.centerprint(
-        interface.get_messages("game.title.index_dificulty"),
-        interface.generate_readable_list(
-            [f"{i+1}) {name}" for i, name in enumerate(GAME["difficulty"])]
-        )
-    )
-    difficulty = interface.get_int_input(len(GAME["difficulty"]))
-    return difficulty
+        index = interface.get_command([namespace.EASY, namespace.MEDIUM, namespace.HARD], "dificulty", add_command_back=False, loop=False, list_option=True)
+
+        if not isinstance(index, tuple):
+            continue
+
+        dificulty = index[1]
+        break
+
+    interface.print_("\n")
+    player = Player( name, role, dificulty )
+
+    from .games import main_menu
+    return main_menu.enter(player)

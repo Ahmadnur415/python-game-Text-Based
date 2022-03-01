@@ -1,0 +1,201 @@
+{
+    "melee/slab": {
+        "name": "Slab",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "modiefer_damage": { "modiefer": 0.5, "equal": "self.level" },
+        "description_of_being_used": "hit",
+        "countdown": 0,
+        "cost_mana": 0,
+        "cost_stamina": 0
+    },
+    "melee/golem_punch": {
+        "name": "Golem Punch",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "damage": [ {"modifier": 1, "equal": "self.level"}, {"modifier": 1.5, "equal": "self.level"} ],
+        "modiefer_damage": { "modifier": 1, "equal": "self.missing_health" , "percent": true, "max_value": 1000},
+        "description_of_being_used": "hit",
+        "countdown": 2,
+        "cost_mana": 0,
+        "cost_stamina": 0
+    },
+    "melee/slash": {
+        "name": "Slash",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "modiefer_damage": { "modiefer": 1, "equal": "self.level" },
+        "description_of_being_used": "hit",
+        "countdown": 3,
+        "cost_mana": 0,
+        "cost_stamina": 25
+    },
+    "ranged/shoot": {
+        "name": "Shoot",
+        "type_damage": "physical",
+        "type_attack": "RANGED",
+        "modiefer_damage": { "modiefer": 0.1, "equal": "enemy.missing_health" },
+        "description_of_being_used": "hit",
+        "countdown": 0,
+        "cost_mana": 0,
+        "cost_stamina": 20
+    },
+    "melee/normal_punch": {
+        "name": "Punch",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "damage": [ 1, { "modifier": 0.2, "equal": "self.strength" } ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 3,
+        "cost_mana": 0,
+        "cost_stamina": 20
+    },
+    "ranged/one_shoot": {
+        "name": "One shoot",
+        "type_damage": "physical",
+        "type_attack": "RANGED",
+        "damage": [
+            { "modifier": 0.5, "equal":"self.perception" },
+            { "modifier": 2.5, "equal":"self.perception" }
+        ],
+        "modiefer_damage": { "modifier": 0.25, "equal": "enemy.missing_health" },
+        "description_of_being_used": "hit",
+        "countdown": 10,
+        "cost_mana": 0,
+        "cost_stamina": 100
+    },
+    "ranged/flameshot": {
+        "name": "flameshot",
+        "type_damage": "magic",
+        "type_attack": "RANGED",
+        "damage": [
+            1,
+            45
+        ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 7,
+        "cost_mana": 50,
+        "cost_stamina": 0
+    },
+    "magic/icebolt": {
+        "name": "Ice Bolt",
+        "type_damage": "magic",
+        "type_attack": "MAGIC",
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 10,
+        "cost_mana": 60,
+        "cost_stamina": 0
+    },
+    "magic/magicbolt": {
+        "name": "magic bolt",
+        "type_damage": "magic",
+        "type_attack": "MAGIC",
+        "modiefer_damage": { "modiefer": 5, "equal": "self.level" },
+        "description_of_being_used": "hit",
+        "countdown": 4,
+        "cost_mana": 17,
+        "cost_stamina": 0
+    },
+    "magic/firebolt": {
+        "name": "fire bolt",
+        "type_damage": "magic",
+        "type_attack": "MAGIC",
+        "damage": [
+            1,
+            1
+        ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 3,
+        "cost_mana": 25,
+        "cost_stamina": 0
+    },
+    "magic/magicslash": {
+        "name": "slash magic",
+        "type_damage": "magic",
+        "type_attack": "MAGIC",
+        "damage": [
+            1,
+            1
+        ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 1,
+        "cost_mana": 25,
+        "cost_stamina": 0
+    },
+    "magic/magic_attack": {
+        "name": "Magic attack",
+        "type_damage": "magic",
+        "type_attack": "MAGIC",
+        "damage": [
+            3,
+            7
+        ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 3,
+        "cost_mana": 5,
+        "cost_stamina": 0
+    },
+    "melee/ice_slash": {
+        "name": "Ice Slash",
+        "type_damage": "magic",
+        "type_attack": "MELEE",
+        "damage": [ 1, 1 ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 4,
+        "cost_mana": 15,
+        "cost_stamina": 15
+    },
+    "spell/drain_health": {
+        "name": "Drain Health Attack",
+        "type_damage": "magic",
+        "type_attack": "SPELL",
+        "damage": [ 1, 1 ],
+        "modiefer_damage": {},
+        "description_of_being_used": "hit",
+        "countdown": 13,
+        "cost_mana": 0,
+        "cost_stamina": 30
+    },
+    "melee/claws": {
+        "name": "Claws",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "damage": [5, 10],
+        "modiefer_damage": { "modiefer": 1, "equal": "self.strength", "percent": true, "base_value": 5, "max_value": 100},
+        "description_of_being_used": "claws"
+    },
+    "melee/magic_claws": {
+        "name": "Magic Claws",
+        "type_damage": "magic",
+        "type_attack": "MELEE",
+        "damage": [6, 9],
+        "modiefer_damage": { "modiefer": 1, "equal": "self.magic", "percent": true, "base_value": 5, "max_value": 100},
+        "description_of_being_used": "claws"
+    },
+    "melee/bite": {
+        "name": "Bite",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "damage": [1, 15],
+        "modiefer_damage": { "modiefer": 1, "equal": "self.level", "base_value": 5, "max_value": 100},
+        "description_of_being_used": "claws"
+    },
+    "melee/punch": {
+        "name": "punch",
+        "type_damage": "physical",
+        "type_attack": "MELEE",
+        "damage": [ 1, { "modiefer": 1.5, "equal": "self.level" , "base_value": 3} ],
+        "modiefer_damage": { "modiefer": 0.5, "equal": "self.strength" , "percent": true, "base_value": 5},
+        "description_of_being_used": "hit",
+        "countdown": 0,
+        "cost_mana": 0,
+        "cost_stamina": 0
+    }
+}

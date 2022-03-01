@@ -1,0 +1,110 @@
+{
+    "type": "potion",
+    "namespace": "potion",
+    "items": {
+        "red_potion": {
+            "name": "Recover Potion",
+            "quality": 0,
+            "price": [ 150, "silver" ],
+            "type": "consumable",
+            "description": "",
+            "effects": {
+                "type": "restore",
+                "stats": {
+                    "health": 10,
+                    "mana": 50,
+                    "stamina": 5
+                }
+            }
+        },
+        "potion_health_max": {
+            "name": "Potion health max",
+            "quality": 1,
+            "price": [ 5, "gold" ],
+            "type": "consumable",
+            "description": "",
+            "effects": {
+                "type": "restore",
+                "stats": {
+                    "health": {
+                        "modiefer": 25,
+                        "equal": "self.max_health",
+                        "percent": true
+                    },
+                    "stamina": {
+                        "modiefer": 20,
+                        "equal": "self.max_stamina",
+                        "percent": true
+                    },
+                    "mana": {
+                        "modiefer": 20,
+                        "equal": "self.max_mana",
+                        "percent": true
+                    }
+                }
+            }
+        },
+        "banana_juice": {
+            "name": "Banana Juice",
+            "quality": 1,
+            "price": [ 25, "silver" ],
+            "type": "consumable",
+            "description": "",
+            "effects": {
+                "type": "restore",
+                "stats": {
+                    "health": 25,
+                    "stamina": 5
+                }
+            }
+        },
+        "blue_potion": {
+            "name": "Blue Potion",
+            "quality": 1,
+            "price": [ 35, "silver" ],
+            "type": "consumable",
+            "description": "",
+            "effects": {
+                "type": "restore",
+                "stats": {
+                    "mana": {
+                        "modiefer": 5,
+                        "equal": "self.max_mana",
+                        "percent": true
+                    }
+                }
+            }
+        },
+        "yellow_potion": {
+            "name": "Yellow Potion",
+            "quality": 1,
+            "price": [ 35, "silver" ],
+            "type": "consumable",
+            "description": "",
+            "effects": {
+                "type": "restore",
+                "stats": {
+                    "mana": {
+                        "modiefer": 5,
+                        "equal": "self.max_stamina",
+                        "percent": true
+                    }
+                }
+            }
+        },
+        "milk": {
+            "name": "Milk",
+            "quality": 4,
+            "price": [ 25, "gold" ],
+            "type": "consumable",
+            "description": "",
+            "effects": {
+                "type": "increase",
+                "stats": {
+                    "strength": 3,
+                    "constitution": 3
+                }
+            }
+        }
+    }
+}

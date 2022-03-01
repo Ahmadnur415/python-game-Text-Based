@@ -1,1 +1,2 @@
-from .start_game import start_game
+
+__version__ = "0.2.0"

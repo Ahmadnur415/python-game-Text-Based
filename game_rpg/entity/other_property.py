@@ -1,79 +1,76 @@
-from ..items import Items as ITEMS
-from ..setup import ENTITY
-from ..until import clamp
+from ..util import clamp
+from .data import DATA
 
 
 def _init(entity):
-    global CON, STR, ARC, PERC, MGC, WILL, LUCK, WILL, LUCK, LV, GROWTH_HP, GROWTH_MP, DEF, EVE, RES
+    global CON, STR, DEX, PERC, MGC, WILL, LV, GROWTH_HP, GROWTH_MP, DEF, EVE, RES
+
     CON = getattr(entity, "constitution", 0)
     STR = getattr(entity, "strength", 0)
-
-    ARC = getattr(entity, "archery", 0)
+    DEX = getattr(entity, "dextery", 0)
     PERC = getattr(entity, "perception", 0)
-
     MGC = getattr(entity, "magic", 0)
     WILL = getattr(entity, "will", 0)
-
-    LUCK = getattr(entity, "luck", 0)
     LV = getattr(entity, "level", 1)
-
     GROWTH_HP = getattr(entity, "growth_hp", 0)
     GROWTH_MP = getattr(entity, "growth_mp", 0)
-
     DEF = getattr(entity, "defense", 0)
     EVE = getattr(entity, "evasion", 0)
     RES = getattr(entity, "resistance", 0)
 
 
 # ===========
-# Reduce
+#   defend
 # ===========
-def physical_reduce(entity):
+def physical_attack_reduce(entity):
     # 1 point = 8 def | 12 CON
     _init(entity)
-    bonus = 0
-    for items in entity.equipment.values():
-        if items:
-            bonus += items.attribute.defense
 
-    total = ((DEF + bonus + CON / 2) / 8) * (LUCK / 100)
-    return clamp(100 - 10000 / (100 + total), 1, 95)
+    _reduce = sum(
+        [item.stats["basic"].get("defense", 0) for item in entity.equipment.values() if item]
+    )
+
+    T_R = ((DEF * 1.5  + _reduce + CON / 2) / 8)
+    return clamp(100 - 10000 / (100 + T_R), 1, 95)
 
 
-def magic_reduce(entity):
+def magic_attack_reduce(entity):
     # 1 magic reduce = 8 RES | 12 WILL
     _init(entity)
-    bonus = 0
-    for items in entity.equipment.values():
-        if items:
-            bonus += items.attribute.resistance
 
-    total = ((RES + bonus + WILL / 2) / 8) * (LUCK / 100)
-    return clamp(100 - 10000 / (100 + total), 1, 95)
+    _reduce = sum(
+        [item.stats["basic"].get("resistance", 0) for item in entity.equipment.values() if item]
+    )
+
+    T_R = ((RES * 1.5  + _reduce + WILL / 2)/ 8)
+    return clamp(100 - 10000 / (100 + T_R), 1, 95)
 
 
-# NOTE ==================== WIP ====================
+@property
+def attack_reduce(entity):
+    return {
+        "physical": entity.physical_attack_reduce(),
+        "magic": entity.magic_attack_reduce()
+    }
+
+
 @property
 def evaded(entity):
     # 1 evaded = 8 EVE / 20 PERC / 16 WILL
     _init(entity)
 
-    bonus = 0
-    for items in entity.equipment.values():
-        if items:
-            bonus += items.attribute.evasion
-    total = ((EVE + bonus + PERC / 2.5 + WILL / 2) / 8) * LUCK / 100
-    return clamp(round(100 - 10000 / (100 + total), 2), 0, 95)
+    B_EVE = sum(
+        [item.stats["basic"].get("evasion", 0) for item in entity.equipment.values() if item]
+    )
+
+    T = ((EVE * 1.5 + B_EVE + PERC / 2.5 + WILL / 2) / 8)
+    return clamp(round(100 - 10000 / (100 + T), 2), 0, 95)
 
 
-@property
-def reduce_damage(entity):
-    return {"physical": physical_reduce(entity), "magic": magic_reduce(entity)}
 
-
-# =========
-# resaurce
-# =========
+# ============
+#   resaurce
+# ============
 
 @property
 def max_health(entity):
@@ -93,89 +90,71 @@ def max_mana(entity):
 
 @property
 def max_stamina(entity):
-    # 1 ST / 4 ARC :- 1 ST / 2 PERC :- 1 ST / 2 STR
+    # 1 ST / 4 DEX :- 1 ST / 2 PERC :- 1 ST / 2 STR
     _init(entity)
-    ST = (3 * ARC + 10 * PERC + 6 * STR + 25 * LV) / 12
+    ST = (3 * DEX + 10 * PERC + 6 * STR + 25 * LV) / 12
     return int(ST  + getattr(entity, "_max_stamina", 0))
 
-
+# ============
+#   critical
+# ============
 @property
 def critical_change(entity):
-    # 1 Crit / 4 PERC / 15 STR / 30 ARC / 30 MGC / 3 LV
+    # 1 Crit / 10 PERC / 30 STR / 30 DEX / 30 MGC
+    # 0.17 / LV = max 25
 
     _init(entity)
-
-    bonus = 0
-    # equipment bonus
-    for items in entity.equipment.values():
-        if isinstance(items, ITEMS):
-            bonus += items.stats.get("critical_change", 0)
-
-    crit = (PERC / 4) + (STR * 2 + ARC + MGC) / 30 + (0.3 * LV) + clamp(LUCK / 100, 1.0, 25.0)
-    return clamp(round(crit + bonus, 2), 1, 99)
+    crit = (PERC / 10) + (STR + DEX + MGC) / 30 + clamp(0.17 * LV, 1, 25)
+    return clamp(round(crit + getattr(entity, "_critical_change", 0), 2), 1, 99)
 
 
 @property
-def critical_hit(entity):
+def critical_damage(entity):
     _init(entity)
-
-    bonus = 0
-    # equipment bonus
-    for items in entity.equipment.values():
-        if isinstance(items, ITEMS):
-            bonus += items.stats.get("critical_hit", 0)
-
-    dmg = (4 * STR + 4 * ARC + 4 * MGC + 3 * PERC + 2 * CON) / 7  + (LV * LUCK / 300)
-    return round(dmg + 20 + bonus, 2)
+    dmg = (4 * STR + 4 * DEX + 4 * MGC + 3 * PERC + 2 * CON) / 7
+    return round(dmg + 20 + getattr(entity, "_critical_damage", 0), 2)
 
 
 # ==========
-# damage
+#   attack
 # ==========
-
 @property
-def damage(entity):
-    _init(entity)
-    floor = int
+def attacks(self) -> list:
+    from ..attack import load_from_id
 
-    physical = [
-        max(LV + floor(STR / 3 + ARC / 5), 1), 
-        max(floor(1.5 + 1.2 * LV) + floor(STR / 3 + ARC / 2), 1)
-    ]
-    magic = [
-        max(LV + floor(MGC / 4 + (MGC + WILL) / 15), 1),
-        max(floor(1.5 + 1.2 * LV) + floor(MGC / 2 + (MGC + WILL) / 15), 1)
-    ]
-
-    for locate, equipment in entity.equipment.items():
-        if not equipment or locate not in ENTITY["attribute"]["equipment"]["weapons"]:
-            continue
-        
-        multiplier = 1.1 if equipment.attribute.styleAttack == entity.style_attack else 0.75
-
-        # menambahkan damage 
-        if equipment.attribute.styleAttack == "magic":
-            magic = [a + floor(b * multiplier) for a, b in zip(magic, equipment.attribute.damage)]
-        else:
-            physical = [a + floor(b * multiplier) for a, b in zip(physical, equipment.attribute.damage)]
+    _attacks = self._attacks.copy()
+    for item in self.equipment.values():
+        if item:
+            for attack in item.attacks:
+                attack.user = self
+                _attacks.append(attack)
     
-    return {
-        "physical": physical,
-        "magic": magic
-    }
+    punch = load_from_id("melee/punch")
+    punch.user = self
+
+    _attacks.append(punch)
+
+    return _attacks
 
 
 @property
-def magic_damage(entity):
-    return entity.damage["magic"]
+def usable_attacks(self):
+    usable_attacks_list = []
+
+    for attack in self.attacks:
+        if (
+            self.mana >= attack.cost_mana and self.stamina >= attack.cost_stamina and attack.cooldown <= 0
+        ):
+            usable_attacks_list.append(attack)
+
+    return usable_attacks_list
 
 
-@property
-def physical_damage(entity):
-    return entity.damage["physical"]
-
-
+# =======
+#   exp
+# =======
 @property
 def max_exp(entity):
     _init(entity)
     return int((175 * LV + 50) / 3.14)
+

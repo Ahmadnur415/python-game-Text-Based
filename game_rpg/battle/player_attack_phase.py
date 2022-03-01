@@ -1,81 +1,58 @@
 from .. import interface, namespace
-from ..entity import flag
-
+from . import flag
 
 def player_attack_phase(battle):
-    display_name = interface.get_messages("prefixes.player", "You") + " "
     while True:
-        print()
-        battle.print_list_of_attacks()        
-        index = "1" if len(battle.player.attack) == 1 else (f"1 - {len(battle.player.attack)}")
+        battle.print_list_of_attacks_player()
+        command = interface.get_command(battle.player.attacks, loop=False)
 
-        # print: choise attack player 
-        interface.centerprint("== " + interface.get_messages("input_messages.choose_items_interface").format(name="Attack",index=index) + " ==")
-        attack_name = interface.get_input()
-        
-        if attack_name.lower() == "b":
-            return namespace.BACK
+        if not isinstance(command, tuple):
+            continue
 
-        try:
-            attack_name = battle.player.attack_name[int(attack_name) - 1]
-        except (ValueError, IndexError):
-            continue
-    
-        if attack_name not in battle.player.attack_name:
-            continue
-        
-        # get attack
-        attack_use = battle.player.get_attack_from_name(attack_name)
+        interface.print_("\n")
+        if command[0] == namespace.BACK:
+            return command[0]
 
-        if attack_use.cooldown < attack_use.countdown:
-            continue
-        
-        # ===== STAMINA AND MANA =====
-        if attack_use.cost_st > battle.player.stamina:
-            interface.centerprint(display_name + interface.get_messages("battle.messages.not_enough_stamina"))
+        attack_use = battle.player.attacks[command[1] - 1]
+
+        if attack_use.cooldown > 0:
+            battle.print_message("on_cooldown", attack_use.name, attack_use.cooldown)
             interface.get_enter()
             continue
 
-        if attack_use.cost_mp > battle.player.mana:
-            interface.centerprint(display_name + interface.get_messages("player.display_name", "you") + interface.get_messages("battle.messages.not_enough_mana"))
+        if attack_use.cost_stamina > battle.player.stamina:
+            battle.print_message("not_enough_stamina", battle.get_prefixes(battle.player))
+
             interface.get_enter()
             continue
 
-        battle.player.stamina -= attack_use.cost_st
-        battle.player.mana -= attack_use.cost_mp
+        if attack_use.cost_mana > battle.player.mana:
+            battle.print_message("not_enough_mana", battle.get_prefixes(battle.player))
+            interface.get_enter()
+            pass
 
-        return battle.player_attack(attack_use)
+        battle.player.stamina -= attack_use.cost_stamina
+        battle.player.mana -= attack_use.cost_mana
 
-def player_attack(battle, attack_use):
-    display_name = interface.get_messages("prefixes.player", "You")
-    count_raw_attack = attack_use.raw_attack
-    print("\n")
-    while count_raw_attack > 0:
         proir_health = battle.enemy.health
-        attack_result = battle.player.attack_state(battle.enemy, attack_use)
+        # attack ----
+        result_battle = battle.player.attack_state(battle.enemy, attack_use)
+        attack_use.cooldown = attack_use.countdown
 
-        if attack_result == flag.EVADED:
-            battle.count_dodge += 1
-            interface.centerprint(interface.get_messages("prefixes.enemy") + interface.get_messages("battle.messages.enemy_evaded"))
-            count_raw_attack -= 1
-            continue
+        interface.centerprint("-", width=battle.width_line)
+        if result_battle == flag.EVADED:
+            battle.print_message( "enemy_evaded", battle.get_prefixes(battle.enemy) )
+            return
 
-        if attack_result == flag.CRITICAL_HIT:
-            battle.count_crit += 1
-            interface.centerprint( display_name + interface.get_messages("battle.messages.critical_hit") )
+        if result_battle == flag.CRITICAL_HIT:
+            battle.count_crit_player += 1
+            battle.print_message( "critical_hit", battle.get_prefixes(battle.player) )
 
-        deal_damage = proir_health - battle.enemy.health
-        count_raw_attack -= 1
+        damage = proir_health - battle.enemy.health
 
-        interface.leftprint(
-            interface.get_messages("battle.messages.damage_dealt").format(
-                attack_description=attack_use.description_of_being_used,
-                enemy=interface.get_messages("prefixes.enemy"),
-                damage=str(deal_damage),
-                attacker=interface.get_messages("prefixes.player") + "'s",
-                type_damage=attack_use.type_damage
-            )
+        battle.print_deal_damage(
+            battle.enemy,
+            attack_use,
+            damage
         )
-
-    print()
-    attack_use.cooldown = 0
+        return

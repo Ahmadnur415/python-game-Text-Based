@@ -1,80 +1,67 @@
-from . import entity, until
-from .setup import ENTITY, SETTING
-from .player import inventory, view, attack
+from .entity import Entity, DATA
+from . import util
 import random
 
+class Enemy(Entity):
+    def __init__(
+        self,
+        name: str,
+        attacks: list,
+        equipments: dict,
+        stats: dict,
+        type_damage: str,
+        looting: list,
+        level: int,
+        inventory: list | None = None,
+    ):
 
-class Enemy(entity.Entity):
-    def __init__(self, name, _class, level, attacks, equipments, stats, looting=None):
         super().__init__(
-            name=name,
-            namespace="Enemy",
-            _class=_class,
-            attacks=attacks,
-            equipments=equipments,
-            stats=stats['stats'],
-            type_attack=stats["typeAttack"],
-            style_attack=stats["styleAttack"]
+            namespace = self.__class__.__name__,
+            attacks = attacks,
+            equipments = equipments,
+            stats = stats,
+            type_damage = type_damage
         )
 
         if not looting:
             looting = []
 
-        _generate_stats_enemy(self, stats.get("prority", []))
+        if not inventory:
+            inventory = []
+
+        if level > self.max_level:
+            level = self.max_level
+
+        self.name = name
+        self.looting = looting
         self.level = level
+
+        _generate_stats_enemy(self)
 
         self.health = self.max_health
         self.mana = self.max_mana
         self.stamina = self.max_stamina
-        self.looting = looting
-
-    append_inventory = inventory.append_inventory
-    view_equipment = view.view_equipment
-
-    view_attack = attack.view_attack
-    get_attack_from_name = attack.get_attack_from_name
-    attack_name = attack.attack_name
 
 
-def _generate_stats_enemy(enemy, priority_stats):
-    change_data = create_change_data_stats(priority_stats)
-    for i in range(enemy.level + 1):
-
-        point = until.resolve_random_condition([
-            (1, 45 - SETTING["difficulty"] * 5),
-            (2, 35),
-            (3, 20 + SETTING["difficulty"] * 5)
+def _generate_stats_enemy(enemy: Enemy):
+    for _ in range(enemy.level + 1):
+        basic_stat = util.resolve_random_condition([
+            ("basic", 60),
+            ("defend", 20),
+            ("resource", 15),
+            ("critical", 5)
         ])
 
-        for _ in range(point):
-            stats = until.resolve_random_condition(change_data)
-            if not stats:
-                stats = random.choice(ENTITY["stats"])
-            value = 1
-            if stats == "health":
-                value = 5
-            if stats == "mana":
-                value = 3
-            until.added_stats(enemy, stats, value=value)
+        point = util.resolve_random_condition( [ (2, 45), (3, 35), (1, 20) ] )
 
-def create_change_data_stats(prority_stats: list):
-    change_data = []
+        stat = random.choice(DATA["values"][basic_stat].copy())
 
-    priority_change = round(max(25 + (10 * len(prority_stats)), 65) / len(prority_stats), 2)
+        if basic_stat == "critical":
+            point = round(point / 0.5, 2) if stat == "critical_change" else round(point * 3.5)
+            stat = "_" + stat
 
-    non_priority_stats = ENTITY["stats"].copy()
-    [non_priority_stats.remove(i) for i in prority_stats]
-    non_priority_change = round((100 - priority_change) / len(non_priority_stats), 2)
-    remainder = 100 - (priority_change * len(prority_stats) + non_priority_change * len(non_priority_stats))
+        if basic_stat == "resource":
+            point = int(point * 2) if stat == "health" else int(point * 1.5)
+            stat = "_max_" + stat
 
-    pre_non_priority_change = non_priority_change
-    for stats in ENTITY["stats"]:
-        non_priority_change = pre_non_priority_change
-        if stats in prority_stats:
-            change_data.append((stats, priority_change))
-        else:
-            if remainder < 1:
-                non_priority_change += remainder
-            change_data.append((stats, non_priority_change + remainder))
-
-    return change_data
+        setattr( enemy, stat, getattr(enemy, stat) + point )
