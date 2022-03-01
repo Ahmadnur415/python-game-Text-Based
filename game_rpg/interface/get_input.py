@@ -1,53 +1,53 @@
-from .. import setup
-from .print_methode import print_
 from .get_messages import get_messages
+from .print_methods import leftprint, centerprint, print_
 
+def get_input(add_text: str | None = None, distance: int=0):
 
-def get_input(add_text: str = ""):
+    if not add_text:
+        add_text = ""
+
     return input(
-        add_text + setup.SETTING["input_prompt"]
+        " " * distance + \
+        add_text +  get_messages("input_messages.input_prompt", ">>>") + " "
     ).strip().lower()
 
 
 def get_enter(text=""):
-    input(
-        text if text else get_messages("input_messages.get_enter")
-    )
-    print()
+    centerprint(text if text else get_messages("input_messages.get_enter"))
+    input()
+
+    print_()
     return
 
 
-def get_boolean_input(add_text: str = ""):
+def get_boolean_input():
     while True:
-        received_input = get_input(add_text)
+        received_input = get_input(distance=1)
 
-        if received_input in get_messages("input_messages.forms_of_true"):
+        if received_input in get_messages("input_messages.forms_of_true", ["y", "yes"]):
             return True
 
-        if received_input in get_messages("input_messages.forms_of_false"):
+        if received_input in get_messages("input_messages.forms_of_false", ["n", "no"]):
             return False
 
-        print()
-        print_(get_messages("input_messages.get_boolean_input"))
+        print_()
+        leftprint(get_messages("input_messages.get_boolean_input"))
 
 
-def get_int_input(upper_limit):
+def get_int_input(upper_limit, add_text: str | None = None):
     while True:
-        _input = get_input()
-        print()
+        _input = get_input(add_text, 1)
+        print_()
         value = None
 
         try:
             value = int(_input)
         except ValueError:
-            print_(get_messages("input_messages.get_int_input").format(upper_limit=upper_limit))
-            # print()
+            leftprint(get_messages("input_messages.get_int_input").format(upper_limit=upper_limit))
             continue
-            
+
         if not 1 <= value <= upper_limit:
-            print_(get_messages("input_messages.get_int_input").format(upper_limit=upper_limit))
-            # print()
+            leftprint(get_messages("input_messages.get_int_input").format(upper_limit=upper_limit))
             continue
-        
+
         return value
-            

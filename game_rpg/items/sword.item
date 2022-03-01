@@ -1,0 +1,82 @@
+{
+    "type": "weapons",
+    "namespace": "sword",
+    "items": {
+        "wood_s": {
+            "name": "Wood Sword",
+            "quality": 0,
+            "type": "equippable",
+            "price": [ 100, "silver" ],
+            "attacks": [ "melee/slash", "melee/slab" ],
+            "stats": {
+                "basic": { "damage": [ 3, 12 ], "armor_penetration": 6 },
+                "other": { "strength": 5, "health": 10 }
+            },
+            "equip_location": [
+                "main_hand",
+                "two_hand",
+                "off_hand"
+            ],
+            "user": [ "warrior" ],
+            "description": ""
+        },
+        "magic_s": {
+            "name": "Magic Sword",
+            "quality": 1,
+            "type": "equippable",
+            "price": [ 5, "gold" ],
+            "attacks": [ "magic/magic_attack" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 5, 15 ],
+                    "armor_penetration": 10
+                },
+                "other": { "magic": 15 }
+            },
+            "equip_location": [ "main_hand" ],
+            "user": [ "warrior" ],
+            "description": ""
+        },
+        "astral": {
+            "name": "astral sword",
+            "quality": 5,
+            "type": "equippable",
+            "price": [ 444, "gold" ],
+            "attacks": [ "melee/slash", "spell/drain_health" ],
+            "stats": {
+                "basic": {
+                    "damage": [ 10, 30 ],
+                    "armor_penetration": 30
+                },
+                "other": {
+                    "growth_hp": 10,
+                    "health": 1000
+                }
+            },
+            "equip_location": [ "main_hand" ],
+            "user": [ "warrior" ],
+            "description": ""
+        },
+        "dragon_ice": {
+            "name": "Dragon ice Sword",
+            "quality": 4,
+            "type": "equippable",
+            "price": [ 500, "gold" ],
+            "attacks": [
+                "melee/slab",
+                "melee/ice_slash",
+                "magic/icebolt"
+            ],
+            "stats": {
+                "basic": {
+                    "damage": [ 1, 40 ],
+                    "armor_penetration": 15
+                },
+                "other": { "critical_change": 1, "critical_hit": 100 }
+            },
+            "equip_location": [ "off_hand" ],
+            "user": [ "warrior" ],
+            "description": ""
+        }
+    }
+}

@@ -1,87 +1,82 @@
-# Generate Enemy
-
-from .enemy import Enemy
-from .setup import ATTACK, GAME, ENEMY
-from .items import get_items, Items as ITEMS, EQUIPPABLE
-from .attack import Attack
+from .data import _load
+from . import enemy, attack
 import random
-import _collections_abc
-
-def _generate_enemy_level(lv: int, diff: int=1):
-    if 3 < lv <= 7:
-        lv = (1, lv)
-    elif lv > 7:
-        if lv < 58:
-            max_lv = lv + diff
-            if max_lv > 60:
-                max_lv = 60
-            lv = (lv - int(4  - (1.5 * diff)) , max_lv)
-        elif lv >= 58:
-            lv = (57 - int(4  - (1.5 * diff)), lv)
-
-    return lv
 
 
-def enemyRandom(lv=3):
-    _ENEMY = ENEMY()
-    if isinstance(lv, (list, tuple)):
-        lv = random.randint(min(lv), max(lv))
+dt_enemy = _load("enemy.json")
 
-    _class = random.choice(_ENEMY["list_enemy"].copy())
-    DATA = _ENEMY["class"][_class].copy()
-    if _class in _ENEMY["variant"]:
-        variant_enemy = random.choice(_ENEMY["variant"][_class].copy() + ["default"])
-        if variant_enemy != "default":
-            DATA = update_enemy(DATA, variant_enemy)
 
-    # -- equipment
-    equipment = {}
-    if DATA.get("equipment"):
-        for locate, values  in DATA["equipment"].items():
-            id_items = random.choice(values) if isinstance(values, list) else values
-            items = get_items(id_items)
-            if not isinstance(items, ITEMS) or not isinstance(items.attribute, EQUIPPABLE):
-                # gagal dalam mendapatka items
-                continue
+def create_enemy(name_enemy, level=1) -> enemy.Enemy:
 
-            if locate == "hand":
-                locate = random.choice(items.attribute.location)
+    if name_enemy not in dt_enemy:
+        raise NameError("Nama Enemy salah, " + str(name_enemy))
 
-            equipment[locate] = items
+    data = dt_enemy[name_enemy]
 
-    # for attack enemy
-    attacks = []
-    if DATA.get("attack"):
-        for attack in DATA["attack"].copy():
+    stats = data["stats"].copy()
 
-            if isinstance(attack, str):
-                attack = ATTACK(attack)
+    for name, values in stats.items():
+        for stat, value in values.items():
 
-            if isinstance(attack, dict):
-                attacks.append(Attack.load_attack(attack))
-                continue
-    
+            if isinstance(value, list):
+                value = random.randint(min(value), max(value))
+
+            stats[name][stat] = value
+
+
+    equipments = data["equipment"].copy()
+
+    for location, values in equipments.items():
+
+        if isinstance(values, list):
+            values = random.choice(values)
+
+        equipments[location] = values
+
     # looting
-    looting = []
-    if DATA.get("looting"):
-        looting_sorted = sorted(DATA["looting"], key=lambda d: d["change"], reverse=True)
+    lootings = []
+    if data.get("looting"):
+        looting_sorted = sorted(data["looting"].copy(), key=lambda d: d["change"], reverse=True)
         for loot in looting_sorted:
-            looting.append((loot, loot["change"]))
+            lootings.append((loot, loot["change"]))
 
-    return Enemy(
-        name=DATA["name"],
-        _class=_class,
-        level=lv,
-        attacks=attacks,
-        equipments=equipment,
-        stats=DATA,
-        looting=looting
+
+    return enemy.Enemy(
+        name=data["name"],
+        level=level,
+        type_damage=data["type_damage"],
+        equipments=equipments,
+        stats=stats,
+        attacks=[ attack.load_from_id(_id) for _id in data["attacks"].copy() ],
+        looting=lootings,
+        inventory=data["inventory"].copy()
     )
 
-def update_enemy(orig_data: dict, new_data: dict):
-    for key, value in new_data.items():
-        if isinstance(value, _collections_abc.Mapping):
-            orig_data[key] = update_enemy(orig_data.get(key, {}), value)
-        else:
-            orig_data[key] = value
-    return orig_data
+
+def create_enemy_random(lv = 1, requirement_level=True):
+
+    name_enemy = random.choice(list(dt_enemy.keys()))
+    r_enemy = dt_enemy[name_enemy]
+    req_level = r_enemy["requirement_level"]
+
+    i = 0
+    while requirement_level and i != 10:
+
+        if req_level == "-":
+            break
+
+        if isinstance(req_level, int) and req_level <= lv:
+            break
+
+        if isinstance(req_level, list):
+            if (req_level[0] < lv and isinstance(req_level[1], str) and req_level[1] == "-") or \
+                (req_level[0] < lv and isinstance(req_level[1], int) and req_level[1] >= lv):
+                break
+
+        name_enemy = random.choice(list(dt_enemy.keys()))
+        r_enemy = dt_enemy[name_enemy]
+        req_level = r_enemy["requirement_level"]
+
+        i += 1
+
+    return create_enemy(name_enemy, lv)

@@ -1,0 +1,230 @@
+{
+    "type": "armor",
+    "namespace": "helmet",
+    "items": {
+        "gold_crown": {
+            "name": "Gold Crown",
+            "quality": 5,
+            "type": "equippable",
+            "price": [
+                10000,
+                "gold"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 10,
+                    "resistance": 7
+                },
+                "other": {
+                    "strength": 25,
+                    "dextery": 23,
+                    "magic": 10,
+                    "constitution": 50
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "anc_helm": {
+            "name": "Ancient Helm",
+            "quality": 2,
+            "type": "equippable",
+            "price": [
+                1000000,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 16,
+                    "resistance": 8
+                },
+                "other": {
+                    "strength": 25,
+                    "health": 10
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "goat_cap": {
+            "name": "Goat Cap",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                3,
+                "gold"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 8,
+                    "resistance": 8,
+                    "evasion": 8
+                },
+                "other": {}
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "broken_helm": {
+            "name": "Broken Helmet",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                100,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 8
+                },
+                "other": {}
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "assassin_mask": {
+            "name": "Assassin Mask",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                1000,
+                "silver"
+            ],
+            "stats": {
+                "basic": {},
+                "other": {
+                    "critical_change": 5,
+                    "critical_hit": 10
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "anubis_helm": {
+            "name": "Template name",
+            "quality": 4,
+            "type": "equippable",
+            "price": [
+                5,
+                "gold"
+            ],
+            "stats": {
+                "basic": {
+                    "armor_penetration": 5
+                },
+                "other": {
+                    "will": 20,
+                    "stamina": 50
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "king_helm": {
+            "name": "King helm",
+            "quality": 2,
+            "type": "equippable",
+            "price": [
+                30,
+                "gold"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 15,
+                    "evasion": 1
+                },
+                "other": {
+                    "constitution": 1,
+                    "strength": 5,
+                    "will": 5
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "sock": {
+            "name": "Sock",
+            "quality": 0,
+            "type": "equippable",
+            "price": [
+                100,
+                "silver"
+            ],
+            "stats": {
+                "basic": {},
+                "other": {
+                    "perception": 3
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "steel_helm": {
+            "name": "Steel helm",
+            "quality": 1,
+            "type": "equippable",
+            "price": [
+                650,
+                "silver"
+            ],
+            "stats": {
+                "basic": {
+                    "defense": 10
+                },
+                "other": {
+                    "strength": 3,
+                    "constitution": 2
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        },
+        "luck_helm": {
+            "name": "Luck of helm",
+            "quality": 4,
+            "type": "equippable",
+            "price": [
+                120,
+                "gold"
+            ],
+            "stats": {
+                "basic": {},
+                "other": {
+                    "luck": 235
+                }
+            },
+            "equip_location": [
+                "head"
+            ],
+            "user": "all",
+            "description": ""
+        }
+    }
+}

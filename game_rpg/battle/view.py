@@ -1,26 +1,33 @@
-from .. import interface
+from .. import interface, entity, util
 
 
-def view_battle(Battle):
-    interface.centerprint(f"== {interface.get_messages('battle.title')} ==")
-    print_line(
-        [
-            "Name : " + Battle.player.name,
-            interface.get_messages("view.health") + " : " + str(Battle.player.health) + " / " + str(Battle.player.max_health),
-            interface.get_messages("view.mana") + " : " + str(Battle.player.mana) + " / " + str(Battle.player.max_mana),
-            interface.get_messages("view.stamina") + " : " + str(Battle.player.stamina) + " / " + str(Battle.player.max_stamina),
-            "Class : " + Battle.player._class
-        ],
-        [
-            Battle.enemy.name + " : Name",
-            str(Battle.enemy.health) + " / " + str(Battle.enemy.max_health) + " : " + interface.get_messages("view.health"),
-            str(Battle.enemy.mana) + " / " + str(Battle.enemy.max_mana) + " : " + interface.get_messages("view.mana"),
-            str(Battle.enemy.stamina) + " / " + str(Battle.enemy.max_stamina) + " : " + interface.get_messages("view.stamina"),
-            Battle.enemy._class + " : Class"
-        ]
+def view(battle):
+    interface.print_title("battle", battle.width_line)
+
+    for name in interface.get_messages("battle.view"):
+        print_line(battle, name)
+
+
+def print_line(battle, stat):
+
+    def get_value(ENTITY: entity.Entity):
+
+        _value = getattr(ENTITY, stat)
+
+        if stat in entity.DATA["values"]["resource"]:
+            _value = str(
+                    getattr( ENTITY, ("max_" if ENTITY._namespace != "Enemy" else "") + stat, stat)
+                ) + " / " +  str(
+                    getattr( ENTITY, ("max_" if ENTITY._namespace == "Enemy" else "") + stat, stat)
+                )
+
+        if stat in entity.DATA["values"]["critical"] or stat == "armor_penetration":
+            _value = str(_value) + "%"
+
+        return _value
+
+    interface.printtwolines(
+        "{:<8} : {}".format(util.short_stat(stat), get_value(battle.player)),
+        "{} : {:>8}".format(get_value(battle.enemy), util.short_stat(stat)),
+         width=int(battle.width_line/2)
     )
-
-
-def print_line(left: list, right: list, distance=1):
-    for a, b in zip(left, right):
-        interface.LeftRigthPrint(left=a, right=b, distance=distance)

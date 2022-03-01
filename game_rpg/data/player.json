@@ -1,0 +1,43 @@
+{
+    "mage": {
+        "type_damage": "magic",
+        "stats": {
+            "basic": { "strength": 7, "magic": 25, "dextery": 6, "constitution": 10, "will": 17, "perception": 5, "growth_hp": 90, "growth_mp": 120 },
+            "defend": { "defense": 7, "evasion": 10, "resistance": 17, "armor_penetration": 3 },
+            "resource": { "health": 25, "mana": 20, "stamina": 5 },
+            "crirical": { "critical_change": 0, "critical_damage": 0}
+        },
+        "equipment": {
+            "main_hand": "staff/m_staff",
+            "shoes": "shoes/gardener_shoes",
+            "body": "armor/saints_r"
+        }
+    },
+    "archer": {
+        "type_damage": "physical",
+        "stats": {
+            "basic": { "strength": 15, "magic": 5, "dextery": 20, "constitution": 10, "will": 8, "perception": 17, "growth_hp": 95, "growth_mp": 105 },
+            "defend": { "defense": 9, "evasion": 15, "resistance": 8, "armor_penetration": 9 },
+            "resource": { "health": 15, "stamina": 25, "mana": 10 },
+            "crirical": { "critical_change": 0, "critical_damage": 0}
+        },
+        "equipment": {
+            "main_hand": "bow/wood_b",
+            "head": "helmet/assassin_mask",
+            "body": "armor/saints_r"
+        }
+    },
+    "warrior": {
+        "type_damage": "physical",
+        "stats": {
+            "basic": { "strength": 20, "magic": 7, "dextery": 8, "constitution": 16, "will": 12, "perception": 10, "growth_hp": 100, "growth_mp": 100 },
+            "defend": { "defense": 11, "evasion": 11, "resistance": 11, "armor_penetration": 6 },
+            "resource": { "health": 35, "stamina": 10, "mana": 5 }
+        },
+        "equipment": {
+            "main_hand": "sword/wood_s",
+            "head": "helmet/broken_helm",
+            "body": "armor/wood_mail"
+        }
+    }
+}

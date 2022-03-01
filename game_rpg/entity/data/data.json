@@ -1,0 +1,23 @@
+{
+    "values": {
+        "basic": [ "strength", "dextery", "magic", "perception", "constitution", "will", "growth_hp", "growth_mp" ],
+        "critical": [ "critical_change" , "critical_damage" ],
+        "defend": [ "defense", "evasion", "resistance", "armor_penetration" ],
+        "resource": [ "health", "mana", "stamina" ]
+    },
+    "equipment": {
+        "weapons": [ "main_hand", "off_hand", "two_hand" ],
+        "armor": [ "head", "body", "shoes" ]
+    },
+    "max_level": 60,
+    "player_values": [
+        ["gold", 10],
+        ["silver", 1000],
+        ["point_level", 5],
+        ["message_width_for_lv", 50]
+    ],
+    "entity_values": [
+        ["level", 1],
+        ["exp", 0]
+    ]
+}

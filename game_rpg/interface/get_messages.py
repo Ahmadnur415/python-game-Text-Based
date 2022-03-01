@@ -1,8 +1,5 @@
-from ..setup import SETTING, LANG
+from ..data import _load
 
 def get_messages(index: str, default=None) -> str:
-    return LANG()[SETTING["lang"]].get(
-        index, LANG()["en_US"].get(
-            index, index if not default else default
-        )
-    )
+    LANG = _load("lang.json")
+    return LANG.get(index, default)

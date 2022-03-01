@@ -1,96 +1,110 @@
-from .. import interface, setup, namespace
+from .. import interface, namespace, util
+from ..entity import DATA
 
 
-def view_equipment(player):
-    DATA = setup.ENTITY.copy()
-
-    lines = ["== Equipment ==".center(50)]
-    if not player.equipment["two_hand"]:
-        lines += [
-            f"{locations.replace('_', ' ').capitalize():<15} : {'-' if not player.equipment[locations] else player.equipment[locations].name}"
-            for locations in ["main_hand", "off_hand"]
-        ]
-
-    if player.equipment["two_hand"]:
-        lines += [f"{'Two Hand':<15} : {player.equipment['two_hand'].name}"]
-
-    lines += [
-        f"{location.replace('_', ' ').capitalize():<15} : {'-' if not player.equipment[location] else player.equipment[location].name}"
-        for location in DATA['attribute']["equipment"]["armor"]
-    ]
-
-    for line in lines:
-        print(" " + line)
-
-
-def view_stats(self):
-    lines = {}
-    distance = 3
-
-    for stats in setup.ENTITY["stats"]:
-        line = str(getattr(self, stats, 0))
-        if stats in setup.ENTITY["entity_values"]["resource"]:
-            line = str(getattr(self, stats, 0)) + " / " + str(getattr(self, "max_" + stats, 0))
-
-        lines.update({interface.get_messages("view."+stats, stats): line})
-
-    lines.update({
-        interface.get_messages("view.critical_change", "C.Change"): str(self.critical_change) + "%",
-        interface.get_messages("view.critical_hit", "C.Hit"): self.critical_hit  + "%",
-        "Level": self.level
-    })
-    if self.namespace == "player":
-        _exp = getattr(self, "exp", 0)
-        _max_exp = getattr(self, "max_exp", 0)
-        line = "0 / 0 | 0% (max)"
-        if self.level < 60:
-            line = str(_exp) + " / " + str(_max_exp) + " | " + str(round((100 * _exp) / _max_exp, 2)) + "%"
-
-        lines.update({"Exp": line, "Gold": getattr(self, "gold", 0), "Silver": getattr(self, "silver", 0)})
-
-    print(f"{self.name} Stats: ")
-    interface.printData(
-        lines, distance=distance
-    )
-
-
-def view_inventory(player, typeItems: str = None):
-    if not player.inventory:
-        interface.centerprint(interface.get_messages("inventory.no_have_items"))
-        return
-
-    if typeItems == namespace.EQUIPPABLE and not player.equippable_items:
-        interface.centerprint(interface.get_messages("inventory.no_equippable_items"))
-        return
-
-    if typeItems == namespace.CONSUMABLE and not player.consumable_items:
-        interface.centerprint(interface.get_messages("inventory.no_consumable_items"))
-        return
-
-    interface.centerprint("== " + ("Inventory" if not typeItems else typeItems) + " ==")
+def inventory_view(self, class_item: str | None = None):
 
     items_to_show = []
-    for items in player.inventory:
-        if not typeItems or typeItems.upper() == items.namespace:
+    for items in self.inventory:
+        if not class_item or class_item == items.class_item:
             items_to_show.append(items)
 
-    interface.leftprint(f"{'NO':<3}{'Name'}")
-
-    for index, inventory_items in enumerate(items_to_show):
-        name = inventory_items.name
-        if inventory_items.amount > 1:
-            name += f" {inventory_items.amount}x"
-
-        if inventory_items.namespace == namespace.EQUIPPABLE:
-            name += (" - [E]" if inventory_items.attribute.use else "")
-
-        interface.leftprint(f"{index + 1:<3}{name}")
-        interface.LeftRigthPrint(f"Quality : {inventory_items.get_quality.capitalize()}", inventory_items.typeItems.capitalize(), 4)
+    interface.print_title(("inventory" if not class_item else class_item))
 
 
-def use_items_interface(player):
-    while True:
-        player.view_inventory("CONSUMABLE")
+    interface.leftprint(
+        interface.get_messages("item.line_item").format(
+            "No", interface.readable_item("", ("name", "quality", "type_item")).replace("_", " ")
+        ), width=100
+    )
 
-        if not player.consumable_items:
-            break
+    for i, inventory_item in enumerate(items_to_show):
+        interface.leftprint(
+            interface.get_messages("item.line_item").format(
+                i + 1, interface.readable_item(inventory_item, ("name", "quality", "type_item"))
+            ), width=100
+        )
+
+    if not self.inventory:
+        interface.centerprint(interface.get_messages("inventory.no_have_items"), width=63)
+        return
+
+    if class_item == namespace.EQUIPPABLE and not self.equippable_items:
+        interface.centerprint(interface.get_messages("inventory.no_equippable_items"), width=63)
+        return
+
+    if class_item == namespace.CONSUMABLE and not self.consumable_items:
+        interface.centerprint(interface.get_messages("inventory.no_consumable_items"), width=63)
+        return
+
+def equipment_view(self):
+
+    interface.print_title("equipment")
+
+    interface.print_message(
+        "equipment.list_line", "left", location="Location", name="Name Item",
+    )
+    for location, equipment_item in self.equipment.items():
+        if self.equipment["two_hand"] and location in ("main_hand", "off_hand") or location == "two_hand" and not equipment_item:
+            continue
+
+        interface.print_message(
+            "equipment.list_line", "left", location=location.replace("_", " ").capitalize(), name=equipment_item.name if equipment_item else "-",
+        )
+
+def player_view(self):
+    interface.leftprint(self.name + " : ")
+
+    WIDTH = 22
+    DISTANCE = 5
+
+    for name, stats in DATA["values"].items():
+        lines = {}
+        one_line = False
+        for stat in stats:
+
+            value = getattr(self, stat, None)
+
+            if name == "critical" or stat == "armor_penetration":
+                value = str(value) + "%"
+
+            if name == "resource":
+                one_line = True
+                value = str(getattr(self, "max_" + stat)) + " / " +  str(getattr(self, stat))
+
+            lines[util.short_stat(stat)] = value
+
+        interface.generates_readable_stats(lines, use_sign=False, width=WIDTH, one_line=one_line, distance=DISTANCE)
+
+    level = str(self.level)
+    if self.level > self.max_level:
+        level += "  (max)"
+
+    interface.generates_readable_stats(
+        {"level": level, "class": self._class}, use_sign=False, width=WIDTH, one_line=True, distance=DISTANCE
+    )
+
+    exp = "|" + interface.progress_bar(self.exp, self.max_exp, width=25) + "|  "
+    if self.level < self.max_level:
+        exp += "{} / {} - {}%".format(self.exp, self.max_exp, int(100 / self.max_exp * self.exp))
+
+    interface.leftprint("exp " + exp, distance=DISTANCE, width=50)
+    interface.printtwolines(f"Silver {self.silver}", f"{self.gold} Gold", width=WIDTH, distance=DISTANCE)
+
+
+def attacks_view(self):
+    interface.print_title("list of Attack")
+
+    distance = 5
+    for i, attack in enumerate(self.attacks):
+        interface.leftprint(
+            "{:>2}) {}".format(i + 1, attack.name),
+            distance=0
+        )
+
+        interface.leftprint(
+            interface.get_messages("attack.cooldown").format(attack.cooldown),
+            interface.get_messages("attack.mana_cost_template").format(attack.cost_mana),
+            interface.get_messages("attack.stamina_cost_template").format(attack.cost_stamina),
+            distance=distance
+        )
