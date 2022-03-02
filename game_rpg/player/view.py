@@ -88,7 +88,7 @@ def player_view(self):
     if self.level < self.max_level:
         exp += "{} / {} - {}%".format(self.exp, self.max_exp, int(100 / self.max_exp * self.exp))
 
-    interface.leftprint("exp " + exp, distance=DISTANCE, width=50)
+    interface.leftprint("exp " + exp, distance=DISTANCE, width=len(exp) + 10)
     interface.printtwolines(f"Silver {self.silver}", f"{self.gold} Gold", width=WIDTH, distance=DISTANCE)
 
 

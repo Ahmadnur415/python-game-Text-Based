@@ -1,6 +1,8 @@
+from copy import deepcopy
 from .items import DATA
 from . import interface, namespace
 from .attack import generate_attack_for_items
+
 
 class Item:
     def __init__(
@@ -90,10 +92,7 @@ class Item:
             "item.desc", "left", classitem=self.class_item.capitalize(), desc=desc, quality=self.quality
         )
 
-        stats = {
-            "basic": self.stats["basic"].copy(),
-            "other": self.stats["other"].copy()
-        }
+        stats = deepcopy(self.stats)
 
         if stats:
 
@@ -101,7 +100,6 @@ class Item:
 
                 interface.print_message("item.weapons_attribute", "left", " ~ ".join(str(i) for i in stats["basic"].get("damage", [0, 0])), stats["basic"]["armor_penetration"])
 
-                stats["basic"]["damage"] = stats["basic"]["damage"].copy()
                 stats["basic"].pop("damage")
                 stats["basic"].pop("armor_penetration")
 

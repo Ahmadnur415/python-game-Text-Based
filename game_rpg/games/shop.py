@@ -1,16 +1,15 @@
 from .game import Game
-from ..items import DATA
 from .. import interface, namespace, util
-from ..item import get_items
+from ..item import get_items, DATA
+
 
 def enter(self, player):
-
-    self.index_row = 0
+    self.index = 0
     sort_by = [namespace.NAME, namespace.PRICE, namespace.QUALITY]
 
     while True:
         interface.print_title( self.name.capitalize() )
-        result = interface.get_command(list(DATA[self.index].keys()), "type of items", list_option=True, loop=False)
+        result = interface.get_command(list(DATA["items_by_namspace"].keys()), "type of items", list_option=True, loop=False)
 
         if not isinstance(result, tuple):
             continue
@@ -28,7 +27,7 @@ def enter(self, player):
 
     interface.print_("\n")
     while True:
-        rows = getattr(self, "get_item_by_" + self.sort_by)()
+        rows = getattr(self, "get_items_by_" + self.sort_by)()
         interface.print_title(self.name.capitalize() + " " + self.typeitem, )
 
         sort_by = [namespace.NAME, namespace.PRICE, namespace.QUALITY]
@@ -37,14 +36,14 @@ def enter(self, player):
         LEFT = ""
         RIGTH = ""
 
-        if self.index_row < 0:
-            self.index_row = 0
+        if self.index < 0:
+            self.index = 0
 
-        if self.index_row > len(rows) - 1:
-            self.index_row = len(rows) - 1
+        if self.index > len(rows) - 1:
+            self.index = len(rows) - 1
 
         items = [
-            get_items(name) for name in rows[self.index_row]
+            get_items(name) for name in rows[self.index]
         ]
 
         self.print_line("No", "")
@@ -59,11 +58,11 @@ def enter(self, player):
 
         items.extend(sort_by)
 
-        if self.index_row > 0 and self.index_row < len(rows):
+        if self.index > 0 and self.index < len(rows):
             LEFT = interface.get_messages("game.shop.go_back").format(len(items) + 1)
             items.append(LEFT)
 
-        if self.index_row > -1 and self.index_row < len(rows) - 1:
+        if self.index > -1 and self.index < len(rows) - 1:
             RIGTH = interface.get_messages("game.shop.next").format(len(items) + 1)
             items.append(RIGTH)
 
@@ -79,17 +78,17 @@ def enter(self, player):
 
         if result[0] == LEFT:
 
-            self.index_row -= 1
+            self.index -= 1
             continue
 
         if result[0] == RIGTH:
 
-            self.index_row += 1
+            self.index += 1
             continue
 
         if result[0] in sort_by:
             self.sort_by = result[0]
-            self.index_row = 0
+            self.index = 0
             continue
 
         if result[0] == namespace.BACK:
@@ -139,31 +138,26 @@ def sort_items(self, key: str) -> list:
     data = [
         item[0] for item in sorted(
             [
-                (id_item , DATA["items"][id_item]) for id_item in DATA[self.index][self.typeitem]
+                (id_item , DATA["items"][id_item][key]) for id_item in DATA["items_by_namspace"][self.typeitem]
             ],
-            key=lambda d : d[1][key]
+            key=lambda d : d[1]
         )
     ]
 
-    return util.generate_rows_list(self.count_item, data)
+    return util.generate_rows_list(self.size, data)
 
 
-def get_item_by_price(self):
-    items_price_silver = []
-    items_price_gold = []
+def get_items_by_price(self):
+    price = {"silver": [], "gold": []}
 
-    for identify in DATA[self.index][self.typeitem]:
-        item = DATA["items"][identify].copy()
 
-        if item["price"][1] == "gold":
-            items_price_gold.append((identify, item))
-            continue
+    for identify in DATA["items_by_namspace"][self.typeitem]:
+        
+        value = DATA["items"][identify]["price"].copy()
+        price[value[1]].append((identify, value))
 
-        items_price_silver.append((identify, item))
-
-    items = sorted(items_price_silver, key=lambda d : d[1]["price"][0]) + sorted(items_price_gold, key=lambda d : d[1]["price"][0])
-
-    return util.generate_rows_list(self.count_item, [item[0] for item in items])
+    items = sorted(price["silver"], key=lambda d: d[1][0]) + sorted(price["gold"], key=lambda d: d[1][0])
+    return util.generate_rows_list(self.size, [item[0] for item in items])
 
 
 def get_item_by_quality(self):
@@ -174,28 +168,17 @@ def get_item_by_name(self):
     return self.sort_items("name")
 
 
-def make_row_items(self, items):
-    rows_items = []
-
-    while data != []:
-        rows_items.append(items[:self.count_item])
-        data = data[self.count_item:]
-
-    return rows_items
-
-
 main = Game(
     namespace.SHOP,
     enter,
-    index="items_by_namspace",
-    index_row=0,
-    count_item=8,
-    typeitem="",
+    index=0,
+    size=8,
+    typeitem="armor",
     sort_by=namespace.QUALITY
 )
 
 main.add_methode("print_line", print_line)
 main.add_methode("sort_items", sort_items)
-main.add_methode("get_item_by_price", get_item_by_price)
-main.add_methode("get_item_by_quality", get_item_by_quality)
-main.add_methode("get_item_by_name", get_item_by_name)
+main.add_methode("get_items_by_price", get_items_by_price)
+main.add_methode("get_items_by_quality", get_item_by_quality)
+main.add_methode("get_items_by_name", get_item_by_name)

@@ -28,4 +28,4 @@ def enemy_attack_phase(battle):
         attack_use,
         damage
     )
-    interface.centerprint("-")
+    interface.centerprint("-", width=battle.width_line)

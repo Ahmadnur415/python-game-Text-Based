@@ -3,7 +3,8 @@ from game_rpg.create_player import create_player, Player
 from game_rpg.saveload import load_game
 from pathlib import Path
 
-def play():    
+
+def play():
     while True:
         interface.print_title("welcome")
 

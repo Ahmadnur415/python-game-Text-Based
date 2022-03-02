@@ -1,7 +1,7 @@
 import random
 import math
 from ..battle import flag
-from .. import util, namespace, interface
+from .. import util, namespace
 
 
 def attack_state(self, enemy, attack_use):

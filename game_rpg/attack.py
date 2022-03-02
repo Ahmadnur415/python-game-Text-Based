@@ -16,17 +16,12 @@ class Attack:
         cost_mana=0,
         cost_stamina=0,
         countdown=0,
-        effects=None,
         modiefer_damage=None
 
     ):
         if not isinstance(damage, (int, list)):
             damage = 1
 
-        if not effects:
-            effects = []
-
-        self.effects = effects
         self.name = name
         self.identify = identify
         self.damage = damage
@@ -44,9 +39,6 @@ class Attack:
         return self.__class__.__name__ + "(" + self.identify + ")"
 
     def get_modiefer_damage(self, enemy):
-
-        if not self.modiefer_damage:
-            return 0
 
         if isinstance(self.modiefer_damage, dict) and self.user:
             return util._generate_value_from_dict(self.modiefer_damage, self.user, enemy)
@@ -87,7 +79,6 @@ class Attack:
             cost_mana=data.get("cost_mana", 0),
             cost_stamina=data.get("cost_stamina", 0),
             countdown=data.get("countdown", 0),
-            effects=data.get("effects"),
             modiefer_damage=data.get("modiefer_damage")
         )
 

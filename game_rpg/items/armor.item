@@ -240,7 +240,7 @@
             "description": ""
         },
         "thives_suit": {
-            "name": "Template name",
+            "name": "Thives suit",
             "quality": 3,
             "type": "equippable",
             "price": [ 55, "gold" ],

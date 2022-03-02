@@ -2,6 +2,7 @@ from .entity import Entity, DATA
 from . import util
 import random
 
+
 class Enemy(Entity):
     def __init__(
         self,
@@ -35,6 +36,7 @@ class Enemy(Entity):
         self.name = name
         self.looting = looting
         self.level = level
+        self.inventory.extend(inventory)
 
         _generate_stats_enemy(self)
 

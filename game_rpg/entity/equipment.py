@@ -52,5 +52,3 @@ def unequip_item(self, location: str):
 
             if stat in DATA["full_stats"]:
                 setattr(self, stat, getattr(self, stat) - value)
-
-    self.set_mode_weapon()
