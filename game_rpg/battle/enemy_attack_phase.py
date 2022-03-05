@@ -14,8 +14,7 @@ def enemy_attack_phase(battle):
 
     if result_attack == flag.EVADED:
         battle.count_dodge_player += 1
-        battle.print_mesagge("player_evaded")
-        interface.get_enter()
+        battle.print_message("player_evaded")
         return
 
     if result_attack == flag.CRITICAL_HIT:
