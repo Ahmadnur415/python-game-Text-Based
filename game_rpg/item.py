@@ -47,6 +47,9 @@ class Item:
         self.description = description
         self.user = user
 
+    def __repr__(self) -> str:
+        return f"Item({self.identify})"
+
     @property
     def selling_price(self):
         return [int(self.price[0] * 0.8), self.price[1]]

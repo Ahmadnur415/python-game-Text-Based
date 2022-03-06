@@ -1,4 +1,6 @@
 from .. import interface
+from ..item import get_items
+
 
 def _generate_value_entity(name):
 
@@ -69,3 +71,29 @@ def generate_exp_value_property():
 
     return value_property
 
+
+def update(entity): 
+    current_inventory, new_inventory, new_equipment = entity.inventory, [], {}
+
+    # update item in inventory
+    for item in current_inventory:
+        new_item = get_items(item.identify)
+        
+        if item.amount > 1:
+            new_item.amount = item.amount
+
+        if item.used:
+ 
+            if item.location_used in new_item.equip_location:
+                new_equipment[item.location_used] = new_item
+
+            entity.unequip_item(item.location_used)
+
+        new_inventory.append(new_item)
+
+    # update equipment
+    for location, item in new_equipment.items():
+        entity.equip_item(item, location)
+
+    entity.inventory.clear()
+    entity.inventory = new_inventory

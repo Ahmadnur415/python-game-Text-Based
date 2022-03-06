@@ -18,6 +18,7 @@ def play():
 
                 if isinstance(result, Player):
                     from game_rpg.games import camp
+                    result.update()
                     return camp.enter(result)
 
                 continue

@@ -13,8 +13,8 @@
         "name": "Golem Punch",
         "type_damage": "physical",
         "type_attack": "MELEE",
-        "damage": [ {"modifier": 1, "equal": "self.level"}, {"modifier": 1.5, "equal": "self.level"} ],
-        "modiefer_damage": { "modifier": 1, "equal": "self.missing_health" , "percent": true, "max_value": 1000},
+        "damage": [ {"modiefer": 1, "equal": "self.level"}, {"modiefer": 1.5, "equal": "self.level"} ],
+        "modiefer_damage": { "modiefer": 1, "equal": "self.missing_health" , "percent": true, "max_value": 1000},
         "description_of_being_used": "hit",
         "countdown": 2,
         "cost_mana": 0,
@@ -44,7 +44,7 @@
         "name": "Punch",
         "type_damage": "physical",
         "type_attack": "MELEE",
-        "damage": [ 1, { "modifier": 0.2, "equal": "self.strength" } ],
+        "damage": [ 1, { "modiefer": 0.2, "equal": "self.strength" } ],
         "modiefer_damage": {},
         "description_of_being_used": "hit",
         "countdown": 3,
@@ -56,10 +56,10 @@
         "type_damage": "physical",
         "type_attack": "RANGED",
         "damage": [
-            { "modifier": 0.5, "equal":"self.perception" },
-            { "modifier": 2.5, "equal":"self.perception" }
+            { "modiefer": 0.5, "equal":"self.perception" },
+            { "modiefer": 2.5, "equal":"self.perception" }
         ],
-        "modiefer_damage": { "modifier": 0.25, "equal": "enemy.missing_health" },
+        "modiefer_damage": { "modiefer": 0.25, "equal": "enemy.missing_health" },
         "description_of_being_used": "hit",
         "countdown": 10,
         "cost_mana": 0,
@@ -83,10 +83,10 @@
         "name": "Ice Bolt",
         "type_damage": "magic",
         "type_attack": "MAGIC",
-        "modiefer_damage": {},
+        "modiefer_damage": { "modiefer": 10, "equal": "enemy.missing_mana", "percent": true, "base_value": 10},
         "description_of_being_used": "hit",
-        "countdown": 10,
-        "cost_mana": 60,
+        "countdown": 5,
+        "cost_mana": 30,
         "cost_stamina": 0
     },
     "magic/magicbolt": {
@@ -114,17 +114,13 @@
         "cost_stamina": 0
     },
     "magic/magicslash": {
-        "name": "slash magic",
+        "name": "Magic slash",
         "type_damage": "magic",
         "type_attack": "MAGIC",
-        "damage": [
-            1,
-            1
-        ],
-        "modiefer_damage": {},
+        "modiefer_damage": { "modiefer": 5, "equal": "self.magic" , "percent": true, "max_value": 7},
         "description_of_being_used": "hit",
         "countdown": 1,
-        "cost_mana": 25,
+        "cost_mana": 10,
         "cost_stamina": 0
     },
     "magic/magic_attack": {
@@ -191,8 +187,8 @@
         "name": "punch",
         "type_damage": "physical",
         "type_attack": "MELEE",
-        "damage": [ 1, { "modiefer": 1.5, "equal": "self.level" , "base_value": 3} ],
-        "modiefer_damage": { "modiefer": 0.5, "equal": "self.strength" , "percent": true, "base_value": 5},
+        "damage": [ 1, { "modiefer": 1.5, "equal": "self.level" , "base_value": 5} ],
+        "modiefer_damage": { "modiefer": 1.2, "equal": "self.strength" , "percent": true, "base_value": 5},
         "description_of_being_used": "hit",
         "countdown": 0,
         "cost_mana": 0,

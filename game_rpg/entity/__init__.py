@@ -75,6 +75,7 @@ class Entity:
     equippable_items = inventory.equippable_items
     consumable_items = inventory.consumable_items
     attack_state = attack_state.attack_state
+    update = util.update
 
  
 for name in DATA["values"]["resource"]:

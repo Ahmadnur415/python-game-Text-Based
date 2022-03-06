@@ -6,12 +6,12 @@
             "name": "magic wood staff",
             "quality": 0,
             "type": "equippable",
-            "price": [ 100, "silver" ],
-            "attacks": [ "magic/magicbolt" ],
+            "price": [ 250, "silver" ],
+            "attacks": [ "magic/magicbolt", "magic/magicslash" ],
             "stats": {
                 "basic": {
-                    "damage": [ 5, 20 ],
-                    "armor_penetration": 15
+                    "damage": [ 7, 15 ],
+                    "armor_penetration": 10
                 },
                 "other": {
                     "magic": 3,
@@ -27,89 +27,63 @@
             "name": "Fire Staff",
             "quality": 0,
             "type": "equippable",
-            "price": [
-                500,
-                "silver"
-            ],
-            "attacks": [
-                "magic/firebolt"
-            ],
+            "price": [ 1000, "silver" ],
+            "attacks": [ "magic/firebolt", "magic/magicslash" ],
             "stats": {
                 "basic": {
-                    "damage": [
-                        3,
-                        4
-                    ],
-                    "armor_penetration": 20
+                    "damage": [ 9, 18 ],
+                    "armor_penetration": 15,
+                    "resistance": 10
                 },
-                "other": {}
+                "other": {
+                    "magic": 10,
+                    "growth_mp": 3
+                }
             },
-            "equip_location": [
-                "main_hand"
-            ],
-            "user": [
-                "mage"
-            ],
+            "equip_location": [ "main_hand" ],
+            "user": [ "mage" ],
             "description": ""
         },
         "ice_staff": {
-            "name": "Fire Staff",
+            "name": "Ice Staff",
             "quality": 1,
             "type": "equippable",
-            "price": [
-                500,
-                "silver"
-            ],
-            "attacks": [
-                "magic/icebolt"
-            ],
+            "price": [ 5, "gold" ],
+            "attacks": [ "magic/icebolt", "magic/magicslash" ],
             "stats": {
                 "basic": {
-                    "damage": [
-                        5,
-                        25
-                    ],
-                    "armor_penetration": 25
+                    "damage": [ 2, 11 ],
+                    "armor_penetration": 12
                 },
-                "other": {}
+                "other": {
+                    "magic": 5,
+                    "will": 15
+                }
             },
-            "equip_location": [
-                "two_hand"
-            ],
-            "user": [
-                "mage"
-            ],
+            "equip_location": [ "main_hand", "off_hand" ],
+            "user": [ "mage" ],
             "description": ""
         },
         "fbi_staff": {
             "name": "<fire> blue ice staff",
             "quality": 3,
             "type": "equippable",
-            "price": [
-                100,
-                "gold"
-            ],
-            "attacks": [
-                "magic/icebolt",
-                "magic/magicslash"
-            ],
+            "price": [ 25, "gold" ],
+            "attacks": [ "magic/icebolt", "magic/magicslash", "magic/firebolt" ],
             "stats": {
                 "basic": {
-                    "damage": [
-                        10,
-                        15
-                    ],
-                    "armor_penetration": 50
+                    "damage": [ 1, 25 ],
+                    "armor_penetration": 33,
+                    "evasion": 10,
+                    "resistance": 15
                 },
                 "other": {
                     "strength": 15,
-                    "mana": 50
+                    "mana": 50,
+                    "critical_damage": 50
                 }
             },
-            "equip_location": [
-                "main_hand",
-                "off_hand"
-            ],
+            "equip_location": [ "main_hand", "off_hand" ],
             "user": [
                 "mage"
             ],
