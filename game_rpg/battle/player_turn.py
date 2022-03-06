@@ -30,6 +30,9 @@ def player_turn(battle):
 
             result = battle.player.consumable_interface()
 
+            if not result:
+                interface.get_enter()
+
             if result and result != namespace.BACK:
                 battle.count_use_items += 1
             interface.print_("\n")

@@ -22,24 +22,23 @@ def enter(_, player):
     player.message_width_for_lv = battle.width_line
     interface.print_title("battle_" + result_battle.lower(), battle.width_line)
 
-    modifier = 1
+    modifier = 0.9 + player.dificulty / 10
     bonus = 10 + 10 * (enemy.level - player.level)
     if result_battle == namespace.BATTLE_LOSE:
-        modifier = 0.5
+        modifier = round(modifier / 2, 1)
         bonus /= 2
 
-    exp = int(100 * modifier + battle.count_turn_battle * 35)
-    gold = int((battle.count_turn_battle / 4 + \
-        battle.count_crit_player * 3 + \
-        battle.count_dodge_player * 5 * modifier) + (1 if result_battle == namespace.BATTLE_LOSE else 5))
+    battle_turn = util.clamp(battle.count_turn_battle, 0, int(5 + player.level / player.max_level / 10))
+    
+    exp = int((25 if result_battle == namespace.BATTLE_LOSE else 50) * modifier)
+    exp += int((exp + 100) * bonus / 100 * modifier + bonus)
 
-    silver = int((battle.count_turn_battle * 100 + \
-        battle.count_crit_player * 50 + \
-        battle.count_dodge_player * 25 * modifier) + (100 if result_battle == namespace.BATTLE_LOSE else 250))
+    gold = 1 if result_battle == namespace.BATTLE_LOSE else 3
+    gold += round(battle_turn / 5 + battle.count_crit_player * 0.7 + battle.count_dodge_player * 1.3 * modifier)
+    gold += int(gold * modifier / 100 * bonus)
 
-    exp += int(exp / 100 * bonus)
-    gold += int(gold / 100 * bonus)
-    silver += int(silver / 100 * bonus)
+    silver = int(battle_turn * 100 + battle.count_crit_player * 100 / 2 + battle.count_dodge_player * 100 * modifier / 4)
+    silver += int((silver * modifier + 150) / 100 * bonus)
 
     interface.centerprint(
         interface.get_messages("battle.get_basic_loot").format(exp=exp, gold=gold, silver=silver),
