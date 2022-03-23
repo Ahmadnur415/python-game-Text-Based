@@ -1,4 +1,3 @@
-from .interface.get_messages import get_messages
 import random
 
 
@@ -8,12 +7,10 @@ def generate_level(lv: int, diff: int=1) -> int:
     if 3 < lv <= 7:
         lv = (1, lv)
     elif lv > 7:
-        if lv < dt["max_level"] - 2:
-            max_lv = lv + diff
-            if max_lv > dt["max_level"]:
-                max_lv = dt["max_level"]
+        if lv < dt["max_level"] - 3:
+            max_lv = clamp(lv + diff, 1, dt["max_level"])
             lv = (lv - int(4  - (1.5 * diff)) , max_lv)
-        elif lv >= 58:
+        elif lv >= 57:
             lv = (57 - int(4  - (1.5 * diff)), lv)
 
     if isinstance(lv, tuple):
@@ -78,7 +75,8 @@ def _generate_value_from_dict(data: dict, self, enemy):
 
 
 def short_stat(stat: str):
-    return get_messages("short_name."+ stat, stat.capitalize())
+    from .interface.get_messages import get_messages
+    return get_messages("short_name." + stat, stat.capitalize())
 
 
 def generate_rows_list(index: int, data: list) -> list:

@@ -1,4 +1,3 @@
-VIEW_PLAYER = "View player"
 INVENTORY = "Inventory"
 EQUIPMENT = "Equipment"
 USE_ITEMS = "Use item"
@@ -13,22 +12,16 @@ POINT_LEVEL = "Point level"
 EQUIPPABLE = "equippable"
 CONSUMABLE = "consumable"
 
-BLACK_MARKET = "black market"
-BUY_ITEMS = "buy items"
-COUNT_ITENS = "count items"
-
 MAIN_MENU = "main menu"
 ADVENTURE = "adventure"
-CAMP = "Camp"
+CAMP = "camp"
 SHOP = "shop"
+DUNGEONS = "dungeons"
 
 PLAY = "Play"
 LOAD = "Load"
 QUIT = "Quit"
 BACK = "Back"
-NEXT = "Next Items"
-GO_BACK = "SEBELUMNYA"
-EXIT = "Exit"
 
 EASY = "easy"
 MEDIUM = "medium"
@@ -39,10 +32,10 @@ PRICE = "price"
 QUALITY = "quality"
 
 BATTLE_ATTACK =  "attack"
-BATTLE_USE_ITEMS = "use items"
 BATTLE_FLED = "fled"
 BATTLE_WIN = "win"
 BATTLE_LOSE = "lose"
+LOOT = "loot"
 
 COMMON = "common"
 UNCOMMON = "uncommon"
@@ -63,3 +56,9 @@ class TYPE_ATTACK:
     SPEEL = "will"
     MAGIC = "magic"
     SHIELD = "constitution"
+
+class DIRECTION:
+    NORTH = "north"
+    SOUTH = "south"
+    WEST = "west"
+    EAST = "east"

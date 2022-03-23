@@ -20,7 +20,7 @@ def attack_state(self, enemy, attack_use):
 
     # ===== GENERATE DAMAGE =====
     if isinstance(damage, list):
-        
+
         for i, value in enumerate(damage.copy()):
             if isinstance(value, dict):
                 damage[i] = util._generate_value_from_dict(damage[i], self, enemy)
@@ -42,22 +42,13 @@ def attack_state(self, enemy, attack_use):
         (False, 100 - util.clamp(self.critical_change, 0, 99))
     ])
 
-
-    # interface.print_("damage :", damage)
     if critical_change:
         damage += round(damage / 100 * self.critical_damage)
-        # interface.print_("CRITICAL DAMAGE :", damage)
 
     # ===== DEAL DAMAGE =====
     reduce_damage = util.clamp( int(damage * enemy.reduce_damage.get( attack_use.type_damage, "physical" ) / 100), 1, 999999999 )
-
-    # interface.print_("reduce damage percent : ", enemy.reduce_damage.get( attack_use.type_damage, "physical" ))
-    # interface.print_("reduce damage final :", reduce_damage)
     damage -= reduce_damage
-
-    # interface.print_("damage :", damage)
-
-    enemy.health -= damage
+    enemy.health -= util.clamp(damage, 1, damage)
     enemy.defense = enemy_defense_prior
 
     if critical_change:

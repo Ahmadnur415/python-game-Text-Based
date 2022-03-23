@@ -5,7 +5,7 @@ def enter(_, player):
 
 
     while True:
-        commands = [namespace.ADVENTURE, namespace.SHOP, namespace.CAMP, namespace.SAVE_GAME, namespace.QUIT]
+        commands = [namespace.ADVENTURE, namespace.DUNGEONS, namespace.SHOP, namespace.CAMP, namespace.SAVE_GAME, namespace.QUIT]
 
         interface.print_title("main_menu")
         result = interface.get_command(commands, add_command_back=False, loop=False, list_option=True)
@@ -23,6 +23,10 @@ def enter(_, player):
 
             from .adventure import main as adventure
             return adventure.enter(player)
+
+        if result[0] == namespace.DUNGEONS:
+            from .dungeons import main as dungeons
+            return dungeons.enter(player)
 
         if result[0] == namespace.SHOP:
             from .shop import main as shop

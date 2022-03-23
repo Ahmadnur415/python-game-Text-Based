@@ -79,6 +79,7 @@
     "game.title.load_game": "-- Load Game --",
     "game.title.template": "-- {} --",
     "game.line_saveload": "{:>2}{:<30}{}",
+    "game.action.move": "----- Move :",
 
     "game.shop.player_coin": "You have {silver} Silver and {gold} Gold",
     "game.shop.purchased": "{name} {count}x items has been purchased.",

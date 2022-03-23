@@ -14,7 +14,8 @@
         ["gold", 10],
         ["silver", 1000],
         ["point_level", 5],
-        ["message_width_for_lv", 50]
+        ["message_width_for_lv", 50],
+        "dungeons"
     ],
     "entity_values": [
         ["level", 1],
