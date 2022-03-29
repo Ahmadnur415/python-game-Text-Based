@@ -1,12 +1,9 @@
-# from .namespace import NODE_MAP
 import random
 from .util import clamp, resolve_random_condition
 from .enemies import create_enemy_random
 from .battle import Battle
 from .item import get_items
 from . import namespace, interface
-from copy import deepcopy
-
 
 
 def create_wall(dungeons, wall, dirc):
@@ -83,10 +80,11 @@ def generate_map(dungeons):
 
 def generate(dungeons):
 	generate_map(dungeons)
+
 	count_enemy = 2 + (1 if dungeons.level % 5 else 0)
-	chance_drop_enemy = 3
 	count_loot = 1 + (1 if dungeons.level % 3 else 0)
-	chance_drop_loot = 3
+	change_enemy = 3
+	change_loot = 3
 
 	x = 0
 	for _ in range(0, 1000):
@@ -100,33 +98,30 @@ def generate(dungeons):
 			# set enemy
 			if dungeons.surrounding_wall((x, y)).count("c") > 2 and dungeons.grid[x][y] == "c" and count_enemy > 0:
 				drop = resolve_random_condition(sorted([
-					(True, chance_drop_enemy),
-					(False, 100 - chance_drop_enemy)
+					(True, change_enemy),
+					(False, 100 - change_enemy)
 				], key=lambda d: d[1]))
 
 				if f"{x}:{y}" not in dungeons.location_enemy and drop:
 					dungeons.location_enemy[f"{x}:{y}"] = create_enemy_random(dungeons.level, False)# { "id": "enemy id", "level": dungeons.level}
 					count_enemy -= 1
+					change_enemy = 10
 				else:
-					chance_drop_enemy += 3
+					change_enemy += 5
 
 			# set loot
 			if dungeons.surrounding_wall((x, y)).count("c") <= 2 and dungeons.grid[x][y] == "c" and count_loot > 0:
 				drop = resolve_random_condition(sorted([
-					(True, chance_drop_loot),
-					(False, 100 - chance_drop_loot)
+					(True, change_loot),
+					(False, 100 - change_loot)
 				], key=lambda d: d[1]))
 
 				if f"{x}:{y}" not in dungeons.location_loot and drop:
-					if f"{x}:{y}" in dungeons.location_enemy:
-						dungeons.location_enemy[f"{x}:{y}"].update(
-							{"loot": True}
-						)
-
-					dungeons.location_loot[f"{x}:{y}"] = [deepcopy(looting())]
+					dungeons.location_loot[f"{x}:{y}"] = [looting()]
 					count_loot -= 1
+					change_loot = 10
 				else:
-					chance_drop_loot += 3
+					change_loot += 5
 		x += 1
 
 def looting():
@@ -199,24 +194,27 @@ class Dungeons:
 		t = f"{x}:{y}"
 
 		if t in self.location_enemy:
-			enemy = self.location_enemy[t]
-			result = Battle(player, enemy).run()
+			battle = self.location_enemy[t]
+			if not isinstance(battle, Battle):
+				battle = Battle(player, battle)
+				self.location_enemy[t] = battle
+			result = battle.run()
 			interface.print_("\n")
+
 			if result == namespace.BATTLE_WIN:
 				self.location_enemy.pop(t)
 
 				if t in self.location_loot:
-					self.location_loot[t].append(deepcopy(looting()))
+					self.location_loot[t].append(battle.loot)
 				else:
-					self.location_loot[t] = [deepcopy(looting())]
+					self.location_loot[t] = [battle.loot]
 			else:
 				move = False
 		if move:
 			self.position_x = x
 			self.position_y = y
-		
+
 		if (x, y) == self.exit:
-			print("aadadad")
 			self.next_map()
 
 	def printMaze(self):
@@ -229,8 +227,8 @@ class Dungeons:
 	def looting(self, player):
 		locate = f"{self.position_x}:{self.position_y}"
 		if locate not in self.location_loot:
-			pass
-		
+			return
+
 		for loot in self.location_loot[locate]:
 			loot = resolve_random_condition(loot)
 			if isinstance(loot["value"], list):
@@ -248,7 +246,5 @@ class Dungeons:
 			interface.centerprint(
 				interface.get_messages("battle.get_loot").format(amount=loot["value"], name=loot["id"]),
 			)
-		
 		self.location_loot.pop(locate)
 		interface.get_enter()
-		

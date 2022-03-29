@@ -1,7 +1,7 @@
+from copy import deepcopy
 from .game import Game
 from ..dungeons import Dungeons
 from ..namespace import DIRECTION, BACK, DUNGEONS, LOOT
-from copy import deepcopy
 from .. import interface
 
 
@@ -11,21 +11,18 @@ def enter(self, player):
     dungeons = player.dungeons
     while True:
         lines = deepcopy(self.lines)
-        list_option = []
-        moves = []
+        list_option, moves = [], []
         x, y = dungeons.position_x, dungeons.position_y
         grid = dungeons.grid
-        
-        dungeons.location_enemy = {}
 
         interface.print_title(self.name + f" {dungeons.level}", self.width)
-        interface.leftprint(
-            "-"*(self.width-1), 
-            f"Locate enemy : {list(dungeons.location_enemy.keys())}",
-            f"Exit Location : {dungeons.exit}",
-            f"Your Location : ({x}, {y})",
-            "-"*(self.width-1), width=self.width
-        )
+        interface.leftprint("-"*(self.width - 1))
+        interface.generates_readable_stats({
+            interface.get_messages("game.dungeons.enemy_location") : ", ".join(["({}, {})".format(*t.split(":")) for t in list(dungeons.location_enemy.keys())]),
+            interface.get_messages("game.dungeons.exit_location") : "({}, {})".format(*dungeons.exit),
+            interface.get_messages("game.dungeons.player_location") : f"({x}, {y})"
+        }, 1, self.width, one_line=True, use_sign=False)
+        interface.leftprint("-"*(self.width - 1))
 
         if x - 1 > 0 and grid[x-1][y] == "c":
             list_option.append(f" n) {DIRECTION.NORTH}")
@@ -58,7 +55,7 @@ def enter(self, player):
             list_option.append(f" l) {LOOT}")
 
         interface.leftprint(
-            interface.get_messages("game.action.move"),
+            interface.get_messages("game.dungeons.move"),
             *interface.generate_readable_list(list_option, number=False, make_line=False)
         )
         index = interface.get_input()
