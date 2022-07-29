@@ -1,3 +1,4 @@
+from typing import Optional, Dict
 from .data import DATA
 from . import attack_state, other_property, util, equipment, inventory
 from .. import item
@@ -7,10 +8,10 @@ class Entity:
     def __init__(
         self,
         namespace: str,
-        attacks: str | None = None, 
-        equipments: dict | None = None,
-        stats: dict | None = None,
-        type_damage: str | None = None
+        attacks: Optional[str] = None, 
+        equipments: Optional[Dict] = None,
+        stats: Optional[Dict] = None,
+        type_damage: Optional[str] = None
     ):
         
         if not attacks:
@@ -18,22 +19,22 @@ class Entity:
 
         if not stats:
             stats = {}
-                
+
         for name, values in stats.items():
             for stat, value in values.items():
                 if name == "resource":
                     stat = "_max_" + name
-                
+
                 if name == "critical":
                     stat = "_" + stat
 
                 if stat in DATA["full_stats"]:
                     setattr(self, stat, value)
-        
+
         for stat in DATA["stats"]:
             if not hasattr(self, stat):
                 setattr(self, stat, 0)
-        
+
         for name in DATA["entity_values"]:
             if isinstance(name, list):
                 setattr(self, name[0], name[1])
@@ -77,7 +78,7 @@ class Entity:
     attack_state = attack_state.attack_state
     update = util.update
 
- 
+
 for name in DATA["values"]["resource"]:
     setattr(
         Entity, name, util._generate_value_entity(name)

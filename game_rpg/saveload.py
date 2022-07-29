@@ -5,6 +5,7 @@ from datetime import datetime
 from .player import Player
 from . import interface, namespace, __version__
 
+
 def save_game(player: Player):
     path = "./saves/"
     file_name = player.name + ".sv"
@@ -16,8 +17,8 @@ def save_game(player: Player):
 
     with open(path + file_name, "wb") as f:
         pickle.dump(player, f, pickle.HIGHEST_PROTOCOL)
-
     return True
+
 
 def load_game():
     lines = []
@@ -25,12 +26,10 @@ def load_game():
     interface.print_title("load_game")
 
     for filename in glob.glob("./saves/*.sv"):
-
         try:
             player = pickle.load(open(filename, "rb"))
         except ArithmeticError:
             continue
-
         if player.version != __version__ or not isinstance(player, Player):
             continue
 
@@ -44,7 +43,6 @@ def load_game():
         return False
 
     while lines:
-
         interface.leftprint(line.format( "No", "Name", "level", "Time" ), width=100)
         for i, values in enumerate(lines):
             interface.leftprint(
@@ -52,12 +50,10 @@ def load_game():
             )
 
         result = interface.get_command(lines, loop=False)
-
         if not isinstance(result, tuple):
             continue
 
         interface.print_("\n")
         if result[0] == namespace.BACK:
             return result[0]
-
         return result[0][0]

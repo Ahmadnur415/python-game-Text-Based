@@ -11,23 +11,21 @@ def play():
         index = interface.get_command([namespace.PLAY, namespace.LOAD, namespace.QUIT], add_command_back=False, loop=False, list_option=True)
 
         interface.print_("\n")
-        match index[0]:
+        if index[0] == namespace.LOAD:
+            result = load_game()
 
-            case namespace.LOAD:
-                result = load_game()
+            if isinstance(result, Player):
+                from game_rpg.games import camp
+                result.update()
+                return camp.enter(result)
 
-                if isinstance(result, Player):
-                    from game_rpg.games import camp
-                    result.update()
-                    return camp.enter(result)
+            continue
 
-                continue
+        elif index[0] == namespace.PLAY:
+            return create_player()
 
-            case namespace.PLAY:
-                return create_player()
-
-            case namespace.QUIT:
-                return quit()
+        elif index[0] == namespace.QUIT:
+            return quit()
 
 
 if __name__ == "__main__":

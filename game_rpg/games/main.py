@@ -1,9 +1,8 @@
 from .game import Game
 from .. import interface, namespace, saveload
 
+
 def enter(_, player):
-
-
     while True:
         commands = [namespace.ADVENTURE, namespace.DUNGEONS, namespace.SHOP, namespace.CAMP, namespace.SAVE_GAME, namespace.QUIT]
 
@@ -46,7 +45,6 @@ def enter(_, player):
 
         if result[0] == namespace.QUIT:
             quit()
-
 
 
 main = Game(

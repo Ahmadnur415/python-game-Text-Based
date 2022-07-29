@@ -1,8 +1,9 @@
+from typing import Union, Optional
 from .get_messages import get_messages
 from .print_methods import leftprint, centerprint, print_
 
-def get_input(add_text: str | None = None, distance: int=0):
 
+def get_input(add_text: Optional[str] = None, distance: int = 0):
     if not add_text:
         add_text = ""
 
@@ -12,10 +13,9 @@ def get_input(add_text: str | None = None, distance: int=0):
     ).strip().lower()
 
 
-def get_enter(text=""):
+def get_enter(text: str = ""):
     centerprint(text if text else get_messages("input_messages.get_enter"))
     input()
-
     print_()
     return
 
@@ -23,7 +23,6 @@ def get_enter(text=""):
 def get_boolean_input():
     while True:
         received_input = get_input(distance=1)
-
         if received_input in get_messages("input_messages.forms_of_true", ["y", "yes"]):
             return True
 
@@ -34,7 +33,7 @@ def get_boolean_input():
         leftprint(get_messages("input_messages.get_boolean_input"))
 
 
-def get_int_input(upper_limit, add_text: str | None = None):
+def get_int_input(upper_limit, add_text: Optional[str] = None):
     while True:
         _input = get_input(add_text, 1)
         print_()

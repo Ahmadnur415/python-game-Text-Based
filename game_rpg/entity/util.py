@@ -1,9 +1,8 @@
-from .. import interface
 from ..item import get_items
+from .. import interface
 
 
 def _generate_value_entity(name):
-
     @property
     def value_property(entity):
 
@@ -27,7 +26,6 @@ def _generate_value_entity(name):
     return value_property
 
 def generate_missing_value_property(name):
-
     @property
     def value_property(entity):
         return getattr(entity, "max_" + name) - getattr(entity, name)
@@ -39,7 +37,6 @@ def generate_missing_value_property(name):
     return value_property
 
 def generate_exp_value_property():
-
     @property
     def value_property(entity):
         return getattr(entity, "_exp")
@@ -52,21 +49,17 @@ def generate_exp_value_property():
             value = 0
 
         setattr(entity, "_exp", value)
-
-
         if entity.exp > value_max and entity.level < entity.max_level:
-
             entity.level += 1
             interface.centerprint(
-                interface.get_messages("player.level_up").format(entity.level), width=entity.message_width_for_lv
+                interface.get_messages("player.level_up").format(entity.level),
+                width=entity.message_width_for_lv
             )
 
             entity.point_level += 3
-
             entity.health = entity.max_health
             entity.mana = entity.max_mana
             entity.stamina = entity.max_stamina
-
             entity.exp -= value_max
 
     return value_property
@@ -75,23 +68,19 @@ def generate_exp_value_property():
 def update(entity): 
     current_inventory, new_inventory, new_equipment = entity.inventory, [], {}
 
-    # update item in inventory
     for item in current_inventory:
         new_item = get_items(item.identify)
         
         if item.amount > 1:
             new_item.amount = item.amount
 
-        if item.used:
- 
+        if item.used: 
             if item.location_used in new_item.equip_location:
                 new_equipment[item.location_used] = new_item
 
             entity.unequip_item(item.location_used)
-
         new_inventory.append(new_item)
 
-    # update equipment
     for location, item in new_equipment.items():
         entity.equip_item(item, location)
 

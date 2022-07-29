@@ -2,6 +2,7 @@ import random
 from . import flag
 from .. import interface
 
+
 def enemy_attack_phase(battle):
 
     if not battle.enemy.usable_attacks:

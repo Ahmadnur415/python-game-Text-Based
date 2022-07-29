@@ -1,4 +1,5 @@
 import random
+from typing import Union, Tuple, List
 from .util import clamp, resolve_random_condition
 from .enemies import create_enemy_random
 from .battle import Battle
@@ -34,7 +35,6 @@ def generate_map(dungeons):
 	dungeons.grid = [["u" for _ in range(dungeons.width)] for _ in range(dungeons.height)]
 	start_x = clamp(random.randrange(dungeons.height), 1, dungeons.height - 2)
 	start_y = clamp(random.randrange(dungeons.width), 1, dungeons.width - 2)
-
 	dungeons.grid[start_x][start_y] = "c"
 	dungeons.walls = [ (start_x + 1, start_y), (start_x - 1, start_y), (start_x, start_y + 1), (start_x, start_y - 1) ]
 
@@ -43,7 +43,6 @@ def generate_map(dungeons):
 
 	while dungeons.walls:
 		wall = random.choice(dungeons.walls)
-
 		if wall[0] != 0 and dungeons.grid[wall[0]-1][wall[1]] == "u" and dungeons.grid[wall[0]+1][wall[1]] == "c":
 			create_wall(dungeons, wall, "up")
 			continue
@@ -78,9 +77,9 @@ def generate_map(dungeons):
 			dungeons.exit = (dungeons.height - 1, i)
 			break
 
+
 def generate(dungeons):
 	generate_map(dungeons)
-
 	count_enemy = 2 + (1 if dungeons.level % 5 else 0)
 	count_loot = 1 + (1 if dungeons.level % 3 else 0)
 	change_enemy = 3
@@ -93,7 +92,6 @@ def generate(dungeons):
 
 		if count_enemy == 0:
 			break
-
 		for y in range(1, dungeons.width - 1):
 			# set enemy
 			if dungeons.surrounding_wall((x, y)).count("c") > 2 and dungeons.grid[x][y] == "c" and count_enemy > 0:
@@ -101,7 +99,6 @@ def generate(dungeons):
 					(True, change_enemy),
 					(False, 100 - change_enemy)
 				], key=lambda d: d[1]))
-
 				if f"{x}:{y}" not in dungeons.location_enemy and drop:
 					dungeons.location_enemy[f"{x}:{y}"] = create_enemy_random(dungeons.level, False)# { "id": "enemy id", "level": dungeons.level}
 					count_enemy -= 1
@@ -142,7 +139,7 @@ def looting():
 
 
 class Dungeons:
-	def __init__(self, size: tuple | list, level: int):
+	def __init__(self, size: Union[Tuple, List], level: int):
 		self.size = size
 		self.height, self.width = self.size
 		self.level = level
@@ -158,7 +155,7 @@ class Dungeons:
 		generate(self)
 		self.position_x, self.position_y = self.entrance
 
-	def surrounding_wall(self, wall: tuple | list):
+	def surrounding_wall(self, wall: Union[Tuple, List]):
 		return [
 			self.grid[wall[0]+1][wall[1]],
 			self.grid[wall[0]-1][wall[1]],
@@ -184,7 +181,6 @@ class Dungeons:
 		self.width += 1 if self.level % 5 == 0 else 0
 		self.size = ( self.height, self.width )
 		self.reset()
-
 
 	def move(self, player, x, y):
 		x = self.position_x + x
@@ -235,16 +231,12 @@ class Dungeons:
 				loot["value"] = random.randrange(loot["value"][0], loot["value"][1])
 
 			if loot["id"] in ("silver", "gold"):
-				setattr(
-					player, loot["id"], getattr(player, loot["id"]) + loot["value"]
-				)
+				setattr(player, loot["id"], getattr(player, loot["id"]) + loot["value"])
 			else:
 				item = get_items(loot["id"], loot["value"])
 				loot["id"] = item.name
 				player.add_items(item)
 
-			interface.centerprint(
-				interface.get_messages("battle.get_loot").format(amount=loot["value"], name=loot["id"]),
-			)
+			interface.centerprint(interface.get_messages("battle.get_loot").format(amount=loot["value"], name=loot["id"]))
 		self.location_loot.pop(locate)
 		interface.get_enter()

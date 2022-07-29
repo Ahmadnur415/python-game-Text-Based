@@ -44,12 +44,16 @@ EPIC = "epic"
 LEGENDARY = "legendary"
 SPECIAL = "special"
 
-LIST_OF_QUALITY = [ COMMON, UNCOMMON, RARE, EPIC, LEGENDARY, SPECIAL ]
+LIST_OF_QUALITY = [COMMON, UNCOMMON, RARE, EPIC, LEGENDARY, SPECIAL]
 COMMANDS_PLAYER = [VIEW_STATS, INVENTORY, EQUIPMENT, POINT_LEVEL, VIEW_ATTACK, SAVE_GAME]
 
+LEFT = "left"
+CENTER = "center"
+RIGHT = "right"
+DEFAULT = "default"
+char = {LEFT: "<", CENTER: "^", RIGHT: ">"}
 
 class TYPE_ATTACK:
-    # 1.5 / 8 stat
     MELEE = "strength"
     RANGED = "perception"
     SHORT_MELEE = "dextery"

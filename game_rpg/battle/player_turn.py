@@ -1,11 +1,12 @@
 from .. import interface, namespace
 
+
 def player_turn(battle):
 
     while battle.player:
 
         USE_ITEMS = interface.get_messages("battle.actions.use_item").format(battle.max_use_items - battle.count_use_items)
-        commands = [ namespace.BATTLE_ATTACK, USE_ITEMS, namespace.BATTLE_FLED ]
+        commands = [namespace.BATTLE_ATTACK, USE_ITEMS, namespace.BATTLE_FLED]
 
         battle.view()
 

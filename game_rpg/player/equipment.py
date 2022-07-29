@@ -1,7 +1,8 @@
+from typing import Optional
 from .. import interface
 
 
-def equip_items_interface(self, item_to_equip, location: str | None = None):
+def equip_items_interface(self, item_to_equip, location: Optional[str] = None):
     if item_to_equip.class_item != "equippable":
         interface.print_(
             interface.get_messages("equipment.items_cant_use").format(item=item_to_equip.name)
@@ -11,7 +12,6 @@ def equip_items_interface(self, item_to_equip, location: str | None = None):
         return
 
     location_to_equip = None
-
     if isinstance(item_to_equip.equip_location, list) and not location:
         if len(item_to_equip.equip_location) > 1:
             while True:
@@ -50,12 +50,10 @@ def equip_items_interface(self, item_to_equip, location: str | None = None):
 
     item_use = self.equipment[location_to_equip]
     if item_use:
-
         interface.print_message("equipment.item_already_equipped", item=item_use.name)
         choise = interface.get_boolean_input()
         if not choise:
             return
 
         self.unequip_item(location_to_equip)
-
     return self.equip_item(item_to_equip, location_to_equip)

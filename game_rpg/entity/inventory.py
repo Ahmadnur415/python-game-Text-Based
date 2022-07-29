@@ -1,5 +1,6 @@
 from .. import interface
 
+
 def add_items(self, *items):
     for item in items:
         if not item:
@@ -26,6 +27,7 @@ def remove_items(self, *items):
                 continue
 
             self.inventory.remove(item)
+
 
 @property
 def equippable_items(self):

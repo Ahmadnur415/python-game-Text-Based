@@ -1,8 +1,8 @@
+import textwrap
 from .print_methods import format_text
 from .get_messages import get_messages
 from ..item import Item
 from .. import namespace
-import textwrap
 
 
 def readable_item(item, lines: tuple):
@@ -21,7 +21,6 @@ def readable_item(item, lines: tuple):
             value = " ".join([str(i) for i in value])
 
         value = value.capitalize()
-
         if isinstance(item, Item) and name.lower() == "name":
             value = textwrap.shorten(value, width[name])
 
@@ -32,5 +31,4 @@ def readable_item(item, lines: tuple):
                 value += " " + str(item.amount) + "x"
 
         line += " | " + format_text("<", width[name]).format(value)
-
     return line

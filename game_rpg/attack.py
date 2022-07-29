@@ -1,8 +1,6 @@
 from .data import _load
 from . import util, interface
 
-DATA = _load("attacks.json")
-
 
 class Attack:
     def __init__(
@@ -39,13 +37,11 @@ class Attack:
         return self.__class__.__name__ + "(" + self.identify + ")"
 
     def get_modiefer_damage(self, enemy):
-
         if isinstance(self.modiefer_damage, dict) and self.user:
             return util._generate_value_from_dict(self.modiefer_damage, self.user, enemy)
 
         if isinstance(self.modiefer_damage, (int, float)):
             return self.modiefer_damage
-
         return 0
 
     @property
@@ -95,12 +91,10 @@ load_from_id = Attack._load_attack_from_id
 
 def generate_attack_for_items(item: dict):
     attacks = []
-
     if not item.get("stats") or item["type"] != "equippable" or not item.get("attacks"):
         return attacks
 
     for _id in item["attacks"]:
-
         if isinstance(_id, str) and _id in DATA:
             _attack = load_from_id(_id)
 
@@ -111,9 +105,9 @@ def generate_attack_for_items(item: dict):
             continue
 
         _attack.identify += "@" + item["id"]
-
         _attack.damage = item["stats"]["basic"].get("damage", [1,])
-
         attacks.append(_attack)
-
     return attacks
+
+
+DATA = _load("attacks.json")

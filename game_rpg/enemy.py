@@ -1,6 +1,7 @@
+import random
+from typing import Optional, List
 from .entity import Entity, DATA
 from . import util
-import random
 
 
 class Enemy(Entity):
@@ -13,7 +14,7 @@ class Enemy(Entity):
         type_damage: str,
         looting: list,
         level: int,
-        inventory: list | None = None,
+        inventory: Optional[List] = None,
     ):
 
         super().__init__(
@@ -53,9 +54,7 @@ def _generate_stats_enemy(enemy: Enemy):
             ("resource", 15),
             ("critical", 5)
         ])
-
         point = util.resolve_random_condition( [ (2, 45), (3, 35), (1, 20) ] )
-
         stat = random.choice(DATA["values"][basic_stat].copy())
 
         if basic_stat == "critical":
@@ -65,5 +64,4 @@ def _generate_stats_enemy(enemy: Enemy):
         if basic_stat == "resource":
             point = int(point * 2) if stat == "health" else int(point * 1.5)
             stat = "_max_" + stat
-
         setattr( enemy, stat, getattr(enemy, stat) + point )

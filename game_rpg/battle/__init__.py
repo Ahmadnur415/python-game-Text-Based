@@ -1,6 +1,6 @@
-# from .data import DATA
 from . import view, battle_util, player_turn, player_attack_phase, enemy_attack_phase
 from .. import namespace, interface, util
+
 
 class Battle:
     def __init__(self, player, enemy) -> None:

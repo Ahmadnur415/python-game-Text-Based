@@ -1,5 +1,4 @@
 from ..util import clamp
-from .data import DATA
 
 
 def _init(entity):
@@ -19,11 +18,7 @@ def _init(entity):
     RES = getattr(entity, "resistance", 0)
 
 
-# ===========
-#   defend
-# ===========
 def physical_attack_reduce(entity):
-    # 1 point = 8 def | 12 CON
     _init(entity)
 
     _reduce = sum(
@@ -35,7 +30,6 @@ def physical_attack_reduce(entity):
 
 
 def magic_attack_reduce(entity):
-    # 1 magic reduce = 8 RES | 12 WILL
     _init(entity)
 
     _reduce = sum(
@@ -56,7 +50,6 @@ def attack_reduce(entity):
 
 @property
 def evaded(entity):
-    # 1 evaded = 8 EVE / 20 PERC / 16 WILL
     _init(entity)
 
     B_EVE = sum(
@@ -66,11 +59,6 @@ def evaded(entity):
     T = ((EVE * 1.5 + B_EVE + PERC / 2.5 + WILL / 2) / 8)
     return clamp(round(100 - 10000 / (100 + T), 2), 0, 95)
 
-
-
-# ============
-#   resaurce
-# ============
 
 @property
 def max_health(entity):
@@ -95,14 +83,9 @@ def max_stamina(entity):
     ST = (3 * DEX + 10 * PERC + 6 * STR + 25 * LV) / 12
     return int(ST  + getattr(entity, "_max_stamina", 0))
 
-# ============
-#   critical
-# ============
+
 @property
 def critical_change(entity):
-    # 1 Crit / 10 PERC / 30 STR / 30 DEX / 30 MGC
-    # 0.17 / LV = max 25
-
     _init(entity)
     crit = (PERC / 10) + (STR + DEX + MGC) / 30 + clamp(0.17 * LV, 1, 25)
     return clamp(round(crit + getattr(entity, "_critical_change", 0), 2), 1, 99)
@@ -115,13 +98,9 @@ def critical_damage(entity):
     return round(dmg + 20 + getattr(entity, "_critical_damage", 0), 2)
 
 
-# ==========
-#   attack
-# ==========
 @property
 def attacks(self) -> list:
     from ..attack import load_from_id
-
     _attacks = self._attacks.copy()
     for item in self.equipment.values():
         if item:
@@ -133,28 +112,21 @@ def attacks(self) -> list:
     punch.user = self
 
     _attacks.append(punch)
-
     return _attacks
 
 
 @property
 def usable_attacks(self):
     usable_attacks_list = []
-
     for attack in self.attacks:
         if (
             self.mana >= attack.cost_mana and self.stamina >= attack.cost_stamina and attack.cooldown <= 0
         ):
             usable_attacks_list.append(attack)
-
     return usable_attacks_list
 
 
-# =======
-#   exp
-# =======
 @property
 def max_exp(entity):
     _init(entity)
     return int((175 * LV + 50) / 3.14)
-

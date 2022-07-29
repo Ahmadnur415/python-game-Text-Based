@@ -1,12 +1,11 @@
+from typing import Union, List
 from .print_methods import printtwolines
 from ..namespace import BACK
 from ..util import short_stat
 
 
-def generate_readable_list(lines: list, number: bool=False, make_line: bool=True) -> str | list:
-
+def generate_readable_list(lines: list, number: bool=False, make_line: bool=True) -> Union[str, List[str]]:
     processed_list = []
-
     for i, name in enumerate(lines):
         name = name.capitalize()
         if number:
@@ -24,19 +23,24 @@ def generate_readable_list(lines: list, number: bool=False, make_line: bool=True
         processed_list.append("and " + processed_list.pop())
 
     delimiter = " "
-
     if len(processed_list) > 2:
         delimiter = "," + delimiter
 
     return delimiter.join(processed_list)
 
 
-def generates_readable_stats(stats: dict, distance: int = 5, width = 21, use_colon: bool = True,
-    use_sign: bool = True, one_line: bool = False, use_prepix: bool = False):
+def generates_readable_stats(
+    stats: dict, 
+    distance: int = 5, 
+    width = 21, 
+    use_colon: bool = True,
+    use_sign: bool = True, 
+    one_line: bool = False, 
+    use_prepix: bool = False
+):
 
     def make_line_stat(stat) -> str:
         name, value = stat
-
         line = "> " if use_sign else ""
         line += ("{:<10} : " if use_colon else "{} ").format(short_stat(name))
 
@@ -48,11 +52,8 @@ def generates_readable_stats(stats: dict, distance: int = 5, width = 21, use_col
         return line.replace("_", " ")
 
     stats = list(stats.items())
-
     n = int(len(stats) / 2) + len(stats) % 2
-
     for _ in range(0, len(stats) if one_line else n):
-
         if not stats:
             break
 
@@ -67,7 +68,5 @@ def generates_readable_stats(stats: dict, distance: int = 5, width = 21, use_col
         else:
             _width += len(str(stats[0][1])) + 2
 
-        printtwolines(
-            left, rigth, distance, _width, False, False
-        )
+        printtwolines(left, rigth, distance, _width, False, False)
         stats.pop(0)

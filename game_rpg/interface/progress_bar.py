@@ -1,6 +1,4 @@
-
 def progress_bar(n: int, max_n: int, width: int=30, flip: bool = False):
-
     line = ""
     bar = int(width / max_n * n)
 
@@ -15,5 +13,4 @@ def progress_bar(n: int, max_n: int, width: int=30, flip: bool = False):
 
     if flip:
         line = line[::-1]
-
     return line

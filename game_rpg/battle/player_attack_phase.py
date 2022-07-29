@@ -1,5 +1,6 @@
-from .. import interface, namespace
 from . import flag
+from .. import interface, namespace
+
 
 def player_attack_phase(battle):
     while True:

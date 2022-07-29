@@ -1,9 +1,8 @@
 import random
 
 
-def generate_level(lv: int, diff: int=1) -> int:
+def generate_level(lv: int, diff: int = 1) -> int:
     from .entity import DATA as dt
-
     if 3 < lv <= 7:
         lv = (1, lv)
     elif lv > 7:
@@ -15,13 +14,13 @@ def generate_level(lv: int, diff: int=1) -> int:
 
     if isinstance(lv, tuple):
         lv = random.randrange(lv[0], lv[1])
-
     return lv
 
 
 def resolve_random_condition(chances_data: list):
     sum_of_chances = sum([
-        individual_chance_data[1] for individual_chance_data in chances_data
+        individual_chance_data[1] 
+        for individual_chance_data in chances_data
     ])
     random_value = _generate_random_value(sum_of_chances)
     range_checked = 0
@@ -45,17 +44,15 @@ def clamp(x, min_x, max_x):
 
 
 def _generate_value_from_dict(data: dict, self, enemy):
-    # format dict { "modiefer": 1, "equal": "self.level", "percent": bool, "base_value": 10, "max_value": 30}
-    value = 1
     def _value(prefix: str):
         prefix, stat = prefix.split(".")
         return getattr(enemy if prefix == "enemy" else self, stat, 1)
 
+    value = 1
     if isinstance(data['equal'], str):
         value = _value(data["equal"])
 
     if isinstance(value, (int, float)):
-        # modifier
         modiefer = data["modiefer"]
         if isinstance(modiefer, str):
             modiefer = _value(modiefer)
@@ -81,7 +78,6 @@ def short_stat(stat: str):
 
 def generate_rows_list(index: int, data: list) -> list:
     rows = []
-
     while data != []:
         rows.append(data[:index])
         data = data[index:]

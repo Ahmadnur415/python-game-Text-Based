@@ -29,5 +29,5 @@ def print_line(battle, stat):
     interface.printtwolines(
         "{:<8} : {}".format(util.short_stat(stat), get_value(battle.player)),
         "{} : {:>8}".format(get_value(battle.enemy), util.short_stat(stat)),
-         width=int(battle.width_line/2)
+        width=int(battle.width_line/2)
     )

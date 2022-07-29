@@ -53,6 +53,3 @@ def attack_state(self, enemy, attack_use):
 
     if critical_change:
         return flag.CRITICAL_HIT
-
-
-

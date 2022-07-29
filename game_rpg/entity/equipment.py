@@ -1,5 +1,6 @@
-from .. import interface
 from .data import DATA
+from .. import interface
+
 
 def equip_item(self, item_to_equip, location: str):
     if item_to_equip.class_item != "equippable":

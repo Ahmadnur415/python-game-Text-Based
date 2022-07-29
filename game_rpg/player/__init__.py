@@ -1,9 +1,6 @@
-from .. import entity, data, item
 from . import equipment, view, consume_item, player_interface, item_interface
+from .. import entity, data, item
 from game_rpg import __version__
-
-
-DATA = data._load("player.json")
 
 
 class Player(entity.Entity):
@@ -55,3 +52,6 @@ class Player(entity.Entity):
     consume_item = consume_item.consume_item
     sell_item = item_interface.sell_item
     item_interface = item_interface.item_interface
+
+
+DATA = data._load("player.json")

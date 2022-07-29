@@ -1,19 +1,17 @@
+import random
 from .game import Game
-from .. import enemies, interface, namespace, util
 from ..battle import Battle
 from ..item import get_items
-import random
+from .. import enemies, interface, namespace, util
+
 
 def enter(_, player):
-
     enemy = enemies.create_enemy_random(util.generate_level(player.level, player.dificulty))
-
     battle = Battle(player, enemy)
     result_battle = battle.run()
 
     if result_battle == namespace.BATTLE_FLED:
         interface.get_messages("")
-
         from .main import main as main_menu
         return main_menu.enter(player)
 
@@ -58,9 +56,7 @@ def enter(_, player):
             amount = random.randrange(amount[0], amount[1])
 
         if loot_id in ["silver", "gold"]:
-            setattr(
-                player, loot_id, getattr(player, loot_id) + amount
-            )
+            setattr(player, loot_id, getattr(player, loot_id) + amount)
         else:
             item = get_items(loot_id)
             loot_id = item.name
@@ -75,9 +71,7 @@ def enter(_, player):
     interface.centerprint("-", interface.get_messages("input_messages.get_enter"), width=battle.width_line)
     input()
     interface.print_("\n")
-
     player.message_width_for_lv = 50
-
     from .main import main as main_menu
     return main_menu.enter(player)
 

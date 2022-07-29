@@ -1,6 +1,6 @@
 from .game import Game
-from .. import interface, namespace, util
 from ..item import get_items, DATA
+from .. import interface, namespace, util
 
 
 def enter(self, player):
@@ -15,7 +15,6 @@ def enter(self, player):
             continue
 
         if result[0] == namespace.BACK:
-
             interface.print_("\n")
             from .main import main as main_menu
             return main_menu.enter(player)
@@ -24,15 +23,12 @@ def enter(self, player):
 
 
     self.typeitem = result[0]
-
     interface.print_("\n")
     while True:
         rows = getattr(self, "get_items_by_" + self.sort_by)()
         interface.print_title(self.name.capitalize() + " " + self.typeitem, )
-
         sort_by = [namespace.NAME, namespace.PRICE, namespace.QUALITY]
         sort_by.remove(self.sort_by)
-
         LEFT = ""
         RIGTH = ""
 
@@ -42,12 +38,8 @@ def enter(self, player):
         if self.index > len(rows) - 1:
             self.index = len(rows) - 1
 
-        items = [
-            get_items(name) for name in rows[self.index]
-        ]
-
+        items = [get_items(name) for name in rows[self.index]]
         self.print_line("No", "")
-
         for i, item in enumerate(items):
             self.print_line(i + 1, item)
 
@@ -68,21 +60,17 @@ def enter(self, player):
 
         interface.printtwolines(LEFT, RIGTH)
         interface.print_message("game.shop.player_coin", "left", silver = player.silver, gold = player.gold )
-
         result = interface.get_command(items, "to buy", loop=False)
 
         if not isinstance(result, tuple):
             continue
 
         interface.print_("\n")
-
         if result[0] == LEFT:
-
             self.index -= 1
             continue
 
         if result[0] == RIGTH:
-
             self.index += 1
             continue
 
@@ -95,9 +83,7 @@ def enter(self, player):
             return self.enter(player)
 
         item = result[0]
-
         if getattr(player, item.price[1]) < item.price[0]:
-
             interface.print_message("game.shop.failed_purchased", type_ = item.price[1], name = item.name )
             interface.get_enter()
             continue
@@ -106,20 +92,23 @@ def enter(self, player):
 
         interface.centerprint("-")
         interface.print_message(
-            "game.shop.buy_item", "left", value = getattr(player, item.price[1]), type_ = item.price[1], name = item.name, price = item.price[0] * 1, other = ""
+            "game.shop.buy_item", 
+            "left", 
+            value=getattr(player, item.price[1]), 
+            type_=item.price[1], 
+            name=item.name, 
+            price=item.price[0] * 1, 
+            other=""
         )
 
         result = interface.get_boolean_input()
         interface.print_("\n")
-
         if not result:
             continue
 
         setattr(player, item.price[1], getattr(player, item.price[1]) - item.price[0])
         player.add_items(item)
-
         interface.print_message("game.shop.purchased", name=item.name, count=item.amount)
-
         interface.get_enter()
         interface.print_("")
 
@@ -127,32 +116,29 @@ def enter(self, player):
 def print_line(_, i, item):
     interface.leftprint(
         interface.get_messages("item.line_item").format(
-            i , interface.readable_item(item, ("name", "type", "quality", "price"))
+            i,
+            interface.readable_item(item, ("name", "type", "quality", "price"))
         ),
         width=100
     )
 
 
 def sort_items(self, key: str) -> list:
-    # sorting item
     data = [
         item[0] for item in sorted(
             [
-                (id_item , DATA["items"][id_item][key]) for id_item in DATA["items_by_namspace"][self.typeitem]
+                (id_item , DATA["items"][id_item][key]) 
+                for id_item in DATA["items_by_namspace"][self.typeitem]
             ],
             key=lambda d : d[1]
         )
     ]
-
     return util.generate_rows_list(self.size, data)
 
 
 def get_items_by_price(self):
     price = {"silver": [], "gold": []}
-
-
-    for identify in DATA["items_by_namspace"][self.typeitem]:
-        
+    for identify in DATA["items_by_namspace"][self.typeitem]:        
         value = DATA["items"][identify]["price"].copy()
         price[value[1]].append((identify, value))
 

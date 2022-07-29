@@ -1,7 +1,8 @@
 from copy import deepcopy
+from typing import Optional, Dict, List
 from .items import DATA
-from . import interface, namespace
 from .attack import generate_attack_for_items
+from . import interface, namespace
 
 
 class Item:
@@ -12,14 +13,14 @@ class Item:
         class_item: str,
         identify: str,
         amount: int = 1,
-        stats: dict | None = None,
-        equip_location: str | None = None,
-        attacks: list | None = None,
-        effects: dict | None = None,
-        price: dict | None = None,
-        type_item: str | None = None,
-        description: str | None = None,
-        user: str | None = None
+        stats: Optional[Dict] = None,
+        equip_location: Optional[str] = None,
+        attacks: Optional[List] = None,
+        effects: Optional[Dict] = None,
+        price: Optional[Dict] = None,
+        type_item: Optional[str] = None,
+        description: Optional[str] = None,
+        user: Optional[str] = None
     ):
 
         if not effects:
@@ -67,7 +68,6 @@ class Item:
             title += f" {self.amount}x"
 
         interface.print_title( title )
-
         if self.class_item == namespace.EQUIPPABLE:
             desc = interface.get_messages("item.desc.equippable").format(
                 interface.generate_readable_list(self.equip_location).replace("_", " ")
@@ -76,33 +76,29 @@ class Item:
         if self.class_item == namespace.CONSUMABLE:
             lines = []
             for name, value in self.effects["stats"].items():
-                
                 if isinstance(value, dict):
-                    
                     if value.get("percent"):
                         lines.append(
-                            interface.get_messages("item.desc.consumable.effect").format( stat=name, value=value["modiefer"], equal=value["equal"])
+                            interface.get_messages("item.desc.consumable.effect").format(
+                                stat=name, 
+                                value=value["modiefer"], 
+                                equal=value["equal"]
+                            )
                         )
                     continue
                 
                 lines.append(str(value) + " " + name)
-
-            desc = interface.get_messages("item.desc.consumable").format(
-                interface.generate_readable_list(lines)
-            )
-        
+            desc = interface.get_messages("item.desc.consumable").format(interface.generate_readable_list(lines))
         interface.print_message(
             "item.desc", "left", classitem=self.class_item.capitalize(), desc=desc, quality=self.quality
         )
 
         stats = deepcopy(self.stats)
-
         if stats:
-
             if self.stats.get("basic") and self.type_item == "weapons":
-
-                interface.print_message("item.weapons_attribute", "left", " ~ ".join(str(i) for i in stats["basic"].get("damage", [0, 0])), stats["basic"]["armor_penetration"])
-
+                interface.print_message("item.weapons_attribute", "left", " ~ ".join(
+                    str(i) for i in stats["basic"].get("damage", [0, 0])), stats["basic"]["armor_penetration"]
+                )
                 stats["basic"].pop("damage")
                 stats["basic"].pop("armor_penetration")
 
@@ -113,7 +109,7 @@ class Item:
 
 
     @classmethod
-    def _load_items(cls, _id: str, amount: int=1):
+    def _load_items(cls, _id: str, amount: int = 1):
         if _id not in list(DATA["items"].keys()):
             raise NameError(f"Tidak ada id di DATA {_id}")
 

@@ -1,5 +1,6 @@
 from .. import interface
 
+
 def print_list_of_attacks_player(battle):
     interface.print_title("list of Attack", battle.width_line)
 
