@@ -86,3 +86,7 @@ def update(entity):
 
     entity.inventory.clear()
     entity.inventory = new_inventory
+
+
+
+## data

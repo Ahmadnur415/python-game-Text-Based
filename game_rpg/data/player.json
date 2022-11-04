@@ -11,7 +11,10 @@
             "main_hand": "staff/m_staff",
             "shoes": "shoes/gardener_shoes",
             "body": "armor/saints_r"
-        }
+        },
+        "inventory": [
+            {"id": "food/apple", "value": 10}
+        ]
     },
     "archer": {
         "type_damage": "physical",
@@ -25,7 +28,10 @@
             "main_hand": "bow/wood_b",
             "head": "helmet/assassin_mask",
             "body": "armor/saints_r"
-        }
+        },
+        "inventory": [
+            {"id": "food/apple", "value": 10}
+        ]
     },
     "warrior": {
         "type_damage": "physical",
@@ -38,6 +44,9 @@
             "main_hand": "sword/wood_s",
             "head": "helmet/broken_helm",
             "body": "armor/wood_mail"
-        }
+        },
+        "inventory": [
+            {"id": "food/apple", "value": 10}
+        ]
     }
 }

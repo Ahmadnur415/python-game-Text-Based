@@ -11,6 +11,9 @@ def play():
         index = interface.get_command([namespace.PLAY, namespace.LOAD, namespace.QUIT], add_command_back=False, loop=False, list_option=True)
 
         interface.print_("\n")
+        if not index:
+            continue
+
         if index[0] == namespace.LOAD:
             result = load_game()
 

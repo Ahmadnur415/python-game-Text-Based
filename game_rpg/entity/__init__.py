@@ -13,11 +13,7 @@ class Entity:
         stats: Optional[Dict] = None,
         type_damage: Optional[str] = None
     ):
-        
-        if not attacks:
-            attacks = []
-
-        if not stats:
+        if not stats: 
             stats = {}
 
         for name, values in stats.items():
@@ -42,7 +38,7 @@ class Entity:
             setattr(self, name, None)
 
         self._namespace = namespace
-        self._attacks = attacks
+        self._attacks = attacks if attacks else []
         self.inventory = []
         self.equipment = DATA["full_equipment"].copy()       
         self.type_damage = type_damage

@@ -1,24 +1,22 @@
-from . import equipment, view, consume_item, player_interface, item_interface
-from .. import entity, data, item
 from game_rpg import __version__
+from . import equipment, view, consume_item, player_interface, item_interface
+from .. import entity, data
+from ..item import get_items
+
+DATA = data._load("player.json")
 
 
 class Player(entity.Entity):
     def __init__(self, name: str, _class : str, dificulty: int = 1):
-
-        if _class not in DATA:
-            raise NameError(f"Tidak Ada name class {_class}")
-
-        self.version = __version__
-        self._class = _class
-        self.__name = name
-        self.__dificulty = dificulty
+        DataPlayer = DATA.get(_class)
+        if not DataPlayer:
+            raise ()
 
         super().__init__(
             namespace = self.__class__.__name__,
-            equipments = DATA[self._class]["equipment"],
-            stats = DATA[self._class]["stats"],
-            type_damage = DATA[self._class]["type_damage"]
+            equipments = DataPlayer["equipment"],
+            stats = DataPlayer["stats"],
+            type_damage = DataPlayer["type_damage"]
         )
 
         for name in entity.DATA["player_values"]:
@@ -27,11 +25,18 @@ class Player(entity.Entity):
                 continue
             setattr(self, name, None)
 
+        for item in DataPlayer["inventory"]:
+            self.add_items(get_items(item["id"], item["value"]))
+
+        self.version = __version__
+        self._class = _class
+        self.__name = name
+        self.__dificulty = dificulty        
+        
         self.health = self.max_health
         self.mana = self.max_mana
         self.stamina = self.max_stamina
-
-        self.add_items(item.get_items("food/apple", 10))
+        
 
     @property
     def name(self):
@@ -52,6 +57,3 @@ class Player(entity.Entity):
     consume_item = consume_item.consume_item
     sell_item = item_interface.sell_item
     item_interface = item_interface.item_interface
-
-
-DATA = data._load("player.json")
