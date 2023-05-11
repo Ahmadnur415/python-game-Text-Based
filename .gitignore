@@ -3,8 +3,8 @@ __pycache__/
 .vscode/*
 .idea/*
 .venv/*
-saves
 tests
-game_rpg
+game_rpg_1
 /data
+!saves/readme.md
 !game/data
