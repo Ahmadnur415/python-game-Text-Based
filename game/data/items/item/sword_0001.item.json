@@ -1,0 +1,20 @@
+{
+    "sword_0001": {
+        "type": "EquippableItem",
+        "name": "Iron Sword",
+        "price": 10,
+        "quality": 1,
+        "sub_type": "SWORD",
+        "description": "This is Sword",
+        "in_shop": true,
+        "skills": ["slab0003"],
+        "stats": {
+            "strength": 1,
+            "dexterity": 10,
+            "magic": 1,
+            "perception": 1,
+            "constitution": 1,
+            "will": 1
+        }
+    }
+}

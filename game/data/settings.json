@@ -1,0 +1,6 @@
+{
+    "color_system": "truecolor", 
+    "force_terminal": true,
+    "tab_size":4,
+    "theme": "default"
+}
